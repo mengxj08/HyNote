@@ -1,0 +1,17 @@
+css\default.css
+css\jquery-ui.min.css
+default.html
+images\logo.scale-100.png
+images\smalllogo.scale-100.png
+images\splashscreen.scale-100.png
+images\storelogo.scale-100.png
+js\default.js
+js\jquery-2.1.1.min.js
+js\jquery-ui.min.js
+js\navigator.js
+pages\home\home.css
+pages\home\home.html
+pages\home\home.js
+pages\Page2\page2.css
+pages\Page2\page2.html
+pages\Page2\page2.js

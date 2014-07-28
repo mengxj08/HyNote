@@ -1,0 +1,39 @@
+﻿.homepage section[role=main] {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#mainGrid {
+    margin: 20px 20px 0px 20px;
+    height:100%;
+}
+#contentGrid {
+    height: 100%;
+    display: -ms-grid;
+    -ms-grid-columns: 1fr 1fr;
+    /*-ms-grid-rows: 80vh;*/
+}
+
+#conceptShow {
+    -ms-grid-column: 1;
+    width: auto;
+    height: 100%; 
+    margin-right: 20px; 
+    border: 1px solid black;
+    background-color: gray; 
+    overflow:hidden;
+}
+.ui-resizable-helper { border: 2px dotted red; }
+
+#textShow {
+    -ms-grid-column: 2;
+    margin-left: 20px; 
+    width: auto;
+    height: 100%; 
+    float: left;
+}
+#inputText {
+    margin: 0px;
+    width: 100%;
+    height:80vh;
+}

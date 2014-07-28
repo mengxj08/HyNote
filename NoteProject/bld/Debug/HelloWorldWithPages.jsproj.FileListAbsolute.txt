@@ -1,0 +1,15 @@
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bin\Debug\ReverseMap\resources.pri
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bin\Debug\AppxManifest.xml
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bin\Debug\HelloWorldWithPages.build.appxrecipe
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\priconfig.xml
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\priconfig.xml.intermediate
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\layout.resfiles
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\layout.resfiles.intermediate
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\resources.resfiles
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\resources.resfiles.intermediate
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\pri.resfiles
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\pri.resfiles.intermediate
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\qualifiers.txt
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\qualifiers.txt.intermediate
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\MultipleQualifiersPerDimensionFound.txt
+c:\users\v-xime\documents\visual studio 2013\Projects\HelloWorldWithPages\HelloWorldWithPages\bld\Debug\ProjectArchitectures.txt
