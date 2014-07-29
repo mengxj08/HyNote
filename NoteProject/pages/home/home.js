@@ -21,13 +21,20 @@
             WinJS.Utilities.query("a").listen("click", this.linkClickEventHandler, false);
 
             var conceptShow = document.getElementById("conceptShow");
+            var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
             
             $("#conceptShow").resizable({
-                animate: true,
+                //animate: true,
                 helper: "ui-resizable-helper",
                 maxHeight: conceptShow.clientHeight,
-                minHeight: conceptShow.clientHeight
-
+                minHeight: conceptShow.clientHeight,
+                stop: function (event, ui) {
+                    // $("#textShow").width(constantWidth - $("#conceptShow").width());
+                    //$("#contentGrid").css("-ms-grid-columns", $("#conceptShow").outerWidth(true) + "px 1fr");
+                    var textShowouterWidth = constantWidth - $("#conceptShow").outerWidth(true);
+                    $("#contentGrid").css("-ms-grid-columns", $("#conceptShow").outerWidth(true) + "px " + textShowouterWidth + "px");
+                    //console.log("textShow:" + $("#textShow").width());
+                }
             });
         },
 

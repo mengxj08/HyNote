@@ -19,9 +19,9 @@
     width: auto;
     height: 100%; 
     margin-right: 20px; 
-    border: 1px solid black;
-    background-color: gray; 
-    overflow:hidden;
+    border: 3px solid black;
+    border-right: 10px solid blue;
+    background: #ccc;
 }
 .ui-resizable-helper { border: 2px dotted red; }
 
@@ -29,11 +29,11 @@
     -ms-grid-column: 2;
     margin-left: 20px; 
     width: auto;
-    height: 100%; 
-    float: left;
+    height: 100%;
+    /*float: right;*/
 }
 #inputText {
     margin: 0px;
     width: 100%;
-    height:80vh;
+    height:75vh;
 }
