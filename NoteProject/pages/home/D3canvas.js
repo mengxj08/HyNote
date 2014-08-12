@@ -27,12 +27,28 @@ var drawingD3 = function () {
     svg = d3.select("#keyWordMap").append("svg")
         .attr("width", width)
         .attr("height", height);
-        //.on("mousemove", mousemove)
-        //.on("mousedown", mousedown);
 
-    //svg.append("rect")
-    //    .attr("width", width)
-    //    .attr("height", height);
+    svg.append('svg:defs').append('svg:marker')
+        .attr('id', 'end-arrow')
+        .attr("viewBox", "0 -5 10 10")
+        .attr('refX', 6)
+        .attr('markerWidth', 6)
+        .attr('markerHeight', 6)
+        .attr('orient', 'auto')
+            .append('svg:path')
+            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('fill', '#000');
+
+    svg.append('svg:defs').append('svg:marker')
+        .attr('id', 'start-arrow')
+        .attr('viewBox', '0 -5 10 10')
+        .attr('refX', 4)
+        .attr('markerWidth', 6)
+        .attr('markerHeight', 6)
+        .attr('orient', 'auto')
+            .append('svg:path')
+            .attr('d', 'M10,-5L0,0L10,5')
+            .attr('fill', '#000');
 
     //nodes = force.nodes();
     //links = force.links();
@@ -66,10 +82,30 @@ var drawingD3 = function () {
     //    .attr("dy", ".35em");
 
     function tick() {
-        link.attr("x1", function (d) { return d.source.x; })
-            .attr("y1", function (d) { return d.source.y; })
-            .attr("x2", function (d) { return d.target.x; })
-            .attr("y2", function (d) { return d.target.y; });
+        //link.attr("x1", function (d) { return d.source.x; })
+        //    .attr("y1", function (d) { return d.source.y; })
+        //    .attr("x2", function (d) { return d.target.x; })
+        //    .attr("y2", function (d) { return d.target.y; });
+
+        //link.attr("d", function (d) {
+        //    return 'M' + d.source.x + ',' + d.source.y + ',' + 'L' + d.target.x + ',' + d.target.y;
+        //});
+        link.each(function () { this.parentNode.insertBefore(this, this); });
+
+        link.attr('d', function (d) {
+            var deltaX = d.target.x - d.source.x,
+                deltaY = d.target.y - d.source.y,
+                dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+                normX = deltaX / dist,
+                normY = deltaY / dist,
+                sourcePadding = d.source.frequency * 30 + 3,
+                targetPadding = d.target.frequency * 30 + 3,
+                sourceX = d.source.x + (sourcePadding * normX),
+                sourceY = d.source.y + (sourcePadding * normY),
+                targetX = d.target.x - (targetPadding * normX),
+                targetY = d.target.y - (targetPadding * normY);
+            return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+        });
 
         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
     }
@@ -126,12 +162,17 @@ function oneclick(d) {
     }
 }
 function restartLinks() {
+
     console.log("linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
-    link = link.data(links);
-    link.enter().insert("line", ".node")
-        .attr("class", "link");
 
+    link = link.data(links);
+
+    link.enter().insert("path", ".node")
+        .attr("class", "link")
+        .style('marker-end', 'url(#end-arrow)')
+        .style("marker-start", "url(#start-arrow)");
+      
     force.start();
 }
 
