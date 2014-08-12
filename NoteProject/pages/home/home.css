@@ -25,15 +25,81 @@
 }
 .ui-resizable-helper { border: 2px dotted red; }
 
+#keyWordMap {
+
+    width: 100%;
+    height: 100%;
+}
+
 #textShow {
     -ms-grid-column: 2;
     margin-left: 20px; 
     width: auto;
-    height: 100%;
+    height: 75vh;
+
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    background-color: white;
+    background-color: -moz-field;
+    border: 3px solid darkgray;
+    box-shadow: 1px 1px 1px 0 lightgray inset;  
+    font: -moz-field;
+    font: -webkit-small-control;
+    font-size: xx-large;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: auto;
+   
     /*float: right;*/
 }
-#inputText {
+
+/*#inputText {
     margin: 0px;
     width: 100%;
     height:75vh;
+}*/
+
+.item {
+/*background: rgb(135,199,135);*/
+  height: 100px;
+  width: 100px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: yellow;
+}
+
+/*   */
+
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.circle {
+  cursor: move;
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node.fixed {
+  fill: #f00;
+}
+.node.connecting {
+    fill: #ff6a00;
+}
+.node.connected {
+    fill: #4cff00;
+}
+
+.node.connected.fixed {
+    fill: #00ff90;
+}
+
+text {
+  font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: middle;
+  pointer-events: none;
 }

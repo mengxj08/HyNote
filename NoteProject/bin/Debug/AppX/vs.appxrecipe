@@ -8,7 +8,7 @@
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>4c720e30-542c-4811-a244-62aa9b8ff9d7</PackageIdentityName>
     <IntermediateOutputPath>C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\</IntermediateOutputPath>
-    <RegisteredManifestChecksum>230456F662B78E1BC405A268F01B0EFA633563DB9A6EEE72E77A24BA7DBA9EA9</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>322A63DE5A6A217691CAD9C63845A6A2C23CB66273EAA9F839071C0D8B07EA2D</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>4c720e30-542c-4811-a244-62aa9b8ff9d7_1.0.0.0_neutral__e9ayrwprkb2q0</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>4c720e30-542c-4811-a244-62aa9b8ff9d7_e9ayrwprkb2q0!App</RegisteredUserModeAppID>
     <RegisteredPackageID>4c720e30-542c-4811-a244-62aa9b8ff9d7</RegisteredPackageID>
@@ -20,10 +20,86 @@
     <AppXManifest Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-07-28T10:19:57.182</Modified>
+      <Modified>2014-08-12T02:59:47.787</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Component.winmd">
+      <PackagePath>Component.winmd</PackagePath>
+      <Modified>2014-08-12T02:59:46.576</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+      <Modified>2014-08-01T07:08:38.563</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\bin\Debug\Common.dll">
+      <PackagePath>Common.dll</PackagePath>
+      <Modified>2013-04-06T22:56:15.186</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\bin\Debug\SplatDrop.dll">
+      <PackagePath>SplatDrop.dll</PackagePath>
+      <Modified>2014-08-01T03:12:14.226</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatInterfaces\bin\Debug\SplatInterfaces.dll">
+      <PackagePath>SplatInterfaces.dll</PackagePath>
+      <Modified>2014-08-01T03:12:13.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SplatLibrary.dll">
+      <PackagePath>SplatLibrary.dll</PackagePath>
+      <Modified>2014-08-01T03:12:13.844</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\NlpCommon.dll">
+      <PackagePath>NlpCommon.dll</PackagePath>
+      <Modified>2013-04-06T22:56:17.928</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\PorterLib.dll">
+      <PackagePath>PorterLib.dll</PackagePath>
+      <Modified>2013-01-11T22:35:01.022</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\ClassifierLib.dll">
+      <PackagePath>ClassifierLib.dll</PackagePath>
+      <Modified>2013-01-11T22:35:00.922</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\DataExtractor.dll">
+      <PackagePath>DataExtractor.dll</PackagePath>
+      <Modified>2013-01-11T22:35:00.992</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Tokenizer.dll">
+      <PackagePath>Tokenizer.dll</PackagePath>
+      <Modified>2013-01-11T22:35:01.172</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\TextFilter.dll">
+      <PackagePath>TextFilter.dll</PackagePath>
+      <Modified>2013-01-11T22:35:01.162</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\ExtractorLib.dll">
+      <PackagePath>ExtractorLib.dll</PackagePath>
+      <Modified>2013-01-11T22:35:01.012</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\MLLibrary.dll">
+      <PackagePath>MLLibrary.dll</PackagePath>
+      <Modified>2013-04-06T22:56:28.666</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\LocalFeatureExtractor.dll">
+      <PackagePath>LocalFeatureExtractor.dll</PackagePath>
+      <Modified>2013-04-06T22:56:30.073</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SemanticRoleLearner.dll">
+      <PackagePath>SemanticRoleLearner.dll</PackagePath>
+      <Modified>2013-04-06T22:56:31.273</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Vectors.dll">
+      <PackagePath>Vectors.dll</PackagePath>
+      <Modified>2013-04-06T22:56:11.562</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Optimizer.dll">
+      <PackagePath>Optimizer.dll</PackagePath>
+      <Modified>2013-04-06T22:56:16.039</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\MathUtil.dll">
+      <PackagePath>MathUtil.dll</PackagePath>
+      <Modified>2013-04-06T22:56:10.343</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\default.css">
       <PackagePath>css\default.css</PackagePath>
       <Modified>2014-07-28T07:56:03.839</Modified>
@@ -34,11 +110,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.css">
       <PackagePath>pages\home\home.css</PackagePath>
-      <Modified>2014-07-28T10:42:11.143</Modified>
+      <Modified>2014-08-08T10:11:05.018</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.css">
       <PackagePath>pages\Page2\page2.css</PackagePath>
       <Modified>2014-07-14T08:49:18.437</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\images\ui-icons_222222_256x240.png">
+      <PackagePath>css\images\ui-icons_222222_256x240.png</PackagePath>
+      <Modified>2014-08-12T02:47:20.051</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\logo.scale-100.png">
       <PackagePath>images\logo.scale-100.png</PackagePath>
@@ -60,9 +140,17 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2014-03-13T18:11:40.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\d3.min.js">
+      <PackagePath>js\d3.min.js</PackagePath>
+      <Modified>2014-06-30T17:16:39.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\default.js">
       <PackagePath>js\default.js</PackagePath>
       <Modified>2014-07-14T08:07:54.581</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\freewall.js">
+      <PackagePath>js\freewall.js</PackagePath>
+      <Modified>2014-08-04T05:47:02.850</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery-2.1.1.min.js">
       <PackagePath>js\jquery-2.1.1.min.js</PackagePath>
@@ -72,13 +160,21 @@
       <PackagePath>js\jquery-ui.min.js</PackagePath>
       <Modified>2014-06-26T07:22:14.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery.highlight-4.js">
+      <PackagePath>js\jquery.highlight-4.js</PackagePath>
+      <Modified>2014-08-04T02:26:57.275</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\navigator.js">
       <PackagePath>js\navigator.js</PackagePath>
       <Modified>2014-07-14T08:07:54.760</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\D3canvas.js">
+      <PackagePath>pages\home\D3canvas.js</PackagePath>
+      <Modified>2014-08-12T03:09:44.404</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.js">
       <PackagePath>pages\home\home.js</PackagePath>
-      <Modified>2014-07-28T10:45:35.215</Modified>
+      <Modified>2014-08-09T09:30:28.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.js">
       <PackagePath>pages\Page2\page2.js</PackagePath>
@@ -86,7 +182,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.html">
       <PackagePath>pages\home\home.html</PackagePath>
-      <Modified>2014-07-28T10:19:50.133</Modified>
+      <Modified>2014-08-05T09:17:01.482</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\default.html">
       <PackagePath>default.html</PackagePath>
@@ -96,9 +192,25 @@
       <PackagePath>pages\Page2\page2.html</PackagePath>
       <Modified>2014-07-14T08:54:33.295</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SemanticRoleLabeler.exe">
+      <PackagePath>SemanticRoleLabeler.exe</PackagePath>
+      <Modified>2013-04-06T22:56:33.593</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SplitMerge.exe">
+      <PackagePath>SplitMerge.exe</PackagePath>
+      <Modified>2013-04-06T22:56:30.725</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Morph.exe">
+      <PackagePath>Morph.exe</PackagePath>
+      <Modified>2013-04-06T22:56:29.374</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\PerceptronUtil.exe">
+      <PackagePath>PerceptronUtil.exe</PackagePath>
+      <Modified>2013-04-06T22:56:27.702</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2014-07-28T10:19:57.114</Modified>
+      <Modified>2014-08-12T02:50:57.097</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

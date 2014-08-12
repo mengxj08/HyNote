@@ -1,1 +1,2 @@
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\Component.csproj;neutral
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\NoteProject.jsproj;neutral

@@ -16,6 +16,63 @@
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Component.winmd">
+      <PackagePath>Component.winmd</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\bin\Debug\Common.dll">
+      <PackagePath>Common.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\bin\Debug\SplatDrop.dll">
+      <PackagePath>SplatDrop.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatInterfaces\bin\Debug\SplatInterfaces.dll">
+      <PackagePath>SplatInterfaces.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SplatLibrary.dll">
+      <PackagePath>SplatLibrary.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\NlpCommon.dll">
+      <PackagePath>NlpCommon.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\PorterLib.dll">
+      <PackagePath>PorterLib.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\ClassifierLib.dll">
+      <PackagePath>ClassifierLib.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\DataExtractor.dll">
+      <PackagePath>DataExtractor.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Tokenizer.dll">
+      <PackagePath>Tokenizer.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\TextFilter.dll">
+      <PackagePath>TextFilter.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\ExtractorLib.dll">
+      <PackagePath>ExtractorLib.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\MLLibrary.dll">
+      <PackagePath>MLLibrary.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\LocalFeatureExtractor.dll">
+      <PackagePath>LocalFeatureExtractor.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SemanticRoleLearner.dll">
+      <PackagePath>SemanticRoleLearner.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Vectors.dll">
+      <PackagePath>Vectors.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Optimizer.dll">
+      <PackagePath>Optimizer.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\MathUtil.dll">
+      <PackagePath>MathUtil.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\default.css">
       <PackagePath>css\default.css</PackagePath>
     </AppxPackagedFile>
@@ -27,6 +84,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.css">
       <PackagePath>pages\Page2\page2.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\images\ui-icons_222222_256x240.png">
+      <PackagePath>css\images\ui-icons_222222_256x240.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\logo.scale-100.png">
       <PackagePath>images\logo.scale-100.png</PackagePath>
@@ -44,8 +104,14 @@
       <PackagePath>images\storelogo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\d3.min.js">
+      <PackagePath>js\d3.min.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\default.js">
       <PackagePath>js\default.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\freewall.js">
+      <PackagePath>js\freewall.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery-2.1.1.min.js">
       <PackagePath>js\jquery-2.1.1.min.js</PackagePath>
@@ -53,8 +119,14 @@
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery-ui.min.js">
       <PackagePath>js\jquery-ui.min.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery.highlight-4.js">
+      <PackagePath>js\jquery.highlight-4.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\navigator.js">
       <PackagePath>js\navigator.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\D3canvas.js">
+      <PackagePath>pages\home\D3canvas.js</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.js">
       <PackagePath>pages\home\home.js</PackagePath>
@@ -70,6 +142,18 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.html">
       <PackagePath>pages\Page2\page2.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SemanticRoleLabeler.exe">
+      <PackagePath>SemanticRoleLabeler.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SplitMerge.exe">
+      <PackagePath>SplitMerge.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\Morph.exe">
+      <PackagePath>Morph.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\PerceptronUtil.exe">
+      <PackagePath>PerceptronUtil.exe</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>

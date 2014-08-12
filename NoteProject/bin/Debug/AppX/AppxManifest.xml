@@ -33,6 +33,19 @@
   <Dependencies>
     <PackageDependency Name="Microsoft.WinJS.2.0" MinVersion="1.0.9600.16408" />
   </Dependencies>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>CLRHost.dll</Path>
+        <ActivatableClass ActivatableClassId="Component.SampleComponent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.DataBase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.NodesData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.RootObject" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.LinksData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.AnalyzedWord" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
   <build:Metadata>
     <build:Item Name="VisualStudio" Version="12.0" />
     <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Ultimate 2013" />

@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "NoteProject", "NoteProject\NoteProject.jsproj", "{4C720E30-542C-4811-A244-62AA9B8FF9D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component", "Component\Component.csproj", "{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,16 @@ Global
 		{4C720E30-542C-4811-A244-62AA9B8FF9D7}.Release|x86.ActiveCfg = Release|x86
 		{4C720E30-542C-4811-A244-62AA9B8FF9D7}.Release|x86.Build.0 = Release|x86
 		{4C720E30-542C-4811-A244-62AA9B8FF9D7}.Release|x86.Deploy.0 = Release|x86
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Release|x64.ActiveCfg = Release|Any CPU
+		{F58617AC-CF66-4A2E-B385-4D3BA20DEC30}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

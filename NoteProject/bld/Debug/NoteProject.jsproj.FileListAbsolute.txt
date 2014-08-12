@@ -16,6 +16,13 @@ C:\Users\v-xime\Documents\Visual Studio 2013\Projects\HelloWorldWithPages\HelloW
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\AppxManifest.xml
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\NoteProject.build.appxrecipe
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\Component.winmd
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\Newtonsoft.Json.dll
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\Component.pdb
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\Component.pri
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\Newtonsoft.Json.xml
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\NoteProject.jsprojResolveAssemblyReference.cache
+C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\NoteProject.jsproj.GenerateResource.Cache
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\priconfig.xml
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\priconfig.xml.intermediate
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\layout.resfiles

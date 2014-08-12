@@ -15,7 +15,10 @@
     <script src="/pages/home/home.js"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/jquery-ui.min.js"></script>
-    
+    <script src="/js/jquery.highlight-4.js"></script>
+    <!--<script src="/js/freewall.js"></script>-->
+    <script src="/js/d3.min.js"></script>
+    <script src="D3canvas.js"></script>
 </head>
 <body>
     <!-- The content that will be loaded and displayed. -->
@@ -25,15 +28,18 @@
             <h1 class="titlearea win-type-ellipsis">
                 <span class="pagetitle">Welcome to NoteProject!</span>
             </h1>
+            <button id="testButton">Test</button>
         </header>
         <section aria-label="Main content" role="main">
             <div id="mainGrid">
                 <div id="contentGrid">
                     <div id="conceptShow">
-                        
+                        <div id="keyWordMap" class="win-scrollview">
+
+                       </div>
                     </div>
-                    <div id="textShow">
-                        <textarea id="inputText"></textarea>
+                    <div id="textShow" contenteditable="true">
+
                     </div>
                 </div>
             </div>
