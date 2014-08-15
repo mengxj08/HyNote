@@ -1,17 +1,37 @@
-﻿var width, height, force, node, nodes, link, links, drag, svg;
+﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container;
 var graph;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
+var dragNodeObj = null;
+var radius = 30;   // base radius for circle
+
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);  
 };
 
+var log2 = function (val)
+{
+    return Math.log(val) / Math.LN2;
+};
+
+var updateSize = function (updatwWidth, updateheight) {
+    width = updatwWidth;
+    height = updateheight;
+
+    svg.attr("width", width)
+    .attr("height", height);
+
+    force.size([width, height]);
+
+    force.start();
+}
+
 var drawingD3 = function () {
     
-    width = 800;
-    height = 800;
+    //width = 800;
+    //height = 800;
     nodes = [];
     links = [];
 
@@ -20,13 +40,25 @@ var drawingD3 = function () {
     .nodes(nodes) // initialize with a single node
     .links(links)
     .linkDistance(200)
-    .charge(-600)
-    .on("tick", tick);
-    drag = force.drag().on("dragstart", dragstart);
+    .charge(-600);
+    //.charge(0)
+    //.on("tick", tick);
+    //drag = force.drag()
+    drag = d3.behavior.drag()
+        .on("dragstart", dragstart)
+        .on("drag", dragging)
+        .on("dragend", dragend);
+
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed);
 
     svg = d3.select("#keyWordMap").append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .call(zoom)
+        .on("dblclick.zoom", null);
+       
 
     svg.append('svg:defs').append('svg:marker')
         .attr('id', 'end-arrow')
@@ -50,38 +82,12 @@ var drawingD3 = function () {
             .attr('d', 'M10,-5L0,0L10,5')
             .attr('fill', '#000');
 
-    //nodes = force.nodes();
-    //links = force.links();
-    //force.start();
+    container = svg.append("g");
+    node = container.selectAll(".node");
+    link = container.selectAll(".link");
+    label = container.selectAll(".label");
 
-    node = svg.selectAll(".node");
-    link = svg.selectAll(".link");
-
-    //restartLinks();
-    //restartNodes();
-
-    //link = link.data(graph.links)
-    //    .enter().append("line")
-    //    .attr("class", "link");
-
-    //node = node.data(graph.nodes)
-    //  .enter().append("g")
-    //    .attr("class", "node")
-    //    .on("dblclick", dblclick)
-    //    .on("click",oneclick)
-    //    .call(drag);
-
-    //node.append("circle")
-    //    .attr("class", "circle")
-    //    .attr("r", function (d) { return 30 * d.frequency;});
-        
-    
-    //node.append("text")
-    //    .text(function (d) { return d.word; })
-    //    .style("font-size", function (d) { return Math.min(2 * 30 * d.frequency, (2 * 30 * d.frequency - 8) / this.getComputedTextLength() * 24) + "px"; })
-    //    .attr("dy", ".35em");
-
-    function tick() {
+    tick = function() {
         //link.attr("x1", function (d) { return d.source.x; })
         //    .attr("y1", function (d) { return d.source.y; })
         //    .attr("x2", function (d) { return d.target.x; })
@@ -98,28 +104,82 @@ var drawingD3 = function () {
                 dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
                 normX = deltaX / dist,
                 normY = deltaY / dist,
-                sourcePadding = d.source.frequency * 30 + 3,
-                targetPadding = d.target.frequency * 30 + 3,
+                sourcePadding = log2(d.source.frequency + 1) * radius,
+                targetPadding = log2(d.target.frequency + 1) * radius + 3,
                 sourceX = d.source.x + (sourcePadding * normX),
                 sourceY = d.source.y + (sourcePadding * normY),
                 targetX = d.target.x - (targetPadding * normX),
                 targetY = d.target.y - (targetPadding * normY);
-            return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+            //return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+            return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
         });
 
         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+        label.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
+              .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
     }
+
+    force.on("tick", tick);
 }
+function zoomed() {
+    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
 function dragstart(d) {
     //if (d3.event.defaultPrevented) return;
     //d3.event.sourceEvent.stopPropagation();
     //if (!d.connected)
     //{
+    d3.event.sourceEvent.stopPropagation(); // silence other listeners
     d3.select(this).classed("fixed", d.fixed = true);
+    dragNodeObj = d3.select(this);
     //}
-    console.log("drag:" + d);
+    //console.log("drag:" + d);
+    //var highlightText = d3.select(this).text;
+    //$("#keyWordMap").highlight(highlightText);
 }
+function dragging(d)
+{
+    var oldPX = d.px,
+        oldPY = d.py,
+        oldX = d.x,
+        oldY = d.y;
 
+    //d.px += d3.event.dx;
+    //d.py += d3.event.dy;
+    //d.x += d3.event.dx;
+    //d.y += d3.event.dy;
+    d.px = d3.event.x;
+    d.py = d3.event.y;
+    d.x = d3.event.x;
+    d.y = d3.event.y
+
+    nodes.forEach(function (nodeValue, nodeIndex) {
+        if (nodeValue.fixed && nodeValue != d)
+        {
+            var deltaX = d.x - nodeValue.x;
+            var deltaY = d.y - nodeValue.y;
+            var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            var sumRadius = log2(d.frequency + 1) * radius + log2(nodeValue.frequency + 1) * radius;
+            if (distance <= sumRadius)
+            {
+                console.log("Collision Detection");
+                d.px = oldPX;
+                d.py = oldPY;
+                d.x = oldX;
+                d.y = oldY;
+            }
+        }
+    });
+    tick();
+    force.resume();
+}
+function dragend(d)
+{
+    tick();
+    force.resume();
+}
 function dblclick(d) {
     if (d3.event.defaultPrevented) return;
 
@@ -140,11 +200,18 @@ function oneclick(d) {
             d3.select(this).classed("connecting", d.connecting = true);
         }
         else {
-            //d3.select(selectedNode).classed("fixed", selectedNode.fixed = false);
+            if (selectedNode == d) return; //Self-connected is not allowed
+
+            links.forEach(function (linkValue, linkIndex) { // Depulicated connect is not allowed
+                if (linkValue.source == selectedNodeObj && linkValue.target == d)
+                    return;
+            });
+
+    
             selectedNode.classed("fixed", selectedNodeObj.fixed = false);
             selectedNode.classed("connecting", selectedNodeObj.connecting = false);
             selectedNode.classed("connected", selectedNodeObj.connected = true);
-            //console.log(selectedNodeObj.index);
+
             links.push({ "source": selectedNodeObj, "target": d, "linkName": null });
             selectedNode = null;
             selectedNodeObj = null;
@@ -153,6 +220,7 @@ function oneclick(d) {
             d3.select(this).classed("connected", d.connected = true);
 
             restartLinks();
+            restartLabels();
         }
     }
     else if (d.fixed && d.connecting) {
@@ -161,7 +229,22 @@ function oneclick(d) {
         selectedNodeObj = null;
     }
 }
-function restartLinks() {
+var restartLabels = function ()
+{
+    label = label.data(links);
+
+    label.enter().insert("text",".node")
+    .attr("class", "label")
+    .attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
+    .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
+    .attr("text-anchor", "middle")
+    .text(function (d) { return d.source.word + "-" + d.target.word })
+    .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
+
+    force.start();
+}
+
+var restartLinks = function() {
 
     console.log("linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
@@ -170,8 +253,8 @@ function restartLinks() {
 
     link.enter().insert("path", ".node")
         .attr("class", "link")
-        .style('marker-end', 'url(#end-arrow)')
-        .style("marker-start", "url(#start-arrow)");
+        .style('marker-end', 'url(#end-arrow)');
+       // .style("marker-start", "url(#start-arrow)");
       
     force.start();
 }
@@ -179,12 +262,6 @@ function restartLinks() {
 var restartNodes = function(jsonData) {
     graph = JSON.parse(jsonData);// Splat's JsonData to JsObject
     console.log("graph:" + jsonData);
-
-    //nodes = force.nodes(graph.nodes);
-    //force.nodes(graph.nodes);
-    //nodes = force.nodes();
-    //nodes.push(graph.nodes[count++]);
-
     //Add new nodes and update the frequency of words
     graph.nodes.forEach(function (graphValue, graphIndex) {
         var sliceIndex = -1;
@@ -241,12 +318,12 @@ var restartNodes = function(jsonData) {
     //Data-Join : Update
     node.select("circle")
         .transition().duration(500)
-        .attr("r", function (d) { return 30 * d.frequency; });
+        .attr("r", function (d) { return radius * log2(d.frequency + 1); });
 
 
     node.select("text")
         .transition().duration(500)
-        .style("font-size", function (d) { console.log(d.word + "-1-" + this.getComputedTextLength() + "-2-" + d.textLength); return Math.min(2 * 30 * d.frequency, (2 * 30 * d.frequency - 8) / d.textlength * 24) + "px"; });
+        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; });
 
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
@@ -260,14 +337,14 @@ var restartNodes = function(jsonData) {
         .attr("class", "circle")
         .attr("r", 0)
         .transition().duration(500)
-        .attr("r", function (d) { return 30 * d.frequency; });
+        .attr("r", function (d) { return radius * log2(d.frequency + 1) ;});
 
 
     nodeEnter.append("text")
         .text(function (d) { return d.word; })
         .style("font-size",function(d){d.textlength = this.getComputedTextLength(); return "0px";})
         .transition().duration(500)
-        .style("font-size", function (d) { return Math.min(2 * 30 * d.frequency, (2 * 30 * d.frequency - 8) / d.textlength * 24) + "px"; })
+        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; })
         .attr("dy", ".35em");
 
     //Data-Join: Exit

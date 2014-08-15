@@ -28,39 +28,24 @@
             var testButton = document.getElementById("testButton");
             testButton.addEventListener("click", this.testButtonClicked, false);
 
-            //var wall = new freewall("#keyWordMap");
-            //wall.fitWidth();
+ 
+            //*************************************************************************
+            //Codes below are designed for resizable conceptMap
 
             $("#conceptShow").resizable({
-                //animate: true,
                 helper: "ui-resizable-helper",
                 maxHeight: conceptShow.clientHeight,
                 minHeight: conceptShow.clientHeight,
                 stop: function (event, ui) {
-                    // $("#textShow").width(constantWidth - $("#conceptShow").width());
-                    //$("#contentGrid").css("-ms-grid-columns", $("#conceptShow").outerWidth(true) + "px 1fr");
                     var textShowouterWidth = constantWidth - $("#conceptShow").outerWidth(true);
                     $("#contentGrid").css("-ms-grid-columns", $("#conceptShow").outerWidth(true) + "px " + textShowouterWidth + "px");
-                    //console.log("textShow:" + $("#textShow").width());
-                    //wall.fitWidth();
+                    updateSize($("#conceptShow").width(), $("#conceptShow").height());
                 }
             });
-
+            //***************************************************************************
+            width = $("#conceptShow").width();
+            height = $("#conceptShow").height();
             drawingD3();
-            
-            //var temp = new Component.SampleComponent();
-            //temp.initialAnalysis();
-            //var temp = new Component.SampleComponent().GetResultJson("I like Beijing");
-            //console.log(temp);
-
-            //var localFolder = Windows.Storage.ApplicationData.current.localFolder.path.toString();
-            //console.log(localFolder);
-
-            //var installedFolder = Windows.ApplicationModel.Package.current.installedLocation;
-            //console.log(installedFolder.path.toString());
-
-
-
         },
 
         //buttonClickHandler: function(eventInfo){
@@ -89,7 +74,6 @@
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
             console.log(resultJson);
-            //updateJsonData(resultJson);
             restartNodes(resultJson);
         },
 

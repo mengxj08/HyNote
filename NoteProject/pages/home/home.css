@@ -11,7 +11,6 @@
     height: 100%;
     display: -ms-grid;
     -ms-grid-columns: 1fr 1fr;
-    /*-ms-grid-rows: 80vh;*/
 }
 
 #conceptShow {
@@ -19,16 +18,17 @@
     width: auto;
     height: 100%; 
     margin-right: 20px; 
-    border: 3px solid black;
-    border-right: 10px solid blue;
+    border: 1px solid darkgray;
+    border-right: 10px dashed darkgray;
     background: #ccc;
+    overflow:hidden;
 }
 .ui-resizable-helper { border: 2px dotted red; }
 
 #keyWordMap {
-
     width: 100%;
-    height: 100%;
+    -ms-overflow-style: none;
+    height: 75vh;
 }
 
 #textShow {
@@ -36,7 +36,6 @@
     margin-left: 20px; 
     width: auto;
     height: 75vh;
-
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
     background-color: white;
@@ -49,32 +48,8 @@
     word-break: break-all;
     word-wrap: break-word;
     overflow: auto;
-   
-    /*float: right;*/
 }
-
-/*#inputText {
-    margin: 0px;
-    width: 100%;
-    height:75vh;
-}*/
-
-.item {
-/*background: rgb(135,199,135);*/
-  height: 100px;
-  width: 100px;
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 50%;
-  background: yellow;
-}
-
-/*   */
-
 path.link {
-  /*stroke: #000;
-  stroke-width: 1.5px;*/
   fill: none;
   stroke: #000;
   stroke-width: 1.5px;
@@ -85,23 +60,15 @@ path.link {
   cursor: move;
   fill: #ccc;
   stroke: #000;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
-.node.fixed {
-  fill: #f00;
+.fixed .circle {
+    stroke-width: 2.5px;
 }
-.node.connecting {
-    fill: #ff6a00;
+.connecting .circle {
+    fill: darkgray;
 }
-.node.connected {
-    fill: #4cff00;
-}
-
-.node.connected.fixed {
-    fill: #00ff90;
-}
-
 text {
   font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
