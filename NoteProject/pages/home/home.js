@@ -46,6 +46,16 @@
             width = $("#conceptShow").width();
             height = $("#conceptShow").height();
             drawingD3();
+
+            $(".inputText").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    // Do something
+                    var inputText = $(".inputText").val();
+                    console.log(inputText);
+                    updateLinkLabelName(inputText);
+                    $(".inputText").val("");
+                }
+            });
         },
 
         //buttonClickHandler: function(eventInfo){

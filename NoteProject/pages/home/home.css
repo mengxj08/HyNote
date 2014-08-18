@@ -52,7 +52,7 @@
 path.link {
   fill: none;
   stroke: #000;
-  stroke-width: 1.5px;
+  stroke-width: 3px;
   cursor: default;
 }
 
@@ -74,3 +74,13 @@ text {
   text-anchor: middle;
   pointer-events: none;
 }
+
+.inputText {
+  visibility: hidden;
+  position:absolute;
+  max-width: 150px;
+  left: 300px;
+  top:  300px;
+}
+
+.highlight { background-color: yellow }

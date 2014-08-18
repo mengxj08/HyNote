@@ -3,9 +3,10 @@ var graph;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
+var selectedLinkObj = null;
 var dragNodeObj = null;
 var radius = 30;   // base radius for circle
-
+var clickOntoLinks = false;
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);  
@@ -57,19 +58,22 @@ var drawingD3 = function () {
         .attr("width", width)
         .attr("height", height)
         .call(zoom)
-        .on("dblclick.zoom", null);
+        .on("dblclick.zoom", null)
+        .on("click", clickSVG);
+        //.on("click", clickLink);
        
 
     svg.append('svg:defs').append('svg:marker')
         .attr('id', 'end-arrow')
         .attr("viewBox", "0 -5 10 10")
         .attr('refX', 6)
-        .attr('markerWidth', 6)
-        .attr('markerHeight', 6)
+        .attr('markerWidth', 4)
+        .attr('markerHeight', 4)
         .attr('orient', 'auto')
             .append('svg:path')
             .attr('d', 'M0,-5L10,0L0,5')
-            .attr('fill', '#000');
+            .attr('fill', '#000')
+            .attr("stroke-width", "1px");
 
     svg.append('svg:defs').append('svg:marker')
         .attr('id', 'start-arrow')
@@ -80,12 +84,17 @@ var drawingD3 = function () {
         .attr('orient', 'auto')
             .append('svg:path')
             .attr('d', 'M10,-5L0,0L10,5')
-            .attr('fill', '#000');
+            .attr('fill', '#000')
+            .attr("stroke-width", "1px");
 
     container = svg.append("g");
     node = container.selectAll(".node");
     link = container.selectAll(".link");
     label = container.selectAll(".label");
+
+    //d3.select("#keyWordMap").append("input")
+    //.attr("class", "inputText")
+    //.attr("type", "text");
 
     tick = function() {
         //link.attr("x1", function (d) { return d.source.x; })
@@ -105,7 +114,7 @@ var drawingD3 = function () {
                 normX = deltaX / dist,
                 normY = deltaY / dist,
                 sourcePadding = log2(d.source.frequency + 1) * radius,
-                targetPadding = log2(d.target.frequency + 1) * radius + 3,
+                targetPadding = log2(d.target.frequency + 1) * radius + 5,
                 sourceX = d.source.x + (sourcePadding * normX),
                 sourceY = d.source.y + (sourcePadding * normY),
                 targetX = d.target.x - (targetPadding * normX),
@@ -118,15 +127,28 @@ var drawingD3 = function () {
 
         label.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
               .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
+
+        if (selectedLinkObj)
+        {
+            $(".inputText").css({
+                "left": (selectedLinkObj.source.x + selectedLinkObj.target.x) / 2, "top": (selectedLinkObj.source.y + selectedLinkObj.target.y) / 2, "visibility": "visible"
+            });
+            $(".inputText").focus();
+        }
     }
 
     force.on("tick", tick);
 }
 function zoomed() {
-    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
+    $(".inputText").css({"visibility": "hidden" });
 
-function dragstart(d) {
+    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+    tick();
+}
+//******************************************************************
+//Drag and Click operations
+function dragstart(d) {//Start dragging node
     //if (d3.event.defaultPrevented) return;
     //d3.event.sourceEvent.stopPropagation();
     //if (!d.connected)
@@ -134,12 +156,14 @@ function dragstart(d) {
     d3.event.sourceEvent.stopPropagation(); // silence other listeners
     d3.select(this).classed("fixed", d.fixed = true);
     dragNodeObj = d3.select(this);
+    clickOntoLinks = true;
     //}
-    //console.log("drag:" + d);
-    //var highlightText = d3.select(this).text;
-    //$("#keyWordMap").highlight(highlightText);
+    
+    var highlightText = d.word;
+    $("#textShow").highlight(highlightText);
+    console.log("highlightText:" + highlightText);
 }
-function dragging(d)
+function dragging(d)//drag node
 {
     var oldPX = d.px,
         oldPY = d.py,
@@ -175,24 +199,21 @@ function dragging(d)
     tick();
     force.resume();
 }
-function dragend(d)
+function dragend(d)//end dragging node
 {
+    $("#textShow").removeHighlight();
     tick();
     force.resume();
 }
-function dblclick(d) {
+function dblclick(d) {//double click node
     if (d3.event.defaultPrevented) return;
 
     console.log("double click:" + d);
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
 }
-function oneclick(d) {
-
+function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
-
-    console.log("oneClick-fixed:" + d.fixed);
-    console.log("oneClick-connecting:" + d.connecting);
     if (d.fixed && !d.connecting) {
         if (!selectedNode) {
             selectedNode = d3.select(this);
@@ -201,13 +222,17 @@ function oneclick(d) {
         }
         else {
             if (selectedNode == d) return; //Self-connected is not allowed
-
+            var depulicatedConnect = false;
             links.forEach(function (linkValue, linkIndex) { // Depulicated connect is not allowed
                 if (linkValue.source == selectedNodeObj && linkValue.target == d)
-                    return;
+                {
+                    depulicatedConnect = true;
+                    return; // it only exits the forEach function but not exits the parent function.
+                }
             });
+            if (depulicatedConnect) return;
 
-    
+            clickOntoLinks = true;
             selectedNode.classed("fixed", selectedNodeObj.fixed = false);
             selectedNode.classed("connecting", selectedNodeObj.connecting = false);
             selectedNode.classed("connected", selectedNodeObj.connected = true);
@@ -221,6 +246,9 @@ function oneclick(d) {
 
             restartLinks();
             restartLabels();
+
+            selectedLinkObj = links[links.length - 1];
+
         }
     }
     else if (d.fixed && d.connecting) {
@@ -229,16 +257,48 @@ function oneclick(d) {
         selectedNodeObj = null;
     }
 }
+function clickLink (d) // one click link
+{
+    clickOntoLinks = true;
+    //var coordinates = [0, 0];
+    //coordinates = d3.mouse(this);
+    //var cursorX = coordinates[0];
+    //var cursorY = coordinates[1];
+    $(".inputText").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
+    $(".inputText").focus();
+    selectedLinkObj = d;
+    //console.log("d3.mouse.x:" + cursorX + " d3.mouse.y:" + cursorY);
+    //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
+}
+function clickSVG(d)
+{
+    if (clickOntoLinks) {
+        clickOntoLinks = false;
+    }
+    else {
+        $(".inputText").css({ "visibility": "hidden" });
+        selectedLinkObj = null;
+    } 
+}
+//******************************************************************
+//Update the concept Name, links and labels of links
 var restartLabels = function ()
 {
     label = label.data(links);
 
+    console.log(JSON.stringify(links));
+
+    //Data-join: Update
+    label.transition().duration(500)
+    .text(function (d) { return d.linkName });
+
+    //Data-Join: Enter
     label.enter().insert("text",".node")
     .attr("class", "label")
     .attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
     .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
     .attr("text-anchor", "middle")
-    .text(function (d) { return d.source.word + "-" + d.target.word })
+    .text(function (d) { return d.linkName })
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
 
     force.start();
@@ -253,9 +313,9 @@ var restartLinks = function() {
 
     link.enter().insert("path", ".node")
         .attr("class", "link")
-        .style('marker-end', 'url(#end-arrow)');
-       // .style("marker-start", "url(#start-arrow)");
-      
+        .style('marker-end', 'url(#end-arrow)')
+        .on("click", clickLink);
+   
     force.start();
 }
 
@@ -359,3 +419,12 @@ var restartNodes = function(jsonData) {
     node.exit().transition().duration(500).remove();
     force.start();
 }
+//****************************************************************************
+var updateLinkLabelName = function(inputText)
+{
+    selectedLinkObj.linkName = inputText;
+    $(".inputText").css({ "visibility": "hidden" });
+    selectedLinkObj = null;
+    restartLabels();
+    console.log(inputText);
+};
