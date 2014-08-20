@@ -138,6 +138,10 @@ var drawingD3 = function () {
     }
 
     force.on("tick", tick);
+
+    d3.select("#keyWordMap")
+    .on('keydown', keydown)
+    .on('keyup', keyup);
 }
 function zoomed() {
     $(".inputText").css({"visibility": "hidden" });
@@ -160,7 +164,7 @@ function dragstart(d) {//Start dragging node
     //}
     
     var highlightText = d.word;
-    $("#textShow").highlight(highlightText);
+    $("#textShow").highlight(highlightText,"highlight");
     console.log("highlightText:" + highlightText);
 }
 function dragging(d)//drag node
@@ -211,6 +215,7 @@ function dblclick(d) {//double click node
     console.log("double click:" + d);
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
+    
 }
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
@@ -221,7 +226,7 @@ function oneclick(d) {//one click node
             d3.select(this).classed("connecting", d.connecting = true);
         }
         else {
-            if (selectedNode == d) return; //Self-connected is not allowed
+            if (selectedNodeObj == d) return; //Self-connected is not allowed
             var depulicatedConnect = false;
             links.forEach(function (linkValue, linkIndex) { // Depulicated connect is not allowed
                 if (linkValue.source == selectedNodeObj && linkValue.target == d)
@@ -282,8 +287,7 @@ function clickSVG(d)
 }
 //******************************************************************
 //Update the concept Name, links and labels of links
-var restartLabels = function ()
-{
+var restartLabels = function () { //redrawing Labels
     label = label.data(links);
 
     console.log(JSON.stringify(links));
@@ -301,25 +305,82 @@ var restartLabels = function ()
     .text(function (d) { return d.linkName })
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
 
+    //Data-Join: Exit
+    label.exit().remove();
+
     force.start();
 }
 
-var restartLinks = function() {
+var restartLinks = function() {//redrawing Links
 
     console.log("linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
 
     link = link.data(links);
-
+    //Data-Join: Enter
     link.enter().insert("path", ".node")
         .attr("class", "link")
         .style('marker-end', 'url(#end-arrow)')
         .on("click", clickLink);
    
+    //Data-Join: Exit
+    link.exit().remove();
+
     force.start();
 }
 
-var restartNodes = function(jsonData) {
+var restartNodes = function () {//redrawing Nodes
+    //Printf for debugging
+    console.log("NodeNum:" + force.nodes().length);
+    console.log(JSON.stringify(nodes));
+    node = node.data(force.nodes(), function (d) { return d.word; });
+
+    //Data-Join : Update
+    node.select("circle")
+        .transition().duration(500)
+        .attr("r", function (d) { return radius * log2(d.frequency + 1); });
+
+
+    node.select("text")
+        .transition().duration(500)
+        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; });
+
+    //Data-Join: Enter
+    var nodeEnter = node.enter().append("g")
+        .attr("class", "node")
+        .attr("id", function (d) { return d.id; })
+        .on("dblclick", dblclick)
+        .on("click", oneclick)
+        .call(drag);
+
+    nodeEnter.append("circle")
+        .attr("class", "circle")
+        .attr("r", 0)
+        .transition().duration(500)
+        .attr("r", function (d) { return radius * log2(d.frequency + 1); });
+
+    nodeEnter.append("text")
+        .text(function (d) { return d.word; })
+        .style("font-size", function (d) { d.textlength = this.getComputedTextLength(); return "0px"; })
+        .transition().duration(500)
+        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; })
+        .attr("dy", ".35em");
+
+    //Data-Join: Exit
+    node.exit().select("circle")
+        .transition().duration(500)
+        .attr("r", 0);
+
+    node.exit().select("text")
+        .transition().duration(500)
+        .style("font-size", "0px");
+
+    node.exit().transition().duration(500).remove();
+
+    force.start();
+}
+
+var analyseNodes = function(jsonData) { //Analyse the textarea/jsonData and update Nodes 
     graph = JSON.parse(jsonData);// Splat's JsonData to JsObject
     console.log("graph:" + jsonData);
     //Add new nodes and update the frequency of words
@@ -362,7 +423,7 @@ var restartNodes = function(jsonData) {
             {
                 delFlag = false;
             }
-        });
+        }); 
 
         if (delFlag)
         {
@@ -370,57 +431,10 @@ var restartNodes = function(jsonData) {
         }
     }
 
-    //Printf for debugging
-    console.log("NodeNum:" + force.nodes().length);
-    console.log(JSON.stringify(nodes));
-    node = node.data(force.nodes(), function (d) { return d.word; });
-
-    //Data-Join : Update
-    node.select("circle")
-        .transition().duration(500)
-        .attr("r", function (d) { return radius * log2(d.frequency + 1); });
-
-
-    node.select("text")
-        .transition().duration(500)
-        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; });
-
-    //Data-Join: Enter
-    var nodeEnter = node.enter().append("g")
-        .attr("class", "node")
-        .attr("id", function (d) { return d.id;})
-        .on("dblclick", dblclick)
-        .on("click", oneclick)
-        .call(drag);
-
-    nodeEnter.append("circle")
-        .attr("class", "circle")
-        .attr("r", 0)
-        .transition().duration(500)
-        .attr("r", function (d) { return radius * log2(d.frequency + 1) ;});
-
-
-    nodeEnter.append("text")
-        .text(function (d) { return d.word; })
-        .style("font-size",function(d){d.textlength = this.getComputedTextLength(); return "0px";})
-        .transition().duration(500)
-        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; })
-        .attr("dy", ".35em");
-
-    //Data-Join: Exit
-    node.exit().select("circle")
-        .transition().duration(500)
-        .attr("r", 0);
-
-    node.exit().select("text")
-        .transition().duration(500)
-        .style("font-size", "0px");
-
-    node.exit().transition().duration(500).remove();
-    force.start();
+    restartNodes();
 }
 //****************************************************************************
-var updateLinkLabelName = function(inputText)
+var updateLinkLabelName = function(inputText) //update label name for link
 {
     selectedLinkObj.linkName = inputText;
     $(".inputText").css({ "visibility": "hidden" });
@@ -428,3 +442,62 @@ var updateLinkLabelName = function(inputText)
     restartLabels();
     console.log(inputText);
 };
+var delLinkandLabel = function ()//delete selected link and its label
+{
+    $(".inputText").css({ "visibility": "hidden" });
+    $(".inputText").val("");
+    links.forEach(function (linkvalue, linkIndex) {
+        if (linkvalue == selectedLinkObj) {
+            links.splice(linkIndex, 1);
+            return;
+        }
+    });
+    selectedLinkObj = null;
+    restartLabels();
+    restartLinks();
+}
+var delNodeWithLink = function ()//delete seleced node and its associated links
+{
+    nodes.forEach(function (nodeValue, nodeIndex) {
+        if (nodeValue == selectedNodeObj)
+        {
+            nodes.splice(nodeIndex, 1);
+            return;
+        }
+    });
+
+    for (var i = 0; i < links.length; i++)
+    {
+        if (links[i].source == selectedNodeObj || links[i].target == selectedNodeObj)
+            links.splice(i--, 1);
+    }
+
+    selectedNode = null;
+    selecedNodeObj = null;
+
+    restartNodes();
+    restartLinks();
+    restartLabels();
+}
+//**************************************************************************
+//Keyboard event
+function keyup() {
+}
+
+function keydown() {
+    //d3.event.preventDefault(); //to stop the default keyboard event
+
+    if (!selectedLinkObj && !selectedNodeObj) return;
+    switch (d3.event.keyCode) {
+        case 46: //delete
+            if (selectedLinkObj)
+            {
+                delLinkandLabel();
+            }
+            if (selectedNodeObj)
+            {
+                delNodeWithLink();
+            }
+            break;
+    }
+}

@@ -84,7 +84,7 @@
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
             console.log(resultJson);
-            restartNodes(resultJson);
+            analyseNodes(resultJson);
         },
 
         testButtonClicked: function (eventInfo) {
