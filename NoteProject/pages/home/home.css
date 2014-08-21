@@ -52,10 +52,14 @@
 path.link {
   fill: none;
   stroke: #000;
+  stroke-opacity:0.3;
   stroke-width: 3px;
   cursor: pointer;
 }
 
+path.link.selected {
+  stroke-dasharray: 5,5;
+}
 .circle {
   cursor: move;
   fill: #ccc;

@@ -3,10 +3,13 @@ var graph;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
+var selectedLink = null;
 var selectedLinkObj = null;
 var dragNodeObj = null;
 var radius = 30;   // base radius for circle
 var clickOntoLinks = false;
+var translate = [0, 0];
+var scale = 1;
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);  
@@ -73,19 +76,20 @@ var drawingD3 = function () {
             .append('svg:path')
             .attr('d', 'M0,-5L10,0L0,5')
             .attr('fill', '#000')
-            .attr("stroke-width", "1px");
+            .attr("stroke-width", "1px")
+            .attr("fill-opacity",0.8);
 
-    svg.append('svg:defs').append('svg:marker')
-        .attr('id', 'start-arrow')
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 4)
-        .attr('markerWidth', 6)
-        .attr('markerHeight', 6)
-        .attr('orient', 'auto')
-            .append('svg:path')
-            .attr('d', 'M10,-5L0,0L10,5')
-            .attr('fill', '#000')
-            .attr("stroke-width", "1px");
+    //svg.append('svg:defs').append('svg:marker')
+    //    .attr('id', 'start-arrow')
+    //    .attr('viewBox', '0 -5 10 10')
+    //    .attr('refX', 4)
+    //    .attr('markerWidth', 6)
+    //    .attr('markerHeight', 6)
+    //    .attr('orient', 'auto')
+    //        .append('svg:path')
+    //        .attr('d', 'M10,-5L0,0L10,5')
+    //        .attr('fill', '#000')
+    //        .attr("stroke-width", "1px");
 
     container = svg.append("g");
     node = container.selectAll(".node");
@@ -119,19 +123,24 @@ var drawingD3 = function () {
                 sourceY = d.source.y + (sourcePadding * normY),
                 targetX = d.target.x - (targetPadding * normX),
                 targetY = d.target.y - (targetPadding * normY);
-            //return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
-            return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
+
+            if(d.linkType == "Curve")
+                return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+            else if (d.linkType == "Line")
+                return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
+            else { throw "No linkType Matched!";}
         });
 
         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-        label.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
-              .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
+        //if without textPath, lable-X,Y should be updated in the tick
+        //label.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
+        //     .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
 
         if (selectedLinkObj)
         {
             $(".inputText").css({
-                "left": (selectedLinkObj.source.x + selectedLinkObj.target.x) / 2, "top": (selectedLinkObj.source.y + selectedLinkObj.target.y) / 2, "visibility": "visible"
+                "left": ((selectedLinkObj.source.x + selectedLinkObj.target.x) / 2 + translate[0]) / scale, "top": ((selectedLinkObj.source.y + selectedLinkObj.target.y) / 2 + translate[1]) / scale, "visibility": "visible"
             });
             $(".inputText").focus();
         }
@@ -145,9 +154,9 @@ var drawingD3 = function () {
 }
 function zoomed() {
     $(".inputText").css({"visibility": "hidden" });
-
+    translate = d3.event.translate;
+    //scale = d3.event.scale;
     container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-
     tick();
 }
 //******************************************************************
@@ -155,13 +164,10 @@ function zoomed() {
 function dragstart(d) {//Start dragging node
     //if (d3.event.defaultPrevented) return;
     //d3.event.sourceEvent.stopPropagation();
-    //if (!d.connected)
-    //{
     d3.event.sourceEvent.stopPropagation(); // silence other listeners
     d3.select(this).classed("fixed", d.fixed = true);
     dragNodeObj = d3.select(this);
     clickOntoLinks = true;
-    //}
     
     var highlightText = d.word;
     $("#textShow").highlight(highlightText,"highlight");
@@ -173,7 +179,7 @@ function dragging(d)//drag node
         oldPY = d.py,
         oldX = d.x,
         oldY = d.y;
-
+    //if we donot need nodes across
     //d.px += d3.event.dx;
     //d.py += d3.event.dy;
     //d.x += d3.event.dx;
@@ -242,7 +248,8 @@ function oneclick(d) {//one click node
             selectedNode.classed("connecting", selectedNodeObj.connecting = false);
             selectedNode.classed("connected", selectedNodeObj.connected = true);
 
-            links.push({ "source": selectedNodeObj, "target": d, "linkName": null });
+            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line" });
+            updateLinkType(links[links.length - 1], true);
             selectedNode = null;
             selectedNodeObj = null;
             d3.select(this).classed("fixed", d.fixed = false);
@@ -253,7 +260,6 @@ function oneclick(d) {//one click node
             restartLabels();
 
             selectedLinkObj = links[links.length - 1];
-
         }
     }
     else if (d.fixed && d.connecting) {
@@ -269,9 +275,20 @@ function clickLink (d) // one click link
     //coordinates = d3.mouse(this);
     //var cursorX = coordinates[0];
     //var cursorY = coordinates[1];
+
+    if (d.linkName && d.linkName != "")
+    {
+        $(".inputText").val(d.linkName);
+        d.linkName = "";
+        restartLabels();
+    }
+
     $(".inputText").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
     $(".inputText").focus();
     selectedLinkObj = d;
+    selectedLink = d3.select(this);
+    selectedLink.classed("selected", true);
+    //restartLinks();
     //console.log("d3.mouse.x:" + cursorX + " d3.mouse.y:" + cursorY);
     //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
 }
@@ -282,7 +299,14 @@ function clickSVG(d)
     }
     else {
         $(".inputText").css({ "visibility": "hidden" });
+        $(".inputText").val("");
         selectedLinkObj = null;
+        if (selectedLink)
+        {
+            selectedLink.classed("selected", false);
+            tick();
+        }
+        selectedLink = null;
     } 
 }
 //******************************************************************
@@ -293,36 +317,49 @@ var restartLabels = function () { //redrawing Labels
     console.log(JSON.stringify(links));
 
     //Data-join: Update
-    label.transition().duration(500)
+    label.select("textPath").transition().duration(500)
     .text(function (d) { return d.linkName });
 
     //Data-Join: Enter
-    label.enter().insert("text",".node")
+    var enterLabel = label.enter().insert("text",".node")
     .attr("class", "label")
-    .attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
-    .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
+     //if without textPath, we need to set x y for path 
+    //.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
+    //.attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
     .attr("text-anchor", "middle")
-    .text(function (d) { return d.linkName })
-    .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
+    .attr("dy", -4)
+    .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" })
+    .append("textPath")
+    .attr("xlink:href", function (d) { return "#"+d.source.index; })
+    .attr("startOffset", "50%")
+    .text(function (d) { return d.linkName });
 
     //Data-Join: Exit
     label.exit().remove();
 
-    force.start();
+    //force.start();
 }
-
 var restartLinks = function() {//redrawing Links
 
     console.log("linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
 
     link = link.data(links);
+    //Data-join: Update
+    //link.style('marker-end', 'url(#end-arrow)');
+
     //Data-Join: Enter
-    link.enter().insert("path", ".node")
-        .attr("class", "link")
+    var enterLink = link.enter().insert("path", ".node")
+        .attr("class", "link selected")
+        .attr("id", function (d) { return d.source.index; })
         .style('marker-end', 'url(#end-arrow)')
         .on("click", clickLink);
    
+    if (enterLink)
+        selectedLink = enterLink;
+    else
+        console.log("enter is empty!");
+        
     //Data-Join: Exit
     link.exit().remove();
 
@@ -340,7 +377,6 @@ var restartNodes = function () {//redrawing Nodes
         .transition().duration(500)
         .attr("r", function (d) { return radius * log2(d.frequency + 1); });
 
-
     node.select("text")
         .transition().duration(500)
         .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; });
@@ -348,7 +384,7 @@ var restartNodes = function () {//redrawing Nodes
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
         .attr("class", "node")
-        .attr("id", function (d) { return d.id; })
+        //.attr("id", function (d) { return d.id; })
         .on("dblclick", dblclick)
         .on("click", oneclick)
         .call(drag);
@@ -439,8 +475,12 @@ var updateLinkLabelName = function(inputText) //update label name for link
     selectedLinkObj.linkName = inputText;
     $(".inputText").css({ "visibility": "hidden" });
     selectedLinkObj = null;
+    selectedLink.classed("selected", false);
+    selectedLink = null;
     restartLabels();
-    console.log(inputText);
+    tick();
+    //restartLinks();
+    //console.log(inputText);
 };
 var delLinkandLabel = function ()//delete selected link and its label
 {
@@ -452,6 +492,7 @@ var delLinkandLabel = function ()//delete selected link and its label
             return;
         }
     });
+    updateLinkType(selectedLinkObj,false);
     selectedLinkObj = null;
     restartLabels();
     restartLinks();
@@ -478,6 +519,22 @@ var delNodeWithLink = function ()//delete seleced node and its associated links
     restartNodes();
     restartLinks();
     restartLabels();
+}
+var updateLinkType = function (targetedLink, isLinkAdded)
+{
+    links.forEach(function (linkValue, linkIndex) {
+        if (linkValue.source == targetedLink.target && linkValue.target == targetedLink.source)
+        {
+            if (isLinkAdded) {
+                linkValue.linkType = "Curve";
+                targetedLink.linkType = "Curve";
+            }
+            else
+                linkValue.linkType = "Line";
+
+            return;
+        }
+    });
 }
 //**************************************************************************
 //Keyboard event
