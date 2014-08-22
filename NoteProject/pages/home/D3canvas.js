@@ -248,7 +248,11 @@ function oneclick(d) {//one click node
             selectedNode.classed("connecting", selectedNodeObj.connecting = false);
             selectedNode.classed("connected", selectedNodeObj.connected = true);
 
-            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line" });
+            var linkIndex = 0;
+            if (links.length != 0)
+                linkIndex = ++links[links.length - 1].linkIndex;
+
+            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex":linkIndex});
             updateLinkType(links[links.length - 1], true);
             selectedNode = null;
             selectedNodeObj = null;
@@ -330,7 +334,7 @@ var restartLabels = function () { //redrawing Labels
     .attr("dy", -4)
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" })
     .append("textPath")
-    .attr("xlink:href", function (d) { return "#"+d.source.index; })
+    .attr("xlink:href", function (d) { return "#linkIndex"+d.linkIndex; })
     .attr("startOffset", "50%")
     .text(function (d) { return d.linkName });
 
@@ -351,7 +355,7 @@ var restartLinks = function() {//redrawing Links
     //Data-Join: Enter
     var enterLink = link.enter().insert("path", ".node")
         .attr("class", "link selected")
-        .attr("id", function (d) { return d.source.index; })
+        .attr("id", function (d) { return "linkIndex" + d.linkIndex; })
         .style('marker-end', 'url(#end-arrow)')
         .on("click", clickLink);
    
