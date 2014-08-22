@@ -24,12 +24,14 @@
     <!-- The content that will be loaded and displayed. -->
     <div class="fragment homepage">
         <header aria-label="Header content" role="banner">
-            <button data-win-control="WinJS.UI.BackButton"></button>
+            <!--<button data-win-control="WinJS.UI.BackButton"></button>-->
             <h1 class="titlearea win-type-ellipsis">
-                <span class="pagetitle">Welcome to NoteProject!</span>
+                <span class="pagetitle">Take Note</span>
             </h1>
-            <button id="testButton">Test</button>
         </header>
+        <div id="ButtonDiv">
+            <button id="Button" type="button">Mapping</button>
+        </div>
         <section aria-label="Main content" role="main">
             <div id="mainGrid">
                 <div id="contentGrid">
@@ -49,6 +51,11 @@
             <!-- A hyperlink to page2.html. -->
             <!--<p><a href="/pages/page2/page2.html">Go to page 2.</a></p>-->
         </section>
+    </div>
+    <div id="homeAppbar" data-win-control="WinJS.UI.AppBar">
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'delete', label:'Delete', icon:'delete', section:'global'}" type="button"></button>
     </div>
 </body>
 </html>

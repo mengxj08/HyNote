@@ -5,7 +5,7 @@
     <title>NoteProject</title>
 
     <!-- WinJS references -->
-    <link href="//Microsoft.WinJS.2.0/css/ui-dark.css" rel="stylesheet" />
+    <link href="//Microsoft.WinJS.2.0/css/ui-light.css" rel="stylesheet" />
     <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
 
@@ -20,15 +20,15 @@
     <div id="navbar" data-win-control="WinJS.UI.NavBar">
         <div id="globalNav" data-win-control="WinJS.UI.NavBarContainer">
             <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{
-                 label: 'Home',
-                 icon: WinJS.UI.AppBarIcon.home,
+                 label: 'New Note',
+                 icon: WinJS.UI.AppBarIcon.page,
                  location: '/pages/home/home.html',
                  splitButton: false
                  }">
             </div>
             <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{
-                 label: 'Page 2',
-                 icon: WinJS.UI.AppBarIcon.page,
+                 label: 'Review Note',
+                 icon: WinJS.UI.AppBarIcon.page2,
                  location: '/pages/page2/page2.html',
                  splitButton: false
                  }">
@@ -36,9 +36,6 @@
         </div>
     </div>
     <div id="contenthost" data-win-control="Application.PageControlNavigator" data-win-options="{home: '/pages/home/home.html'}"></div>
-    <!-- <div id="appbar" data-win-control="WinJS.UI.AppBar">
-        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'cmd', label:'Command', icon:'placeholder'}" type="button"></button>
-    </div> -->
 
 </body>
 </html>

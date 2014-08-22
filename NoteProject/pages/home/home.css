@@ -89,3 +89,19 @@ text {
 }
 
 .highlight { background-color: yellow }
+
+.win-appbar {
+    background-color: #DBDBFF;
+}
+
+#ButtonDiv {
+    width: 100%;
+    text-align:center;
+}
+
+#Button {
+    height:50px;
+    position:relative;
+    top: 80px;
+    font-size: 25px;
+}

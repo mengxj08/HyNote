@@ -2,7 +2,9 @@
     "use strict";
     var SampleComponent = new Component.SampleComponent();
     var resultJson;
-    
+    var winNavBar;
+    var winAppBar;
+
     var homePage = WinJS.UI.Pages.define("/pages/home/home.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
@@ -11,7 +13,7 @@
             //var ratingControlDiv = document.getElementById("ratingControlDiv");
 
             //var ratingControl = ratingControlDiv.winControl;
-
+ 
             //ratingControl.addEventListener("change", this.ratingChanged, false);
 
             //var helloButton = document.getElementById("helloButton");
@@ -21,11 +23,17 @@
             //nameInput.addEventListener("change", this.nameInputChanged, false);
 
             //WinJS.Utilities.query("a").listen("click", this.linkClickEventHandler, false);
-            
+            winNavBar = document.getElementById("navbar").winControl;
+            winAppBar = document.getElementById("homeAppbar").winControl;
+
+            element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
+            element.querySelector("#save").addEventListener("click", this.doClickSave, false);
+            element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
+
             var conceptShow = document.getElementById("conceptShow");
             var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
             
-            var testButton = document.getElementById("testButton");
+            var testButton = document.getElementById("Button");
             testButton.addEventListener("click", this.testButtonClicked, false);
 
  
@@ -72,6 +80,83 @@
         //nameInputChanged: function (eventInfo) {
         //    var nameInput = eventInfo.srcElement;
         //},
+
+        //AppBar Command button function
+        doClickOpen: function () {
+            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+            //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
+            openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
+            openPicker.fileTypeFilter.replaceAll([".json"]);
+            
+            openPicker.pickSingleFileAsync().then(function (file) {
+                if (file) {
+                    Windows.Storage.CachedFileManager.deferUpdates(file);
+                    Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
+                        var readJson = JSON.parse(contents);
+                        //console.log(readJson);
+                        var textShow = document.getElementById("textShow");
+                        textShow.innerText = readJson.text;
+                        nodes = readJson.node;
+                        links = readJson.link;
+                        linkstoNodes();
+
+                        force.nodes(nodes);
+                        force.links(links);
+                       
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                    });
+                }
+                else {
+                }
+            });
+
+            //WinJS.Navigation.navigate("/pages/home/home.html");
+        },
+
+        doClickSave: function () {
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
+            savePicker.fileTypeChoices.insert("Json", [".json"]);
+            savePicker.suggestedFileName = "New Document";
+
+            var textShow = document.getElementById("textShow");
+            var savedString = saveNoteToFile(textShow.innerText);
+            savePicker.pickSaveFileAsync().then(function (file) {
+               
+                if (file) {
+                    Windows.Storage.CachedFileManager.deferUpdates(file);
+                    // write to file
+                    Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
+                        Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
+                            if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
+                                //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
+                            } else {
+                                //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
+                            }
+                        });
+                    });
+                } else {
+                    //WinJS.log && WinJS.log("Operation cancelled.", "sample", "status");
+                }
+            });
+        },
+
+        doClickDelete: function () {
+            var textShow = document.getElementById("textShow");
+            textShow.innerText = "";
+            nodes = [];
+            links = [];
+            force.nodes(nodes);
+            force.links(links);
+            restartLinks();
+            restartLabels();
+            restartNodes();
+
+            winNavBar.hide();
+            winAppBar.hide();
+        },
 
         linkClickEventHandler: function (eventInfo) {
             eventInfo.preventDefault();

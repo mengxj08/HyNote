@@ -171,7 +171,7 @@ function dragstart(d) {//Start dragging node
     
     var highlightText = d.word;
     $("#textShow").highlight(highlightText,"highlight");
-    console.log("highlightText:" + highlightText);
+    //console.log("highlightText:" + highlightText);
 }
 function dragging(d)//drag node
 {
@@ -540,6 +540,22 @@ var updateLinkType = function (targetedLink, isLinkAdded)
         }
     });
 }
+var linkstoNodes = function () {
+    links.forEach(function (linkValue, linkIndex) {
+        nodes.forEach(function (nodeValue, nodeIndex) {
+            if (nodeValue.word == linkValue.source.word)
+            {
+                linkValue.source = nodeValue;
+                //console.log("link source == node");
+            }
+            else if (nodeValue.word == linkValue.target.word) {
+                linkValue.target = nodeValue;
+                //console.log("link target == node");
+            }
+            else { }
+        });
+    });
+};
 //**************************************************************************
 //Keyboard event
 function keyup() {
@@ -561,4 +577,13 @@ function keydown() {
             }
             break;
     }
+}
+//************************************************************************
+var saveNoteToFile = function (textContent)
+{
+    var savedString = {};
+    savedString.text = textContent;
+    savedString.node = nodes;
+    savedString.link = links;
+    return JSON.stringify(savedString);
 }

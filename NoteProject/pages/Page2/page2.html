@@ -12,14 +12,18 @@
 <body>
     <div class="page2 fragment">
         <header class="page-header" aria-label="Header content" role="banner">
-            <button class="back-button" data-win-control="WinJS.UI.BackButton"></button>
+            <!--<button class="back-button" data-win-control="WinJS.UI.BackButton"></button>-->
             <h1 class="titlearea win-type-ellipsis">
-                <span class="pagetitle">Welcome to page2</span>
+                <span class="pagetitle">Review Note</span>
             </h1>
         </header>
         <section class="page-section" aria-label="Main content" role="main">
             <p>Content goes here.</p>
         </section>
+    </div>
+    <div id="page2Appbar" data-win-control="WinJS.UI.AppBar">
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>
     </div>
 </body>
 </html>
