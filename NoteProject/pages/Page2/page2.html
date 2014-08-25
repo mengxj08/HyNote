@@ -8,6 +8,9 @@
     <link href="//Microsoft.WinJS.2.0/css/ui-light.css" rel="stylesheet" />
     <link href="page2.css" rel="stylesheet" />
     <script src="page2.js"></script>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/d3.min.js"></script>
+    <script src="D3canvas2.js"></script>
 </head>
 <body>
     <div class="page2 fragment">
@@ -18,12 +21,19 @@
             </h1>
         </header>
         <section class="page-section" aria-label="Main content" role="main">
-            <p>Content goes here.</p>
+            <div id="mainGrid2">
+                <div id="conceptShow2">
+                    <div id="keyWordMap2">
+                        <input type="text" class="inputText2" />
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     <div id="page2Appbar" data-win-control="WinJS.UI.AppBar">
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'delete', label:'Delete', icon:'delete', section:'global'}" type="button"></button>
     </div>
 </body>
 </html>

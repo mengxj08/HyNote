@@ -9,6 +9,7 @@
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
+    
             // TODO: Initialize the page here.
             //var ratingControlDiv = document.getElementById("ratingControlDiv");
 
@@ -158,11 +159,11 @@
             winAppBar.hide();
         },
 
-        linkClickEventHandler: function (eventInfo) {
-            eventInfo.preventDefault();
-            var link = eventInfo.target;
-            WinJS.Navigation.navigate(link.href);
-        },
+        //linkClickEventHandler: function (eventInfo) {
+        //    eventInfo.preventDefault();
+        //    var link = eventInfo.target;
+        //    WinJS.Navigation.navigate(link.href);
+        //},
 
         PassTextToParse: function () {
             console.log("passtextParse");

@@ -1,4 +1,5 @@
-﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container,graph;
+﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container;
+var graph;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
@@ -11,11 +12,10 @@ var translate = [0, 0];
 var scale = 1;
 
 var updateJsonData = function (jsonData) {
-    return JSON.parse(jsonData);  
+    return JSON.parse(jsonData);
 };
 
-var log2 = function (val)
-{
+var log2 = function (val) {
     return Math.log(val) / Math.LN2;
 };
 
@@ -31,8 +31,8 @@ var updateSize = function (updatwWidth, updateheight) {
     force.start();
 }
 
-var drawingD3 = function () {
-    console.log("D3-Canvas-1");
+var multiDrawingD3 = function () {
+    console.log("D3-Canvas-2");
     cleanCache();
     //width = 800;
     //height = 800;
@@ -57,14 +57,14 @@ var drawingD3 = function () {
         .scaleExtent([1, 10])
         .on("zoom", zoomed);
 
-    svg = d3.select("#keyWordMap").append("svg")
+    svg = d3.select("#keyWordMap2").append("svg")
         .attr("width", width)
         .attr("height", height)
         .call(zoom)
         .on("dblclick.zoom", null)
         .on("click", clickSVG);
-        //.on("click", clickLink);
-       
+    //.on("click", clickLink);
+
 
     svg.append('svg:defs').append('svg:marker')
         .attr('id', 'end-arrow')
@@ -77,7 +77,7 @@ var drawingD3 = function () {
             .attr('d', 'M0,-5L10,0L0,5')
             .attr('fill', '#000')
             .attr("stroke-width", "1px")
-            .attr("fill-opacity",0.8);
+            .attr("fill-opacity", 0.8);
 
     //svg.append('svg:defs').append('svg:marker')
     //    .attr('id', 'start-arrow')
@@ -96,11 +96,11 @@ var drawingD3 = function () {
     link = container.selectAll(".link");
     label = container.selectAll(".label");
 
-    //d3.select("#keyWordMap").append("input")
-    //.attr("class", "inputText")
+    //d3.select("#keyWordMap2").append("input")
+    //.attr("class", "inputText2")
     //.attr("type", "text");
 
-    tick = function() {
+    tick = function () {
         //link.attr("x1", function (d) { return d.source.x; })
         //    .attr("y1", function (d) { return d.source.y; })
         //    .attr("x2", function (d) { return d.target.x; })
@@ -124,11 +124,11 @@ var drawingD3 = function () {
                 targetX = d.target.x - (targetPadding * normX),
                 targetY = d.target.y - (targetPadding * normY);
 
-            if(d.linkType == "Curve")
+            if (d.linkType == "Curve")
                 return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
             else if (d.linkType == "Line")
                 return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
-            else { throw "No linkType Matched!";}
+            else { throw "No linkType Matched!"; }
         });
 
         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -137,23 +137,22 @@ var drawingD3 = function () {
         //label.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
         //     .attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
 
-        if (selectedLinkObj)
-        {
-            $(".inputText").css({
+        if (selectedLinkObj) {
+            $(".inputText2").css({
                 "left": ((selectedLinkObj.source.x + selectedLinkObj.target.x) / 2 + translate[0]) / scale, "top": ((selectedLinkObj.source.y + selectedLinkObj.target.y) / 2 + translate[1]) / scale, "visibility": "visible"
             });
-            $(".inputText").focus();
+            $(".inputText2").focus();
         }
     }
 
     force.on("tick", tick);
 
-    d3.select("#keyWordMap")
+    d3.select("#keyWordMap2")
     .on('keydown', keydown)
     .on('keyup', keyup);
 }
 function zoomed() {
-    $(".inputText").css({"visibility": "hidden" });
+    $(".inputText2").css({ "visibility": "hidden" });
     translate = d3.event.translate;
     //scale = d3.event.scale;
     container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -168,9 +167,9 @@ function dragstart(d) {//Start dragging node
     d3.select(this).classed("fixed", d.fixed = true);
     dragNodeObj = d3.select(this);
     clickOntoLinks = true;
-    
+
     var highlightText = d.word;
-    $("#textShow").highlight(highlightText,"highlight");
+    $("#textShow").highlight(highlightText, "highlight");
     //console.log("highlightText:" + highlightText);
 }
 function dragging(d)//drag node
@@ -190,14 +189,12 @@ function dragging(d)//drag node
     d.y = d3.event.y
 
     nodes.forEach(function (nodeValue, nodeIndex) {
-        if (nodeValue.fixed && nodeValue != d)
-        {
+        if (nodeValue.fixed && nodeValue != d) {
             var deltaX = d.x - nodeValue.x;
             var deltaY = d.y - nodeValue.y;
             var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             var sumRadius = log2(d.frequency + 1) * radius + log2(nodeValue.frequency + 1) * radius;
-            if (distance <= sumRadius)
-            {
+            if (distance <= sumRadius) {
                 console.log("Collision Detection");
                 d.px = oldPX;
                 d.py = oldPY;
@@ -221,7 +218,7 @@ function dblclick(d) {//double click node
     console.log("double click:" + d);
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
-    
+
 }
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
@@ -235,8 +232,7 @@ function oneclick(d) {//one click node
             if (selectedNodeObj == d) return; //Self-connected is not allowed
             var depulicatedConnect = false;
             links.forEach(function (linkValue, linkIndex) { // Depulicated connect is not allowed
-                if (linkValue.source == selectedNodeObj && linkValue.target == d)
-                {
+                if (linkValue.source == selectedNodeObj && linkValue.target == d) {
                     depulicatedConnect = true;
                     return; // it only exits the forEach function but not exits the parent function.
                 }
@@ -252,7 +248,7 @@ function oneclick(d) {//one click node
             if (links.length != 0)
                 linkIndex = ++links[links.length - 1].linkIndex;
 
-            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex":linkIndex});
+            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex": linkIndex });
             updateLinkType(links[links.length - 1], true);
             selectedNode = null;
             selectedNodeObj = null;
@@ -272,7 +268,7 @@ function oneclick(d) {//one click node
         selectedNodeObj = null;
     }
 }
-function clickLink (d) // one click link
+function clickLink(d) // one click link
 {
     clickOntoLinks = true;
     //var coordinates = [0, 0];
@@ -280,15 +276,14 @@ function clickLink (d) // one click link
     //var cursorX = coordinates[0];
     //var cursorY = coordinates[1];
 
-    if (d.linkName && d.linkName != "")
-    {
-        $(".inputText").val(d.linkName);
+    if (d.linkName && d.linkName != "") {
+        $(".inputText2").val(d.linkName);
         d.linkName = "";
         restartLabels();
     }
 
-    $(".inputText").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
-    $(".inputText").focus();
+    $(".inputText2").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
+    $(".inputText2").focus();
     selectedLinkObj = d;
     selectedLink = d3.select(this);
     selectedLink.classed("selected", true);
@@ -296,22 +291,20 @@ function clickLink (d) // one click link
     //console.log("d3.mouse.x:" + cursorX + " d3.mouse.y:" + cursorY);
     //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
 }
-function clickSVG(d)
-{
+function clickSVG(d) {
     if (clickOntoLinks) {
         clickOntoLinks = false;
     }
     else {
-        $(".inputText").css({ "visibility": "hidden" });
-        $(".inputText").val("");
+        $(".inputText2").css({ "visibility": "hidden" });
+        $(".inputText2").val("");
         selectedLinkObj = null;
-        if (selectedLink)
-        {
+        if (selectedLink) {
             selectedLink.classed("selected", false);
             tick();
         }
         selectedLink = null;
-    } 
+    }
 }
 //******************************************************************
 //Update the concept Name, links and labels of links
@@ -325,7 +318,7 @@ var restartLabels = function () { //redrawing Labels
     .text(function (d) { return d.linkName });
 
     //Data-Join: Enter
-    var enterLabel = label.enter().insert("text",".node")
+    var enterLabel = label.enter().insert("text", ".node")
     .attr("class", "label")
      //if without textPath, we need to set x y for path 
     //.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
@@ -334,7 +327,7 @@ var restartLabels = function () { //redrawing Labels
     .attr("dy", -4)
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" })
     .append("textPath")
-    .attr("xlink:href", function (d) { return "#linkIndex"+d.linkIndex; })
+    .attr("xlink:href", function (d) { return "#linkIndex" + d.linkIndex; })
     .attr("startOffset", "50%")
     .text(function (d) { return d.linkName });
 
@@ -343,7 +336,7 @@ var restartLabels = function () { //redrawing Labels
 
     //force.start();
 }
-var restartLinks = function() {//redrawing Links
+var restartLinks = function () {//redrawing Links
 
     console.log("linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
@@ -358,12 +351,12 @@ var restartLinks = function() {//redrawing Links
         .attr("id", function (d) { return "linkIndex" + d.linkIndex; })
         .style('marker-end', 'url(#end-arrow)')
         .on("click", clickLink);
-   
+
     if (enterLink)
         selectedLink = enterLink;
     else
         console.log("enter is empty!");
-        
+
     //Data-Join: Exit
     link.exit().remove();
 
@@ -420,83 +413,77 @@ var restartNodes = function () {//redrawing Nodes
     force.start();
 }
 
-var analyseNodes = function(jsonData) { //Analyse the textarea/jsonData and update Nodes 
-    graph = JSON.parse(jsonData);// Splat's JsonData to JsObject
-    console.log("graph:" + jsonData);
-    //Add new nodes and update the frequency of words
-    graph.nodes.forEach(function (graphValue, graphIndex) {
-        var sliceIndex = -1;
-        var sliceValue = null;
-        nodes.forEach(function (nodesValue, nodesIndex) {
-            if(nodesValue.word == graphValue.word)
-            {
-                if (nodesValue.frequency != graphValue.frequency) {
-                    nodesValue.frequency = graphValue.frequency;
-                    sliceIndex = nodesIndex;
-                    sliceValue = nodesValue;
-                }
-                else
-                    sliceIndex = null;
-            }
-        });
-        if (sliceIndex != null)
-        {
-            if (sliceIndex != -1) {
-                nodes.splice(sliceIndex, 1, sliceValue);
-            }
-            else
-            {
-                graphValue.id = nodes.length;
-                nodes.push(graphValue);
-            }
-        }
-    });
+//var analyseNodes = function (jsonData) { //Analyse the textarea/jsonData and update Nodes 
+//    graph = JSON.parse(jsonData);// Splat's JsonData to JsObject
+//    console.log("graph:" + jsonData);
+//    //Add new nodes and update the frequency of words
+//    graph.nodes.forEach(function (graphValue, graphIndex) {
+//        var sliceIndex = -1;
+//        var sliceValue = null;
+//        nodes.forEach(function (nodesValue, nodesIndex) {
+//            if (nodesValue.word == graphValue.word) {
+//                if (nodesValue.frequency != graphValue.frequency) {
+//                    nodesValue.frequency = graphValue.frequency;
+//                    sliceIndex = nodesIndex;
+//                    sliceValue = nodesValue;
+//                }
+//                else
+//                    sliceIndex = null;
+//            }
+//        });
+//        if (sliceIndex != null) {
+//            if (sliceIndex != -1) {
+//                nodes.splice(sliceIndex, 1, sliceValue);
+//            }
+//            else {
+//                graphValue.id = nodes.length;
+//                nodes.push(graphValue);
+//            }
+//        }
+//    });
 
-    //Delete out-of-view nodes
-    for (var i = 0; i < nodes.length; i++)
-    {
-        if(nodes[i].fixed || nodes[i].connecting || nodes[i].connected) continue;
+//    //Delete out-of-view nodes
+//    for (var i = 0; i < nodes.length; i++) {
+//        if (nodes[i].fixed || nodes[i].connecting || nodes[i].connected) continue;
 
-        var delFlag = true;
-        graph.nodes.forEach(function (graphValue, graphIndex) {
-            if (graphValue.word == nodes[i].word)
-            {
-                delFlag = false;
-            }
-        }); 
+//        var delFlag = true;
+//        graph.nodes.forEach(function (graphValue, graphIndex) {
+//            if (graphValue.word == nodes[i].word) {
+//                delFlag = false;
+//            }
+//        });
 
-        if (delFlag)
-        {
-            nodes.splice(i--, 1);
-        }
-    }
+//        if (delFlag) {
+//            nodes.splice(i--, 1);
+//        }
+//    }
 
-    restartNodes();
-}
+//    restartNodes();
+//}
 //****************************************************************************
-var updateLinkLabelName = function(inputText) //update label name for link
+var updateLinkLabelName = function (inputText2) //update label name for link
 {
-    selectedLinkObj.linkName = inputText;
-    $(".inputText").css({ "visibility": "hidden" });
+    selectedLinkObj.linkName = inputText2;
+    $(".inputText2").css({ "visibility": "hidden" });
     selectedLinkObj = null;
     selectedLink.classed("selected", false);
     selectedLink = null;
     restartLabels();
     tick();
     //restartLinks();
-    //console.log(inputText);
+    //console.log(inputText2);
 };
 var delLinkandLabel = function ()//delete selected link and its label
 {
-    $(".inputText").css({ "visibility": "hidden" });
-    $(".inputText").val("");
+    $(".inputText2").css({ "visibility": "hidden" });
+    $(".inputText2").val("");
     links.forEach(function (linkvalue, linkIndex) {
         if (linkvalue == selectedLinkObj) {
             links.splice(linkIndex, 1);
             return;
         }
     });
-    updateLinkType(selectedLinkObj,false);
+    updateLinkType(selectedLinkObj, false);
     selectedLinkObj = null;
     restartLabels();
     restartLinks();
@@ -504,15 +491,13 @@ var delLinkandLabel = function ()//delete selected link and its label
 var delNodeWithLink = function ()//delete seleced node and its associated links
 {
     nodes.forEach(function (nodeValue, nodeIndex) {
-        if (nodeValue == selectedNodeObj)
-        {
+        if (nodeValue == selectedNodeObj) {
             nodes.splice(nodeIndex, 1);
             return;
         }
     });
 
-    for (var i = 0; i < links.length; i++)
-    {
+    for (var i = 0; i < links.length; i++) {
         if (links[i].source == selectedNodeObj || links[i].target == selectedNodeObj)
             links.splice(i--, 1);
     }
@@ -524,11 +509,9 @@ var delNodeWithLink = function ()//delete seleced node and its associated links
     restartLinks();
     restartLabels();
 }
-var updateLinkType = function (targetedLink, isLinkAdded)
-{
+var updateLinkType = function (targetedLink, isLinkAdded) {
     links.forEach(function (linkValue, linkIndex) {
-        if (linkValue.source == targetedLink.target && linkValue.target == targetedLink.source)
-        {
+        if (linkValue.source == targetedLink.target && linkValue.target == targetedLink.source) {
             if (isLinkAdded) {
                 linkValue.linkType = "Curve";
                 targetedLink.linkType = "Curve";
@@ -543,8 +526,7 @@ var updateLinkType = function (targetedLink, isLinkAdded)
 var linkstoNodes = function () {
     links.forEach(function (linkValue, linkIndex) {
         nodes.forEach(function (nodeValue, nodeIndex) {
-            if (nodeValue.word == linkValue.source.word)
-            {
+            if (nodeValue.word == linkValue.source.word) {
                 linkValue.source = nodeValue;
                 //console.log("link source == node");
             }
@@ -567,26 +549,24 @@ function keydown() {
     if (!selectedLinkObj && !selectedNodeObj) return;
     switch (d3.event.keyCode) {
         case 46: //delete
-            if (selectedLinkObj)
-            {
+            if (selectedLinkObj) {
                 delLinkandLabel();
             }
-            if (selectedNodeObj)
-            {
+            if (selectedNodeObj) {
                 delNodeWithLink();
             }
             break;
     }
 }
 //************************************************************************
-var saveNoteToFile = function (textContent)
-{
+var saveNoteToFile = function (textContent) {
     var savedString = {};
     savedString.text = textContent;
     savedString.node = nodes;
     savedString.link = links;
     return JSON.stringify(savedString);
 }
+
 var cleanCache = function () {
     count = 0;
     selectedNode = null;

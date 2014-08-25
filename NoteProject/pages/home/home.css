@@ -28,14 +28,14 @@
 #keyWordMap {
     width: 100%;
     -ms-overflow-style: none;
-    height: 75vh;
+    height: 80vh;
 }
 
 #textShow {
     -ms-grid-column: 2;
     margin-left: 20px; 
     width: auto;
-    height: 75vh;
+    height: 80vh;
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
     background-color: white;
@@ -84,8 +84,8 @@ text {
   visibility: hidden;
   position:absolute;
   max-width: 150px;
-  left: 300px;
-  top:  300px;
+  left: 0px;
+  top:  0px;
 }
 
 .highlight { background-color: yellow }
