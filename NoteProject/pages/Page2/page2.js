@@ -10,7 +10,7 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             winNavBar = document.getElementById("navbar").winControl;
-            winAppBar = document.getElementById("homeAppbar").winControl;
+            winAppBar = document.getElementById("page2Appbar").winControl;
 
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
@@ -18,7 +18,7 @@
 
             width = $("#conceptShow2").width();
             height = $("#conceptShow2").height();
-            //drawingD3();
+
             multiDrawingD3();
 
             $(".inputText2").keyup(function (e) {
@@ -43,19 +43,32 @@
                     Windows.Storage.CachedFileManager.deferUpdates(file);
                     Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
                         var readJson = JSON.parse(contents);
-                        console.log("readJson");
+                        console.log("readJson:");
                         //var textShow = document.getElementById("textShow");
                         //textShow.innerText = readJson.text;
-                        nodes = readJson.node;
-                        links = readJson.link;
-                        linkstoNodes();
+                        if(!nodes)//First add elements to Nodes
+                        {
+                            console.log("First add elements to Nodes");
+                            nodes = readJson.node;
+                            links = readJson.link;
+                            linkstoNodes();
 
-                        force.nodes(nodes);
-                        force.links(links);
+                            force.nodes(nodes);
+                            force.links(links);
 
-                        restartNodes();
-                        restartLinks();
-                        restartLabels();
+                            restartNodes();
+                            restartLinks();
+                            restartLabels();
+                        }
+                        else {//Merge new added nodes with existing nodes
+                            console.log("Merge new added nodes with existing nodes");
+                            mergeNodesAndLinks(readJson.node, readJson.link);
+                            linkstoNodes();
+
+                            restartNodes();
+                            restartLinks();
+                            restartLabels();
+                        }
                     });
                 }
                 else {

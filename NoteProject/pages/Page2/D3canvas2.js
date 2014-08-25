@@ -179,14 +179,14 @@ function dragging(d)//drag node
         oldX = d.x,
         oldY = d.y;
     //if we donot need nodes across
-    //d.px += d3.event.dx;
-    //d.py += d3.event.dy;
-    //d.x += d3.event.dx;
-    //d.y += d3.event.dy;
-    d.px = d3.event.x;
-    d.py = d3.event.y;
-    d.x = d3.event.x;
-    d.y = d3.event.y
+    d.px += d3.event.dx;
+    d.py += d3.event.dy;
+    d.x += d3.event.dx;
+    d.y += d3.event.dy;
+    //d.px = d3.event.x;
+    //d.py = d3.event.y;
+    //d.x = d3.event.x;
+    //d.y = d3.event.y
 
     nodes.forEach(function (nodeValue, nodeIndex) {
         if (nodeValue.fixed && nodeValue != d) {
@@ -526,11 +526,11 @@ var updateLinkType = function (targetedLink, isLinkAdded) {
 var linkstoNodes = function () {
     links.forEach(function (linkValue, linkIndex) {
         nodes.forEach(function (nodeValue, nodeIndex) {
-            if (nodeValue.word == linkValue.source.word) {
+            if (nodeValue.word.toUpperCase() == linkValue.source.word.toUpperCase()) {
                 linkValue.source = nodeValue;
                 //console.log("link source == node");
             }
-            else if (nodeValue.word == linkValue.target.word) {
+            else if (nodeValue.word.toUpperCase() == linkValue.target.word.toUpperCase()) {
                 linkValue.target = nodeValue;
                 //console.log("link target == node");
             }
@@ -578,4 +578,41 @@ var cleanCache = function () {
     clickOntoLinks = false;
     translate = [0, 0];
     scale = 1;
+}
+//************************************************************************
+var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
+    var nodeCount = nodes.length;
+    mergeNodes.forEach(function (mergeNodeValue, mergeNodeIndex) {
+        var pushtoNodes = true;
+        for (var i = 0; i < nodeCount; i++)
+        {
+            if (mergeNodeValue.word.toUpperCase() == nodes[i].word.toUpperCase())
+            {
+                nodes[i].frequency++;
+                pushtoNodes = false;
+                break;
+            }
+        }
+        if (pushtoNodes)
+            nodes.push(mergeNodeValue);
+    });
+
+    var linkCount = links.length;
+    var addIndex = linkCount;
+    mergeLinks.forEach(function (mergeLinkValue, mergeLinkIndex) {
+        var pushtoLinks = true;
+        for (var i = 0; i < linkCount; i++)
+        {
+            if (mergeLinkValue.source.word.toUpperCase() == links[i].source.word.toUpperCase() && mergeLinkValue.target.word.toUpperCase() == links[i].target.word.toUpperCase())
+            {
+                pushtoLinks = false;
+                break;
+            }
+        }
+        if (pushtoLinks)
+        {
+            mergeLinkValue.linkIndex = addIndex++;
+            links.push(mergeLinkValue);
+        }
+    });
 }

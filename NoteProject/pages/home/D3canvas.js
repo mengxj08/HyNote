@@ -180,14 +180,14 @@ function dragging(d)//drag node
         oldX = d.x,
         oldY = d.y;
     //if we donot need nodes across
-    //d.px += d3.event.dx;
-    //d.py += d3.event.dy;
-    //d.x += d3.event.dx;
-    //d.y += d3.event.dy;
-    d.px = d3.event.x;
-    d.py = d3.event.y;
-    d.x = d3.event.x;
-    d.y = d3.event.y
+    d.px += d3.event.dx;
+    d.py += d3.event.dy;
+    d.x += d3.event.dx;
+    d.y += d3.event.dy;
+    //d.px = d3.event.x;
+    //d.py = d3.event.y;
+    //d.x = d3.event.x;
+    //d.y = d3.event.y
 
     nodes.forEach(function (nodeValue, nodeIndex) {
         if (nodeValue.fixed && nodeValue != d)
