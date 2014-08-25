@@ -9,6 +9,7 @@ var radius = 30;   // base radius for circle
 var clickOntoLinks = false;
 var translate = [0, 0];
 var scale = 1;
+var newAddedClickLink = false;
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);  
@@ -253,6 +254,7 @@ function oneclick(d) {//one click node
                 linkIndex = ++links[links.length - 1].linkIndex;
 
             links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex":linkIndex});
+            newAddedClickLink = true;
             updateLinkType(links[links.length - 1], true);
             selectedNode = null;
             selectedNodeObj = null;
@@ -354,15 +356,16 @@ var restartLinks = function() {//redrawing Links
 
     //Data-Join: Enter
     var enterLink = link.enter().insert("path", ".node")
-        .attr("class", "link selected")
+        .attr("class", "link")
         .attr("id", function (d) { return "linkIndex" + d.linkIndex; })
         .style('marker-end', 'url(#end-arrow)')
         .on("click", clickLink);
    
-    if (enterLink)
+    if (newAddedClickLink) {
         selectedLink = enterLink;
-    else
-        console.log("enter is empty!");
+        enterLink.attr("class", "link selected");
+        newAddedClickLink = false;
+    }
         
     //Data-Join: Exit
     link.exit().remove();

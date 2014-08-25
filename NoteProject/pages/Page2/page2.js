@@ -44,31 +44,37 @@
                     Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
                         var readJson = JSON.parse(contents);
                         console.log("readJson:");
-                        //var textShow = document.getElementById("textShow");
-                        //textShow.innerText = readJson.text;
-                        if(!nodes)//First add elements to Nodes
-                        {
-                            console.log("First add elements to Nodes");
-                            nodes = readJson.node;
-                            links = readJson.link;
-                            linkstoNodes();
+                        
+                        mergeNodesAndLinks(readJson.node, readJson.link);
+                        linkstoNodes();
 
-                            force.nodes(nodes);
-                            force.links(links);
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
 
-                            restartNodes();
-                            restartLinks();
-                            restartLabels();
-                        }
-                        else {//Merge new added nodes with existing nodes
-                            console.log("Merge new added nodes with existing nodes");
-                            mergeNodesAndLinks(readJson.node, readJson.link);
-                            linkstoNodes();
+                        //if(!nodes)//First add elements to Nodes
+                        //{
+                        //    console.log("First add elements to Nodes");
+                        //    nodes = readJson.node;
+                        //    links = readJson.link;
+                        //    linkstoNodes();
 
-                            restartNodes();
-                            restartLinks();
-                            restartLabels();
-                        }
+                        //    force.nodes(nodes);
+                        //    force.links(links);
+
+                        //    restartNodes();
+                        //    restartLinks();
+                        //    restartLabels();
+                        //}
+                        //else {//Merge new added nodes with existing nodes
+                        //    console.log("Merge new added nodes with existing nodes");
+                        //    mergeNodesAndLinks(readJson.node, readJson.link);
+                        //    linkstoNodes();
+
+                        //    restartNodes();
+                        //    restartLinks();
+                        //    restartLabels();
+                        //}
                     });
                 }
                 else {
