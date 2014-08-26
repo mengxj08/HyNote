@@ -620,3 +620,32 @@ var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
         }
     });
 }
+
+var removeNodesAndLinks = function (removeNodes, removeLinks) {
+    for(var i = 0; i < nodes.length; i++){
+        var spliceNode = false;
+
+        var nodeValue = nodes[i];
+        removeNodes.forEach(function (removeNodeObj, removeNodeLink) {
+            if (nodeValue.word.toUpperCase() == removeNodeObj.word.toUpperCase()) {
+                if (nodeValue.frequency == removeNodeObj.frequency) {
+                    spliceNode = true;
+                }
+                else if (nodeValue.frequency > removeNodeObj.frequency) {
+                    nodeValue.frequency = nodeValue.frequency - removeNodeObj.frequency;
+                }
+                else { }
+                return;
+            }
+        });
+    
+        if (spliceNode) nodes.splice(i--,1);
+    }
+
+    for(var i = 0; i < links.length; i++){
+        if (nodes.indexOf(links[i].source) == -1 || nodes.indexOf(links[i].target) == -1)
+        {
+            links.splice(i--,1);
+        }
+    }
+}

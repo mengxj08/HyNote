@@ -15,6 +15,7 @@
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
+            element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
 
             width = $("#conceptShow2").width();
             height = $("#conceptShow2").height();
@@ -124,6 +125,56 @@
 
             winNavBar.hide();
             winAppBar.hide();
+        },
+
+        doClickRemove: function () {
+            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+            //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
+            openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
+            openPicker.fileTypeFilter.replaceAll([".json"]);
+
+            openPicker.pickSingleFileAsync().then(function (file) {
+                if (file) {
+                    Windows.Storage.CachedFileManager.deferUpdates(file);
+                    Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
+                        var readJson = JSON.parse(contents);
+                        console.log("readJson:");
+
+                        removeNodesAndLinks(readJson.node, readJson.link);
+                        //linkstoNodes();
+
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+
+                        //if(!nodes)//First add elements to Nodes
+                        //{
+                        //    console.log("First add elements to Nodes");
+                        //    nodes = readJson.node;
+                        //    links = readJson.link;
+                        //    linkstoNodes();
+
+                        //    force.nodes(nodes);
+                        //    force.links(links);
+
+                        //    restartNodes();
+                        //    restartLinks();
+                        //    restartLabels();
+                        //}
+                        //else {//Merge new added nodes with existing nodes
+                        //    console.log("Merge new added nodes with existing nodes");
+                        //    mergeNodesAndLinks(readJson.node, readJson.link);
+                        //    linkstoNodes();
+
+                        //    restartNodes();
+                        //    restartLinks();
+                        //    restartLabels();
+                        //}
+                    });
+                }
+                else {
+                }
+            });
         },
 
         unload: function () {
