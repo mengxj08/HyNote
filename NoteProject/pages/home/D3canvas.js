@@ -219,13 +219,19 @@ function dragend(d)//end dragging node
 function dblclick(d) {//double click node
     if (d3.event.defaultPrevented) return;
 
-    console.log("double click:" + d);
+    console.log("double click node");
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
     
+    if (d == selectedNodeObj) {
+        selectedNodeObj = null;
+        selectedNode = null;
+    }
 }
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
+
+    console.log("click node");
     if (d.fixed && !d.connecting) {
         if (!selectedNode) {
             selectedNode = d3.select(this);
@@ -449,7 +455,7 @@ var analyseNodes = function(jsonData) { //Analyse the textarea/jsonData and upda
             }
             else
             {
-                graphValue.id = nodes.length;
+                //graphValue.id = nodes.length;
                 nodes.push(graphValue);
             }
         }
@@ -491,8 +497,6 @@ var updateLinkLabelName = function(inputText) //update label name for link
 };
 var delLinkandLabel = function ()//delete selected link and its label
 {
-    $(".inputText").css({ "visibility": "hidden" });
-    $(".inputText").val("");
     links.forEach(function (linkvalue, linkIndex) {
         if (linkvalue == selectedLinkObj) {
             links.splice(linkIndex, 1);

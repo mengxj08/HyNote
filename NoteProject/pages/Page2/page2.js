@@ -26,8 +26,18 @@
                 if (e.keyCode == 13) {
                     // Do something
                     var inputText = $(".inputText2").val();
+                    inputText = inputText.trim();
                     console.log(inputText);
-                    updateLinkLabelName(inputText);
+                    if (selectedLinkObj) {
+                        updateLinkLabelName(inputText);
+                    }
+                    else if (selectedNodeObj)
+                    {
+                        updateNodeWord(inputText);
+                    }
+                    else { console.log("No update while type enter in inputText.");}
+                    
+                    $(".inputText2").css({ "visibility": "hidden" });
                     $(".inputText2").val("");
                 }
             });

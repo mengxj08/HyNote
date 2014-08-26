@@ -11,6 +11,7 @@ var clickOntoLinks = false;
 var translate = [0, 0];
 var scale = 1;
 var newAddedClickLink = false;
+var doubleClickNode = false;
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);
@@ -63,7 +64,8 @@ var multiDrawingD3 = function () {
         .attr("height", height)
         .call(zoom)
         .on("dblclick.zoom", null)
-        .on("click", clickSVG);
+        .on("click", clickSVG)
+        .on("dblclick", dblclickSVG);
     //.on("click", clickLink);
 
 
@@ -216,14 +218,31 @@ function dragend(d)//end dragging node
 function dblclick(d) {//double click node
     if (d3.event.defaultPrevented) return;
 
-    console.log("double click:" + d);
+    console.log("double click node");
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
 
+    if (d == selectedNodeObj) {
+        selectedNodeObj = null;
+        selectedNode = null;
+    }
+
+    doubleClickNode = true;
 }
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
+
+    console.log("click node");
     if (d.fixed && !d.connecting) {
+        $(".inputText2").css({ "visibility": "hidden" });
+        $(".inputText2").val("");
+        selectedLinkObj = null;
+        if (selectedLink) {
+            selectedLink.classed("selected", false);
+            tick();
+        }
+        selectedLink = null;
+
         if (!selectedNode) {
             selectedNode = d3.select(this);
             selectedNodeObj = d;
@@ -294,6 +313,7 @@ function clickLink(d) // one click link
     //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
 }
 function clickSVG(d) {
+    console.log("clickSVG");
     if (clickOntoLinks) {
         clickOntoLinks = false;
     }
@@ -306,6 +326,31 @@ function clickSVG(d) {
             tick();
         }
         selectedLink = null;
+    }
+}
+//This function is to add blank node for user
+function dblclickSVG(d) {
+    //selectedNodeObj = null;
+    //if (selectedNode)
+    //{
+    //    selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+    //    selectedNode = null;
+    //}
+    if (doubleClickNode)
+    {
+        doubleClickNode = false;
+        return;
+    }
+    console.log("double clickSVG");
+    var addNewNode = true;
+    nodes.forEach(function (nodeValue, nodeIndex) {
+        if (nodeValue.word == "")
+            addNewNode = false;
+    });
+    if (addNewNode)
+    {
+        nodes.push({ "word": "", "frequency": 1, "x": d3.event.x, "y": d3.event.y, "dx": d3.event.x, "dy": d3.event.y });
+        restartNodes();
     }
 }
 //******************************************************************
@@ -465,10 +510,43 @@ var restartNodes = function () {//redrawing Nodes
 //    restartNodes();
 //}
 //****************************************************************************
+var updateNodeWord = function (inputText2)//Update Node word for Nodes
+{
+    var selectedNodeIndex = nodes.indexOf(selectedNodeObj);
+    nodes.splice(selectedNodeIndex, 1);
+    var newAddNode = null;
+    nodes.forEach(function (nodeValue, nodeIndex) {
+        if (nodeValue.word.toUpperCase() == inputText2.toUpperCase())
+        {
+            newAddNode = nodeValue;
+        }
+    });
+    if (!newAddNode) {
+        newAddNode = JSON.parse(JSON.stringify(selectedNodeObj));
+        newAddNode.word = inputText2;
+        nodes.push(newAddNode);
+    }
+    else {
+        newAddNode.frequency += selectedNodeObj.frequency;
+    }
+
+    links.forEach(function (linkValue, linkIndex) {
+        if (linkValue.source == selectedNodeObj)
+            linkValue.source = newAddNode;
+        else if (linkValue.target == selectedNodeObj)
+            linkValue.target = newAddNode;
+        else { }
+    });
+
+    selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+    selectedNodeObj = null;
+    selectedNode = null;
+    restartNodes();
+}
 var updateLinkLabelName = function (inputText2) //update label name for link
 {
     selectedLinkObj.linkName = inputText2;
-    $(".inputText2").css({ "visibility": "hidden" });
+
     selectedLinkObj = null;
     selectedLink.classed("selected", false);
     selectedLink = null;
@@ -545,6 +623,17 @@ var linkstoNodes = function () {
 //**************************************************************************
 //Keyboard event
 function keyup() {
+    if (selectedLinkObj || !selectedNodeObj) return;
+    switch (d3.event.keyCode) {
+        case 69: //Edit
+            if (selectedNodeObj) {
+                $(".inputText2").css({
+                    "left": selectedNodeObj.x + translate[0], "top": selectedNodeObj.y + translate[1], "visibility": "visible"
+                });
+                $(".inputText2").focus();
+            }
+            break;
+    }
 }
 
 function keydown() {

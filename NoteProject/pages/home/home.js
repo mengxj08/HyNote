@@ -60,9 +60,11 @@
                 if (e.keyCode == 13) {
                     // Do something
                     var inputText = $(".inputText").val();
+                    inputText = inputText.trim();
                     console.log(inputText);
                     updateLinkLabelName(inputText);
                     $(".inputText").val("");
+                    $(".inputText").css({ "visibility": "hidden" });
                 }
             });
         },
