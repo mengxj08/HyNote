@@ -17,6 +17,17 @@
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
             element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
 
+            this.dataBindingProcess();
+
+            var viewListView = element.querySelector("#viewListView").winControl;
+            viewListView.layout.orientation = "vertical";
+
+            //while (DataExample.itemList.length > 0)
+            //{
+            //    DataExample.itemList.pop();
+            //}
+
+
             width = $("#conceptShow2").width();
             height = $("#conceptShow2").height();
 
@@ -63,6 +74,9 @@
                         restartLinks();
                         restartLabels();
 
+                        var dateString = file.dateCreated.toString();
+                        dateString = dateString.slice(0, dateString.indexOf("(")).trim();
+                        DataExample.itemList.push({ title: file.name, text: dateString, data: contents });
                         //if(!nodes)//First add elements to Nodes
                         //{
                         //    console.log("First add elements to Nodes");
@@ -135,6 +149,8 @@
 
             winNavBar.hide();
             winAppBar.hide();
+
+            DataExample.itemList.push({ title: "Banana blast111", text: "Ice cream11" });
         },
 
         doClickRemove: function () {
@@ -187,14 +203,37 @@
             });
         },
 
+        dataBindingProcess: function () {
+            var viewListView = document.getElementById("viewListView").winControl;
+
+            var dataArray = [
+                //{ title: "Basic banana", text: "Low-fat frozen yogurt", data:"test"},
+                //{ title: "Banana blast", text: "Ice cream", data: "test" },
+            ];
+
+            var itemList = new WinJS.Binding.List(dataArray);
+
+            // Create a namespace to make the data publicly accessible. 
+            var publicMembers =
+                {
+                    itemList: itemList
+                };
+            WinJS.Namespace.define("DataExample", publicMembers);
+
+            viewListView.itemDataSource = DataExample.itemList.dataSource;
+        },
+
         unload: function () {
             // TODO: Respond to navigations away from this page.
         },
 
-        updateLayout: function (element) {
+        updateLayout: function (element, viewState, lastViewState) {
             /// <param name="element" domElement="true" />
 
             // TODO: Respond to changes in layout.
+            var viewListView = element.querySelector("#viewListView").winControl;
+            viewListView.layout.orientation = "vertical";
+
         }
     });
 })();

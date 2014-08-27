@@ -5,8 +5,11 @@
 #mainGrid2 {
     margin: 20px 20px 0px 40px;
     height:100%;
+    display: -ms-grid;
+    -ms-grid-columns: 9fr 1fr;
 }
 #conceptShow2 {
+    -ms-grid-column: 1;
     width: auto;
     height: 80vh; 
     margin-right: 20px; 
@@ -27,3 +30,24 @@
   left: 0px;
   top:  0px;
 }
+.win-listview 
+{
+    -ms-grid-column: 2;
+    width: auto;
+    height: 80vh; 
+    border: solid 2px darkgray;
+}
+.ListItemTemplate {
+    width: auto;
+    height: 70px;
+    padding:10px;
+    overflow:hidden;
+}
+.ListItemTemplate-Detail {
+    height: 70px;
+}
+
+/*.win-listview .win-container {
+    margin-left:20px;
+    margin-bottom:10px;
+}*/
