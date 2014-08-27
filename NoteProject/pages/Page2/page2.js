@@ -76,7 +76,7 @@
 
                         var dateString = file.dateCreated.toString();
                         dateString = dateString.slice(0, dateString.indexOf("(")).trim();
-                        DataExample.itemList.push({ title: file.name, text: dateString, data: contents });
+                        DataExample.itemList.push({ "title": file.name, "text": dateString, "data": contents });
                         //if(!nodes)//First add elements to Nodes
                         //{
                         //    console.log("First add elements to Nodes");
@@ -150,57 +150,96 @@
             winNavBar.hide();
             winAppBar.hide();
 
-            DataExample.itemList.push({ title: "Banana blast111", text: "Ice cream11" });
+            DataExample.itemList.push({ "title": "Banana blast111", "text": "Ice cream11", "data":"123"});
         },
 
         doClickRemove: function () {
-            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-            //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
-            openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
-            openPicker.fileTypeFilter.replaceAll([".json"]);
+            var viewListView = document.getElementById("viewListView").winControl;
+            if (viewListView.selection.count() == 0) {
+                //No selected items
+            }
+            else {
+                viewListView.selection.getItems().done(function (selectedDataSource) {
+                    var contents = selectedDataSource[0].data.data.toString();
+                    var fileTitle = selectedDataSource[0].data.title.toString();
+                    //console.log(contents);
+                    viewListView.selection.clear();
 
-            openPicker.pickSingleFileAsync().then(function (file) {
-                if (file) {
-                    Windows.Storage.CachedFileManager.deferUpdates(file);
-                    Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
-                        var readJson = JSON.parse(contents);
-                        console.log("readJson:");
-
-                        removeNodesAndLinks(readJson.node, readJson.link);
-                        //linkstoNodes();
-
-                        restartNodes();
-                        restartLinks();
-                        restartLabels();
-
-                        //if(!nodes)//First add elements to Nodes
-                        //{
-                        //    console.log("First add elements to Nodes");
-                        //    nodes = readJson.node;
-                        //    links = readJson.link;
-                        //    linkstoNodes();
-
-                        //    force.nodes(nodes);
-                        //    force.links(links);
-
-                        //    restartNodes();
-                        //    restartLinks();
-                        //    restartLabels();
-                        //}
-                        //else {//Merge new added nodes with existing nodes
-                        //    console.log("Merge new added nodes with existing nodes");
-                        //    mergeNodesAndLinks(readJson.node, readJson.link);
-                        //    linkstoNodes();
-
-                        //    restartNodes();
-                        //    restartLinks();
-                        //    restartLabels();
-                        //}
+                    DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                        if (itemValue.title == fileTitle)
+                        {
+                            DataExample.itemList.splice(itemIndex, 1);
+                            return;
+                        }
                     });
-                }
-                else {
-                }
-            });
+                    //for (var i = 0; i < DataExample.itemList.length; i++)
+                    //{
+                    //    if (DataExample.itemList.getAt(i).title == fileTitle)
+                    //    {
+                    //        DataExample.itemList.splice(i--, 1);
+                    //        break;
+                    //    }
+                    //}
+                    
+                    var readJson = JSON.parse(contents);
+                    removeNodesAndLinks(readJson.node, readJson.link);
+                    //linkstoNodes();
+
+                    restartNodes();
+                    restartLinks();
+                    restartLabels();
+                });
+            }
+
+            winNavBar.hide();
+            winAppBar.hide();
+            //var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+            ////openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
+            //openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
+            //openPicker.fileTypeFilter.replaceAll([".json"]);
+
+            //openPicker.pickSingleFileAsync().then(function (file) {
+            //    if (file) {
+            //        Windows.Storage.CachedFileManager.deferUpdates(file);
+            //        Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
+            //            var readJson = JSON.parse(contents);
+            //            console.log("readJson:");
+
+            //            removeNodesAndLinks(readJson.node, readJson.link);
+            //            //linkstoNodes();
+
+            //            restartNodes();
+            //            restartLinks();
+            //            restartLabels();
+
+            //            //if(!nodes)//First add elements to Nodes
+            //            //{
+            //            //    console.log("First add elements to Nodes");
+            //            //    nodes = readJson.node;
+            //            //    links = readJson.link;
+            //            //    linkstoNodes();
+
+            //            //    force.nodes(nodes);
+            //            //    force.links(links);
+
+            //            //    restartNodes();
+            //            //    restartLinks();
+            //            //    restartLabels();
+            //            //}
+            //            //else {//Merge new added nodes with existing nodes
+            //            //    console.log("Merge new added nodes with existing nodes");
+            //            //    mergeNodesAndLinks(readJson.node, readJson.link);
+            //            //    linkstoNodes();
+
+            //            //    restartNodes();
+            //            //    restartLinks();
+            //            //    restartLabels();
+            //            //}
+            //        });
+            //    }
+            //    else {
+            //    }
+            //});
         },
 
         dataBindingProcess: function () {

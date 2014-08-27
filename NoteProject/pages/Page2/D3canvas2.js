@@ -681,7 +681,7 @@ var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
         {
             if (mergeNodeValue.word.toUpperCase() == nodes[i].word.toUpperCase())
             {
-                nodes[i].frequency++;
+                nodes[i].frequency += mergeNodeValue.frequency;
                 pushtoNodes = false;
                 break;
             }
@@ -723,7 +723,9 @@ var removeNodesAndLinks = function (removeNodes, removeLinks) {
                 else if (nodeValue.frequency > removeNodeObj.frequency) {
                     nodeValue.frequency = nodeValue.frequency - removeNodeObj.frequency;
                 }
-                else { }
+                else {//This case should not happen.
+                    spliceNode = true;
+                }
                 return;
             }
         });
