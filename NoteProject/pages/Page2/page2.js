@@ -149,8 +149,6 @@
 
             winNavBar.hide();
             winAppBar.hide();
-
-            DataExample.itemList.push({ "title": "Banana blast111", "text": "Ice cream11", "data":"123"});
         },
 
         doClickRemove: function () {

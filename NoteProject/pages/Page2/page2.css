@@ -1,9 +1,5 @@
-﻿.homepage section[role=main] {
-    margin-left: 120px;
-    margin-right: 120px;
-}
-#mainGrid2 {
-    margin: 20px 20px 0px 40px;
+﻿#mainGrid2 {
+    margin: 20px 20px 0px 20px;
     height:100%;
     display: -ms-grid;
     -ms-grid-columns: 9fr 1fr;

@@ -1,7 +1,7 @@
-﻿.homepage section[role=main] {
+﻿/*.homepage section[role=main] {
     margin-left: 120px;
     margin-right: 120px;
-}
+}*/
 
 #mainGrid {
     margin: 20px 20px 0px 20px;
@@ -28,14 +28,14 @@
 #keyWordMap {
     width: 100%;
     -ms-overflow-style: none;
-    height: 80vh;
+    height: 79vh;
 }
 
 #textShow {
     -ms-grid-column: 2;
     margin-left: 20px; 
     width: auto;
-    height: 80vh;
+    height: 79vh;
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
     background-color: white;
