@@ -313,7 +313,7 @@ function clickLink(d) // one click link
     //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
 }
 function clickSVG(d) {
-    console.log("clickSVG");
+    console.log("clickSVG" + d3.event.scale);
     if (clickOntoLinks) {
         clickOntoLinks = false;
     }
@@ -538,7 +538,14 @@ var updateNodeWord = function (inputText2)//Update Node word for Nodes
         else { }
     });
 
-    selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+    newAddNode.fixed = false;
+    newAddNode.connecting = false;
+    newAddNode.connected = false;
+    /*
+    This part needs update if we set state/style for connected node.
+    */
+    //selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+    //selectedNode.classed("fixed", selectedNodeObj.fixed = false);
     selectedNodeObj = null;
     selectedNode = null;
     restartNodes();

@@ -21,6 +21,16 @@
 
             nav.history = app.sessionState.history || {};
             nav.history.current.initialPlaceholder = true;
+            nav.addEventListener("beforenavigate", function (eventObject) {
+                console.log(eventObject);
+                if (eventObject.detail.location == nav.location) {
+                    eventObject.detail.setPromise(WinJS.Promise.wrap(true));
+ 
+                }
+                else {
+                    eventObject.detail.setPromise(WinJS.Promise.wrap(false));
+                }
+            });
 
             // Optimize the load of the application and while the splash screen is shown, execute high priority scheduled work.
             ui.disableAnimations();

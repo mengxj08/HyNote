@@ -33,7 +33,7 @@ namespace Component
     {
         //public int ID { get; set; }
         public string word { get; set; }
-        public int state { get; set; } //0--unpined 1--pined 2--connected
+        //public int state { get; set; } //0--unpined 1--pined 2--connected
         public int frequency { get; set; }
     }
     public sealed class LinksData
@@ -95,7 +95,7 @@ namespace Component
                         NodesData tmp = new NodesData();
                         //tmp.index = i;
                         tmp.word = obj.Word;
-                        tmp.state = 0;
+                        //tmp.state = 0;
                         tmp.frequency = 1;
                         //System.Diagnostics.Debug.WriteLine("duck");
                         database.nodes.Add(tmp);

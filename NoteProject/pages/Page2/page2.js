@@ -139,6 +139,10 @@
         doClickDelete: function () {
             //var textShow = document.getElementById("textShow");
             //textShow.innerText = "";
+            while (DataExample.itemList.length > 0)
+            {
+                DataExample.itemList.pop();
+            }
             nodes = [];
             links = [];
             force.nodes(nodes);

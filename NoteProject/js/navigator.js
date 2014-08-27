@@ -87,6 +87,7 @@
                 // Responds to navigation by adding new pages to the DOM. 
                 _navigating: function (args) {
                     var newElement = this._createPageElement();
+
                     this._element.appendChild(newElement);
 
                     this._lastNavigationPromise.cancel();
