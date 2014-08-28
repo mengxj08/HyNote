@@ -22,7 +22,6 @@
             nav.history = app.sessionState.history || {};
             nav.history.current.initialPlaceholder = true;
             nav.addEventListener("beforenavigate", function (eventObject) {
-                console.log(eventObject);
                 if (eventObject.detail.location == nav.location) {
                     eventObject.detail.setPromise(WinJS.Promise.wrap(true));
  

@@ -257,7 +257,7 @@ function oneclick(d) {//one click node
 
             var linkIndex = 0;
             if (links.length != 0)
-                linkIndex = ++links[links.length - 1].linkIndex;
+                linkIndex = links[links.length - 1].linkIndex + 1;
 
             links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex":linkIndex});
             newAddedClickLink = true;
@@ -319,7 +319,29 @@ function clickSVG(d)
             tick();
         }
         selectedLink = null;
-    } 
+    }
+
+    var coordinates = [0, 0];
+    coordinates = zoom.scaleExtent();
+    if (d3.event.ctrlKey) {
+        var scale = zoom.scale();
+        zoom.center([d3.event.x, d3.event.y]);
+        scale = scale + 0.5;
+        if (scale > coordinates[1]) return;
+        zoom.scale(scale);
+        zoom.event(svg.transition().duration(800));
+        //console.log("+" + zoom.scale());
+    }
+    else if (d3.event.altKey) {
+        var scale = zoom.scale();
+        zoom.center([d3.event.x, d3.event.y]);
+        scale = scale - 0.5;
+        if (scale < coordinates[0]) return;
+        zoom.scale(scale);
+        zoom.event(svg.transition().duration(800));
+        //console.log("-" + zoom.scale());
+    }
+    else { }
 }
 //******************************************************************
 //Update the concept Name, links and labels of links

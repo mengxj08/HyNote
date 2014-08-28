@@ -1,4 +1,4 @@
-﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container;
+﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, zoom;
 var graph;
 var count = 0;
 var selectedNode = null;
@@ -55,7 +55,8 @@ var multiDrawingD3 = function () {
         .on("drag", dragging)
         .on("dragend", dragend);
 
-    var zoom = d3.behavior.zoom()
+    zoom = d3.behavior.zoom()
+       // .center([width/2,height/2])
         .scaleExtent([1, 10])
         .on("zoom", zoomed);
 
@@ -266,7 +267,7 @@ function oneclick(d) {//one click node
 
             var linkIndex = 0;
             if (links.length != 0)
-                linkIndex = ++links[links.length - 1].linkIndex;
+                linkIndex = links[links.length - 1].linkIndex + 1;
 
             links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex": linkIndex });
             newAddedClickLink = true;
@@ -327,6 +328,30 @@ function clickSVG(d) {
         }
         selectedLink = null;
     }
+
+    var coordinates = [0, 0];
+    coordinates = zoom.scaleExtent();
+    if (d3.event.ctrlKey)
+    {
+        var scale = zoom.scale();
+        zoom.center([d3.event.x,d3.event.y]);
+        scale = scale + 0.5;
+        if (scale > coordinates[1]) return;
+        zoom.scale(scale);
+        zoom.event(svg.transition().duration(800));
+        //console.log("+" + zoom.scale());
+    }
+    else if (d3.event.altKey) {
+        var scale = zoom.scale();
+        zoom.center([d3.event.x, d3.event.y]);
+        scale = scale - 0.5;
+        if (scale < coordinates[0]) return;
+        zoom.scale(scale);
+        zoom.event(svg.transition().duration(800));
+        //console.log("-" + zoom.scale());
+    }
+    else { }
+
 }
 //This function is to add blank node for user
 function dblclickSVG(d) {
