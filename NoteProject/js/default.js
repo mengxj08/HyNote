@@ -31,6 +31,7 @@
                 }
             });
 
+            setupDataset();
             // Optimize the load of the application and while the splash screen is shown, execute high priority scheduled work.
             ui.disableAnimations();
             var p = ui.processAll().then(function () {

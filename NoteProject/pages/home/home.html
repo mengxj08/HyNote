@@ -25,9 +25,11 @@
     <div class="fragment homepage">
         <header aria-label="Header content" role="banner">
             <!--<button data-win-control="WinJS.UI.BackButton"></button>-->
-            <h1 class="titlearea win-type-ellipsis">
-                <span class="pagetitle">Take Note</span>
-            </h1>
+            <div class="titlename" contenteditable="true">
+                <h1 class="titlearea win-type-ellipsis">
+                    <span class="pagetitle">Take Note</span>
+                </h1>
+            </div>
         </header>
         <div id="ButtonDiv">
             <button id="Button" type="button">Mapping</button>
@@ -53,6 +55,7 @@
         </section>
     </div>
     <div id="homeAppbar" data-win-control="WinJS.UI.AppBar">
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'reviewNotes', label:'Review Notes', icon:'page2', section:'selection'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'delete', label:'Delete', icon:'delete', section:'global'}" type="button"></button>

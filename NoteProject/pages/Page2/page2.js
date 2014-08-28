@@ -2,16 +2,19 @@
 // http://go.microsoft.com/fwlink/?LinkId=232511
 (function () {
     "use strict";
-    var winNavBar;
+    //var winNavBar;
     var winAppBar;
-
+    var passedOptions = null;
     WinJS.UI.Pages.define("/pages/Page2/page2.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
-            winNavBar = document.getElementById("navbar").winControl;
+            //winNavBar = document.getElementById("navbar").winControl;
+            passedOptions = options;
+
             winAppBar = document.getElementById("page2Appbar").winControl;
 
+            element.querySelector("#newNote").addEventListener("click", this.doClickNewNote, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
@@ -52,6 +55,11 @@
                     $(".inputText2").val("");
                 }
             });
+        },
+        doClickNewNote: function () {
+            if (!passedOptions)
+                WinJS.Navigation.navigate("/pages/home/home.html");
+            else { }
         },
 
         doClickOpen: function () {
@@ -151,7 +159,7 @@
             restartLabels();
             restartNodes();
 
-            winNavBar.hide();
+            //winNavBar.hide();
             winAppBar.hide();
         },
 
@@ -193,7 +201,7 @@
                 });
             }
 
-            winNavBar.hide();
+            //winNavBar.hide();
             winAppBar.hide();
             //var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
             ////openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
@@ -246,21 +254,6 @@
 
         dataBindingProcess: function () {
             var viewListView = document.getElementById("viewListView").winControl;
-
-            var dataArray = [
-                //{ title: "Basic banana", text: "Low-fat frozen yogurt", data:"test"},
-                //{ title: "Banana blast", text: "Ice cream", data: "test" },
-            ];
-
-            var itemList = new WinJS.Binding.List(dataArray);
-
-            // Create a namespace to make the data publicly accessible. 
-            var publicMembers =
-                {
-                    itemList: itemList
-                };
-            WinJS.Namespace.define("DataExample", publicMembers);
-
             viewListView.itemDataSource = DataExample.itemList.dataSource;
         },
 

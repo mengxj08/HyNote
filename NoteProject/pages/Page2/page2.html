@@ -41,13 +41,14 @@
                 <div id="viewListView" data-win-control="WinJS.UI.ListView"
                      data-win-options="{itemTemplate: select('#ListTemplate'),
                      layout: {type: WinJS.UI.GridLayout},
-                     selectionMode: 'single',
+                     selectionMode: 'multi',
                      tapBehavior: 'toggleSelect'}">
                 </div>
             </div>
         </section>
     </div>
     <div id="page2Appbar" data-win-control="WinJS.UI.AppBar">
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'newNote', label:'New Note', icon:'page', section:'selection'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>
         <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'remove', label:'Remove', icon:'remove', section:'global'}" type="button"></button>

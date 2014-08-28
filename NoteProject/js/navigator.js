@@ -115,8 +115,8 @@
 
                     args.detail.setPromise(this._lastNavigationPromise);
                     //WinJS.UI.NavBar hide after one clicking
-                    var winNavBar = document.getElementById("navbar").winControl;
-                    winNavBar.hide();
+                    //var winNavBar = document.getElementById("navbar").winControl;
+                    //winNavBar.hide();
                 },
 
                 // Responds to resize events and call the updateLayout function

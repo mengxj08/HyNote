@@ -2,31 +2,18 @@
     "use strict";
     var SampleComponent = new Component.SampleComponent();
     var resultJson;
-    var winNavBar;
+    //var winNavBar;
     var winAppBar;
-
+    var passedOptions = null
     var homePage = WinJS.UI.Pages.define("/pages/home/home.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
-    
-            // TODO: Initialize the page here.
-            //var ratingControlDiv = document.getElementById("ratingControlDiv");
+            passedOptions = options;
 
-            //var ratingControl = ratingControlDiv.winControl;
- 
-            //ratingControl.addEventListener("change", this.ratingChanged, false);
-
-            //var helloButton = document.getElementById("helloButton");
-            //helloButton.addEventListener("click", this.buttonClickHandler, false);
-
-            //var nameInput = document.getElementById("nameInput");
-            //nameInput.addEventListener("change", this.nameInputChanged, false);
-
-            //WinJS.Utilities.query("a").listen("click", this.linkClickEventHandler, false);
-            winNavBar = document.getElementById("navbar").winControl;
             winAppBar = document.getElementById("homeAppbar").winControl;
 
+            element.querySelector("#reviewNotes").addEventListener("click", this.doClickreviewNotes, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
@@ -85,6 +72,12 @@
         //},
 
         //AppBar Command button function
+        doClickreviewNotes: function () {
+            if (!passedOptions)
+                WinJS.Navigation.navigate("/pages/page2/page2.html");
+            else { }
+        },
+
         doClickOpen: function () {
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
             //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
@@ -109,6 +102,8 @@
                         restartNodes();
                         restartLinks();
                         restartLabels();
+
+                        passedOptions = null;
                     });
                 }
                 else {
@@ -157,7 +152,8 @@
             restartLabels();
             restartNodes();
 
-            winNavBar.hide();
+            passedOptions = null;
+            //winNavBar.hide();
             winAppBar.hide();
         },
 

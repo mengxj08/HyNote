@@ -9,6 +9,8 @@ var radius = 30;   // base radius for circle
 var clickOntoLinks = false;
 var translate = [0, 0];
 var scale = 1;
+var scaleMin = 1;
+var scaleMax = 10;
 var newAddedClickLink = false;
 
 var updateJsonData = function (jsonData) {
@@ -55,7 +57,7 @@ var drawingD3 = function () {
         .on("dragend", dragend);
 
     var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 10])
+        .scaleExtent([scaleMin, scaleMax])
         .on("zoom", zoomed);
 
     svg = d3.select("#keyWordMap").append("svg")
@@ -321,13 +323,11 @@ function clickSVG(d)
         selectedLink = null;
     }
 
-    var coordinates = [0, 0];
-    coordinates = zoom.scaleExtent();
     if (d3.event.ctrlKey) {
         var scale = zoom.scale();
         zoom.center([d3.event.x, d3.event.y]);
         scale = scale + 0.5;
-        if (scale > coordinates[1]) return;
+        if (scale > scaleMax) return;
         zoom.scale(scale);
         zoom.event(svg.transition().duration(800));
         //console.log("+" + zoom.scale());
@@ -336,7 +336,7 @@ function clickSVG(d)
         var scale = zoom.scale();
         zoom.center([d3.event.x, d3.event.y]);
         scale = scale - 0.5;
-        if (scale < coordinates[0]) return;
+        if (scale < scaleMin) return;
         zoom.scale(scale);
         zoom.event(svg.transition().duration(800));
         //console.log("-" + zoom.scale());
