@@ -18,7 +18,12 @@
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
-            element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
+            //element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
+            
+            
+            WinJS.Namespace.define("utility", { itemButtonClick: this.itemButtonClick });
+            WinJS.Namespace.define("utility", { toggleSwitchChange: this.toggleSwitchChange });
+            WinJS.Utilities.markSupportedForProcessing(this.toggleSwitchChange);
 
             this.dataBindingProcess();
 
@@ -55,6 +60,12 @@
                     $(".inputText2").val("");
                 }
             });
+        },
+        itemButtonClick: function (event) {
+            console.log(event.name + "---" + event.value);
+        },
+        toggleSwitchChange: function (event) {
+            console.log(event.srcElement.title);
         },
         doClickNewNote: function () {
             if (!passedOptions)
@@ -251,7 +262,6 @@
             //    }
             //});
         },
-
         dataBindingProcess: function () {
             var viewListView = document.getElementById("viewListView").winControl;
             viewListView.itemDataSource = DataExample.itemList.dataSource;
@@ -265,8 +275,8 @@
             /// <param name="element" domElement="true" />
 
             // TODO: Respond to changes in layout.
-            var viewListView = element.querySelector("#viewListView").winControl;
-            viewListView.layout.orientation = "vertical";
+            //var viewListView = element.querySelector("#viewListView").winControl;
+            //viewListView.layout.orientation = "vertical";
 
         }
     });

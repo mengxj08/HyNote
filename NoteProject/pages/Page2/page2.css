@@ -1,8 +1,15 @@
-﻿#mainGrid2 {
+﻿#title {
+    width: 550px;
+    height: 100px;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: auto;
+}
+#mainGrid2 {
     margin: 20px 20px 0px 20px;
     height:100%;
     display: -ms-grid;
-    -ms-grid-columns: 9fr 1fr;
+    -ms-grid-columns: 1fr 180px;
 }
 #conceptShow2 {
     -ms-grid-column: 1;
@@ -34,15 +41,27 @@
     border: solid 2px darkgray;
 }
 .ListItemTemplate {
-    width: auto;
-    height: 70px;
-    padding:10px;
+    width: 100%;
+    height: 100px;
+    padding:5px;
     overflow:hidden;
+    display: -ms-grid;
+    -ms-grid-rows: 1fr 1fr;
 }
 .ListItemTemplate-Detail {
-    height: 70px;
+    -ms-grid-row: 1;
+    width:150px;
 }
-
+.ListItemTemplate-toggle {
+    -ms-grid-row: 2;
+    width:150px;
+}
+#viewListView .win-viewport{
+    -ms-overflow-style: none;
+}
+#viewListView .win-surface {
+    margin:0px;
+}
 /*.win-listview .win-container {
     margin-left:20px;
     margin-bottom:10px;

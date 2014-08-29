@@ -12,10 +12,11 @@
             passedOptions = options;
 
             winAppBar = document.getElementById("homeAppbar").winControl;
-
+            
+            element.querySelector("#AddtoProject").addEventListener("click", this.doClickAddtoProject, false);
             element.querySelector("#reviewNotes").addEventListener("click", this.doClickreviewNotes, false);
-            element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
-            element.querySelector("#save").addEventListener("click", this.doClickSave, false);
+            //element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
+            //element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
 
             var conceptShow = document.getElementById("conceptShow");
@@ -72,6 +73,10 @@
         //},
 
         //AppBar Command button function
+        doClickAddtoProject: function () {
+
+        },
+
         doClickreviewNotes: function () {
             if (!passedOptions)
                 WinJS.Navigation.navigate("/pages/page2/page2.html");
