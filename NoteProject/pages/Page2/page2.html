@@ -19,7 +19,7 @@
         <header class="page-header" aria-label="Header content" role="banner">
             <!--<button class="back-button" data-win-control="WinJS.UI.BackButton"></button>-->
             <h1 class="titlearea win-type-ellipsis">
-                <div id="title" contenteditable="true">
+                <div id="titleProject" contenteditable="true">
                     Click to name Project...
                 </div>
             </h1>
@@ -33,9 +33,8 @@
                 </div>
                 <div id="ListTemplate" data-win-control="WinJS.Binding.Template">
                     <div class="ListItemTemplate">
-                        <button class="ListItemTemplate-Detail" data-win-bind="name: text; innerText: title" onclick="utility.itemButtonClick(this)">
-                        </button>
-                        <div class="ListItemTemplate-toggle" data-win-control="WinJS.UI.ToggleSwitch" data-win-bind="title: text"
+                        <button class="ListItemTemplate-Detail" data-win-bind="name: Index; innerText: Title" onclick="utility.itemButtonClick(this)"></button>
+                        <div class="ListItemTemplate-toggle" data-win-control="WinJS.UI.ToggleSwitch" data-win-bind="title: Index; winControl.checked:checked"
                              data-win-options="{title: 'Appear',
                              onchange: utility.toggleSwitchChange}">
                         </div>

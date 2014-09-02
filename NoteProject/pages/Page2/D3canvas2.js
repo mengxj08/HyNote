@@ -706,6 +706,8 @@ var cleanCache = function () {
 }
 //************************************************************************
 var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
+    if (!mergeNodes) return;
+
     var nodeCount = nodes.length;
     mergeNodes.forEach(function (mergeNodeValue, mergeNodeIndex) {
         var pushtoNodes = true;

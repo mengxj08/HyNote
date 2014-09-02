@@ -4,23 +4,20 @@
     "use strict";
     //var winNavBar;
     var winAppBar;
-    var passedOptions = null;
-    WinJS.UI.Pages.define("/pages/Page2/page2.html", {
+    var page2options = null;
+    var page2obj = WinJS.UI.Pages.define("/pages/Page2/page2.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
             //winNavBar = document.getElementById("navbar").winControl;
-            passedOptions = options;
-
             winAppBar = document.getElementById("page2Appbar").winControl;
-
+            page2options = options;
             element.querySelector("#newNote").addEventListener("click", this.doClickNewNote, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
             //element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
-            
-            
+             
             WinJS.Namespace.define("utility", { itemButtonClick: this.itemButtonClick });
             WinJS.Namespace.define("utility", { toggleSwitchChange: this.toggleSwitchChange });
             WinJS.Utilities.markSupportedForProcessing(this.toggleSwitchChange);
@@ -30,16 +27,11 @@
             var viewListView = element.querySelector("#viewListView").winControl;
             viewListView.layout.orientation = "vertical";
 
-            //while (DataExample.itemList.length > 0)
-            //{
-            //    DataExample.itemList.pop();
-            //}
-
-
             width = $("#conceptShow2").width();
             height = $("#conceptShow2").height();
 
             multiDrawingD3();
+            this.readPassedOptions();
 
             $(".inputText2").keyup(function (e) {
                 if (e.keyCode == 13) {
@@ -62,29 +54,74 @@
             });
         },
         itemButtonClick: function (event) {
-            console.log(event.name + "---" + event.value);
+            //console.log(event.name + "---" + event.value);
+            DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                if (itemValue.Index == event.name)
+                {
+                    if (itemValue.checked)
+                    {
+                        itemValue.checked = false;
+                        var readJson = JSON.parse(itemValue.Data);
+                        removeNodesAndLinks(readJson.node, readJson.link);
+
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                    }
+                    return;
+                }
+            });
+            page2obj.prototype.saveProjectState();
+            WinJS.Navigation.navigate("/pages/home/home.html", {"Index":event.name});
         },
         toggleSwitchChange: function (event) {
-            console.log(event.srcElement.title);
+            var index = event.srcElement.title;
+            console.log("index:"+index);
+            DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                if (itemValue.Index == index)
+                {
+                    itemValue.checked = !itemValue.checked;
+                    var readJson = JSON.parse(itemValue.Data);
+
+                    if (itemValue.checked) {
+                        mergeNodesAndLinks(readJson.node, readJson.link);
+                        linkstoNodes();
+
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                    }
+                    else {
+                        removeNodesAndLinks(readJson.node, readJson.link);
+
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                    }
+                    return;
+                }
+            });
         },
         doClickNewNote: function () {
-            if (!passedOptions)
-                WinJS.Navigation.navigate("/pages/home/home.html");
-            else { }
+            page2obj.prototype.saveProjectState();
+            WinJS.Navigation.navigate("/pages/home/home.html");
         },
 
         doClickOpen: function () {
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
             //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
             openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
-            openPicker.fileTypeFilter.replaceAll([".json"]);
+            openPicker.fileTypeFilter.replaceAll([".project"]);
 
             openPicker.pickSingleFileAsync().then(function (file) {
                 if (file) {
                     Windows.Storage.CachedFileManager.deferUpdates(file);
                     Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
-                        var readJson = JSON.parse(contents);
-                        console.log("readJson:");
+                        var JsonObject = JSON.parse(contents)
+                        var readJson = JsonObject.currentState;
+                        var dataExample = JsonObject.projectData;
+                        var titleName = document.getElementById("titleProject");
+                        titleName.innerText = JsonObject.ProjectName;
                         
                         mergeNodesAndLinks(readJson.node, readJson.link);
                         linkstoNodes();
@@ -93,48 +130,38 @@
                         restartLinks();
                         restartLabels();
 
-                        var dateString = file.dateCreated.toString();
-                        dateString = dateString.slice(0, dateString.indexOf("(")).trim();
-                        DataExample.itemList.push({ "title": file.name, "text": dateString, "data": contents });
-                        //if(!nodes)//First add elements to Nodes
-                        //{
-                        //    console.log("First add elements to Nodes");
-                        //    nodes = readJson.node;
-                        //    links = readJson.link;
-                        //    linkstoNodes();
+                        dataExample.forEach(function (dataValue, dataIndex) {
+                            //should consider the Index of dataValue
+                            //Need to be fixed
+                            if (DataExample.itemList.length == 0)
+                                var index = DataExample.itemList.length;
+                            else {
+                                var index = DataExample.itemList.getAt(DataExample.itemList.length - 1).Index + 1;
+                            }
+                            dataValue.Index = index;
+                            DataExample.itemList.push(dataValue);
+                        });
 
-                        //    force.nodes(nodes);
-                        //    force.links(links);
-
-                        //    restartNodes();
-                        //    restartLinks();
-                        //    restartLabels();
-                        //}
-                        //else {//Merge new added nodes with existing nodes
-                        //    console.log("Merge new added nodes with existing nodes");
-                        //    mergeNodesAndLinks(readJson.node, readJson.link);
-                        //    linkstoNodes();
-
-                        //    restartNodes();
-                        //    restartLinks();
-                        //    restartLabels();
-                        //}
+                        page2obj.prototype.saveProjectState();
                     });
                 }
                 else {
                 }
             });
-            //WinJS.Navigation.navigate("/pages/home/home.html");
         },
 
         doClickSave: function () {
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
-            savePicker.fileTypeChoices.insert("Json", [".json"]);
+            savePicker.fileTypeChoices.insert("Project", [".project"]);
             savePicker.suggestedFileName = "New Document";
 
-            var textShow = "N/A";
-            var savedString = saveNoteToFile(textShow);
+            page2obj.prototype.saveProjectState();
+            var dataExample = DataExample.itemList.slice(0);
+            var titleName = document.getElementById("titleProject");
+            var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
+            savedString = JSON.stringify(savedString);
+            //savedString = savedString.toString();
             savePicker.pickSaveFileAsync().then(function (file) {
 
                 if (file) {
@@ -156,44 +183,27 @@
         },
 
         doClickDelete: function () {
-            //var textShow = document.getElementById("textShow");
-            //textShow.innerText = "";
-            while (DataExample.itemList.length > 0)
-            {
-                DataExample.itemList.pop();
-            }
-            nodes = [];
-            links = [];
-            force.nodes(nodes);
-            force.links(links);
-            restartLinks();
-            restartLabels();
-            restartNodes();
-
-            //winNavBar.hide();
-            winAppBar.hide();
-        },
-
-        doClickRemove: function () {
             var viewListView = document.getElementById("viewListView").winControl;
             if (viewListView.selection.count() == 0) {
                 //No selected items
             }
             else {
                 viewListView.selection.getItems().done(function (selectedDataSource) {
-                    var contents = selectedDataSource[0].data.data.toString();
-                    var fileTitle = selectedDataSource[0].data.title.toString();
+                    var contents = selectedDataSource[0].data.Data.toString();
+                    //var fileTitle = selectedDataSource[0].data.Title.toString();
+                    var fileIndex = selectedDataSource[0].data.Index;
+                    var toggleChecked = false;
                     //console.log(contents);
                     viewListView.selection.clear();
 
-                    DataExample.itemList.forEach(function (itemValue, itemIndex) {
-                        if (itemValue.title == fileTitle)
-                        {
+                    DataExample.itemList.forEach(function (itemValue, itemIndex) {//del single item
+                        if (itemValue.Index == fileIndex) {
+                            toggleChecked = itemValue.checked;
                             DataExample.itemList.splice(itemIndex, 1);
                             return;
                         }
                     });
-                    //for (var i = 0; i < DataExample.itemList.length; i++)
+                    //for (var i = 0; i < DataExample.itemList.length; i++) //del Multi-item
                     //{
                     //    if (DataExample.itemList.getAt(i).title == fileTitle)
                     //    {
@@ -201,70 +211,58 @@
                     //        break;
                     //    }
                     //}
-                    
-                    var readJson = JSON.parse(contents);
-                    removeNodesAndLinks(readJson.node, readJson.link);
-                    //linkstoNodes();
+                    if (toggleChecked) {
+                        var readJson = JSON.parse(contents);
+                        removeNodesAndLinks(readJson.node, readJson.link);
 
-                    restartNodes();
-                    restartLinks();
-                    restartLabels();
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                    }
                 });
             }
-
-            //winNavBar.hide();
             winAppBar.hide();
-            //var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-            ////openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
-            //openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
-            //openPicker.fileTypeFilter.replaceAll([".json"]);
-
-            //openPicker.pickSingleFileAsync().then(function (file) {
-            //    if (file) {
-            //        Windows.Storage.CachedFileManager.deferUpdates(file);
-            //        Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
-            //            var readJson = JSON.parse(contents);
-            //            console.log("readJson:");
-
-            //            removeNodesAndLinks(readJson.node, readJson.link);
-            //            //linkstoNodes();
-
-            //            restartNodes();
-            //            restartLinks();
-            //            restartLabels();
-
-            //            //if(!nodes)//First add elements to Nodes
-            //            //{
-            //            //    console.log("First add elements to Nodes");
-            //            //    nodes = readJson.node;
-            //            //    links = readJson.link;
-            //            //    linkstoNodes();
-
-            //            //    force.nodes(nodes);
-            //            //    force.links(links);
-
-            //            //    restartNodes();
-            //            //    restartLinks();
-            //            //    restartLabels();
-            //            //}
-            //            //else {//Merge new added nodes with existing nodes
-            //            //    console.log("Merge new added nodes with existing nodes");
-            //            //    mergeNodesAndLinks(readJson.node, readJson.link);
-            //            //    linkstoNodes();
-
-            //            //    restartNodes();
-            //            //    restartLinks();
-            //            //    restartLabels();
-            //            //}
-            //        });
-            //    }
-            //    else {
-            //    }
-            //});
         },
+
         dataBindingProcess: function () {
             var viewListView = document.getElementById("viewListView").winControl;
             viewListView.itemDataSource = DataExample.itemList.dataSource;
+        },
+
+        saveProjectState: function () {
+            var textShow = "N/A";
+            var currentState = saveNoteToFile(textShow);
+
+            var titleName = document.getElementById("titleProject");
+            DataExample.currentProjectState.Title = titleName.innerText.trim();
+            DataExample.currentProjectState.Data = currentState;
+            console.log(DataExample.currentProjectState);
+        },
+        readProjectState: function () {
+            var titleName = document.getElementById("titleProject");
+            titleName.innerText = DataExample.currentProjectState.Title;
+            console.log(titleName.innerText);
+            var readJson = JSON.parse(DataExample.currentProjectState.Data);
+
+            nodes = readJson.node;
+            links = readJson.link;
+            linkstoNodes();
+
+            force.nodes(nodes);
+            force.links(links);
+
+            restartNodes();
+            restartLinks();
+            restartLabels();
+        },
+        readPassedOptions: function () {
+            if (page2options) {
+            }
+            else if (DataExample.currentProjectState.Title) {
+                page2obj.prototype.readProjectState();
+            }
+            else { }
+            page2options = null;
         },
 
         unload: function () {
