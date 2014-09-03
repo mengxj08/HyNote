@@ -47,7 +47,7 @@ var drawingD3 = function () {
     .nodes(nodes) // initialize with a single node
     .links(links)
     .linkDistance(200)
-    .charge(-600);
+    .charge(function (d) { return -600 * log2(d.frequency + 1); });
     //.charge(0)
     //.on("tick", tick);
     //drag = force.drag()
