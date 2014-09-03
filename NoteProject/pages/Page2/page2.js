@@ -157,7 +157,12 @@
             savePicker.suggestedFileName = "New Document";
 
             page2obj.prototype.saveProjectState();
-            var dataExample = DataExample.itemList.slice(0);
+            console.log("FUCK"+DataExample.itemList.length);
+            //var dataExample = DataExample.itemList.slice(0);
+            var dataExample = [];
+            DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
+            });
             var titleName = document.getElementById("titleProject");
             var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
             savedString = JSON.stringify(savedString);
