@@ -418,7 +418,8 @@ var restartNodes = function () {//redrawing Nodes
 
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
-        .attr("class", "node")
+        //.attr("class", "node")
+         .attr("class", function (d) { return d.fixed ? "node fixed" : "node";})
         //.attr("id", function (d) { return d.id; })
         .on("dblclick", dblclick)
         .on("click", oneclick)

@@ -51,6 +51,7 @@
 .ListItemTemplate-Detail {
     -ms-grid-row: 1;
     width:150px;
+    /*background-color:darkgray;*/
 }
 .ListItemTemplate-toggle {
     -ms-grid-row: 2;

@@ -139,7 +139,7 @@
                                 var index = DataExample.itemList.getAt(DataExample.itemList.length - 1).Index + 1;
                             }
                             dataValue.Index = index;
-                            DataExample.itemList.push(dataValue);
+                            DataExample.itemList.push(WinJS.Binding.as(dataValue));
                         });
 
                         page2obj.prototype.saveProjectState();
@@ -257,6 +257,8 @@
         },
         readPassedOptions: function () {
             if (page2options) {
+                page2obj.prototype.readProjectState();
+
             }
             else if (DataExample.currentProjectState.Title) {
                 page2obj.prototype.readProjectState();

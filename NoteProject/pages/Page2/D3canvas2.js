@@ -175,6 +175,18 @@ function dragstart(d) {//Start dragging node
     var highlightText = d.word;
     $("#textShow").highlight(highlightText, "highlight");
     //console.log("highlightText:" + highlightText);
+    DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        var readJson = JSON.parse(itemValue.Data);
+        readJson.node.forEach(function (nodeValue, nodeIndex) {
+            if (nodeValue.word == d.word)
+            {
+                itemValue.Color = "red";
+                return;
+            }
+        });
+    });
+    //var viewListView = document.getElementById("viewListView").winControl;
+    //viewListView.itemDataSource = DataExample.itemList.dataSource;
 }
 function dragging(d)//drag node
 {
@@ -213,6 +225,17 @@ function dragging(d)//drag node
 function dragend(d)//end dragging node
 {
     $("#textShow").removeHighlight();
+    DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        var readJson = JSON.parse(itemValue.Data);
+        readJson.node.forEach(function (nodeValue, nodeIndex) {
+            if (nodeValue.word == d.word) {
+                itemValue.Color = "darkgrey";
+                return;
+            }
+        });
+    });
+    //var viewListView = document.getElementById("viewListView").winControl;
+    //viewListView.itemDataSource = DataExample.itemList.dataSource;
     tick();
     force.resume();
 }
@@ -454,7 +477,8 @@ var restartNodes = function () {//redrawing Nodes
 
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
-        .attr("class", "node")
+        //.attr("class", "node")
+        .attr("class", function (d) { return d.fixed ? "node fixed" : "node";})
         //.attr("id", function (d) { return d.id; })
         .on("dblclick", dblclick)
         .on("click", oneclick)

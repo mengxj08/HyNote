@@ -33,7 +33,7 @@
                 </div>
                 <div id="ListTemplate" data-win-control="WinJS.Binding.Template">
                     <div class="ListItemTemplate">
-                        <button class="ListItemTemplate-Detail" data-win-bind="name: Index; innerText: Title" onclick="utility.itemButtonClick(this)"></button>
+                        <button class="ListItemTemplate-Detail" data-win-bind="name: Index; innerText: Title; style.background:Color" onclick="utility.itemButtonClick(this)"></button>
                         <div class="ListItemTemplate-toggle" data-win-control="WinJS.UI.ToggleSwitch" data-win-bind="title: Index; winControl.checked:checked"
                              data-win-options="{title: 'Appear',
                              onchange: utility.toggleSwitchChange}">

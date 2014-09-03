@@ -78,7 +78,7 @@
                 else {
                     var index = DataExample.itemList.getAt(DataExample.itemList.length - 1).Index + 1;
                 }
-                DataExample.itemList.push({ "Title": DataExample.currentNoteState.Title, "Index": index, "checked": false, "Data": DataExample.currentNoteState.Data });
+                DataExample.itemList.push(WinJS.Binding.as({ "Title": DataExample.currentNoteState.Title, "Index": index, "checked": false, "Color": "darkgrey", "Data": DataExample.currentNoteState.Data }));
             }
             passedOptions = null;
             DataExample.currentNoteState = {};
@@ -229,7 +229,11 @@
 
         doClickDelete: function () {
             var textShow = document.getElementById("textShow");
-            textShow.innerText = "";
+            textShow.innerText = "Click to take notes...";
+
+            var title = document.getElementById("title");
+            title.innerText = "Click to name Note...";
+
             nodes = [];
             links = [];
             force.nodes(nodes);
