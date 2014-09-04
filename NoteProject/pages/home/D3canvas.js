@@ -231,8 +231,8 @@ function dragging(d)//drag node
             }
         }
     });
-    tick();
-    force.resume();
+    //tick();
+    //force.resume();
 }
 function dragend(d)//end dragging node
 {
@@ -376,7 +376,8 @@ var restartLabels = function () { //redrawing Labels
 
     //Data-join: Update
     label.select("textPath").transition().duration(500)
-    .text(function (d) { return d.linkName });
+    .text(function (d) { return d.linkName })
+    .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
 
     //Data-Join: Enter
     var enterLabel = label.enter().insert("text",".node")
@@ -385,7 +386,7 @@ var restartLabels = function () { //redrawing Labels
     //.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
     //.attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
     .attr("text-anchor", "middle")
-    .attr("dy", -4)
+    .attr("dy", -5)
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" })
     .append("textPath")
     .attr("xlink:href", function (d) { return "#linkIndex"+d.linkIndex; })

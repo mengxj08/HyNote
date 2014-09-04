@@ -195,21 +195,22 @@ function dragstart(d) {//Start dragging node
     dragNodeObj = d3.select(this);
     clickOntoLinks = true;
 
-    var highlightText = d.word;
-    $("#textShow").highlight(highlightText, "highlight");
-    //console.log("highlightText:" + highlightText);
-    DataExample.itemList.forEach(function (itemValue, itemIndex) {
-        var readJson = JSON.parse(itemValue.Data);
-        readJson.node.forEach(function (nodeValue, nodeIndex) {
-            if (nodeValue.word == d.word)
-            {
-                itemValue.Color = "red";
-                return;
-            }
+    var textShow = document.getElementById("textShow");
+    if (textShow) {
+        var highlightText = d.word;
+        $("#textShow").highlight(highlightText, "highlight");
+    }
+    else {
+        DataExample.itemList.forEach(function (itemValue, itemIndex) {
+            var readJson = JSON.parse(itemValue.Data);
+            readJson.node.forEach(function (nodeValue, nodeIndex) {
+                if (nodeValue.word == d.word) {
+                    itemValue.Color = "red";
+                    return;
+                }
+            });
         });
-    });
-    //var viewListView = document.getElementById("viewListView").winControl;
-    //viewListView.itemDataSource = DataExample.itemList.dataSource;
+    }
 }
 function dragging(d)//drag node
 {
@@ -242,23 +243,27 @@ function dragging(d)//drag node
             }
         }
     });
-    tick();
-    force.resume();
+    //tick();
+    //force.resume();
 }
 function dragend(d)//end dragging node
 {
-    $("#textShow").removeHighlight();
-    DataExample.itemList.forEach(function (itemValue, itemIndex) {
-        var readJson = JSON.parse(itemValue.Data);
-        readJson.node.forEach(function (nodeValue, nodeIndex) {
-            if (nodeValue.word == d.word) {
-                itemValue.Color = "darkgrey";
-                return;
-            }
+    var textShow = document.getElementById("textShow");
+    if (textShow) {
+        $("#textShow").removeHighlight();
+    }
+    else {
+        DataExample.itemList.forEach(function (itemValue, itemIndex) {
+            var readJson = JSON.parse(itemValue.Data);
+            readJson.node.forEach(function (nodeValue, nodeIndex) {
+                if (nodeValue.word == d.word) {
+                    itemValue.Color = "darkgrey";
+                    return;
+                }
+            });
         });
-    });
-    //var viewListView = document.getElementById("viewListView").winControl;
-    //viewListView.itemDataSource = DataExample.itemList.dataSource;
+    }
+
     tick();
     force.resume();
 }
@@ -450,7 +455,8 @@ var restartLabels = function () { //redrawing Labels
 
     //Data-join: Update
     label.select("textPath").transition().duration(500)
-    .text(function (d) { return d.linkName });
+    .text(function (d) { return d.linkName })
+    .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" });
 
     //Data-Join: Enter
     var enterLabel = label.enter().insert("text", ".node")
@@ -459,7 +465,7 @@ var restartLabels = function () { //redrawing Labels
     //.attr("x", function (d) { return (d.source.x + d.target.x) / 2; })
     //.attr("y", function (d) { return (d.source.y + d.target.y) / 2; })
     .attr("text-anchor", "middle")
-    .attr("dy", -4)
+    .attr("dy", -5)
     .style("font-size", function (d) { return 10 * log2(d.source.frequency + 1) + "px" })
     .append("textPath")
     .attr("xlink:href", function (d) { return "#linkIndex" + d.linkIndex; })
@@ -784,8 +790,6 @@ var saveNoteToFile = function (textContent) {
 //}
 //************************************************************************
 var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
-    if (!mergeNodes) return;
-
     var nodeCount = nodes.length;
     mergeNodes.forEach(function (mergeNodeValue, mergeNodeIndex) {
         var pushtoNodes = true;
@@ -803,7 +807,6 @@ var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
     });
 
     var linkCount = links.length;
-    var addIndex = linkCount;
     mergeLinks.forEach(function (mergeLinkValue, mergeLinkIndex) {
         var pushtoLinks = true;
         for (var i = 0; i < linkCount; i++)
@@ -811,18 +814,34 @@ var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
             if (mergeLinkValue.source.word.toUpperCase() == links[i].source.word.toUpperCase() && mergeLinkValue.target.word.toUpperCase() == links[i].target.word.toUpperCase())
             {
                 pushtoLinks = false;
+                if (links[i].linkName.indexOf(mergeLinkValue.linkName) == -1) {
+                    links[i].linkName = links[i].linkName + " " + mergeLinkValue.linkName;
+                }
                 break;
             }
+            else if (mergeLinkValue.source.word.toUpperCase() == links[i].target.word.toUpperCase() && mergeLinkValue.target.word.toUpperCase() == links[i].source.word.toUpperCase()) {
+                mergeLinkValue.linkType = "Curve";
+                links[i].linkType = "Curve";
+                break;
+            }
+            else { }
         }
         if (pushtoLinks)
         {
-            mergeLinkValue.linkIndex = addIndex++;
-            links.push(mergeLinkValue);
+            if (links.length == 0) {
+                mergeLinkValue.linkIndex = links.length;
+                links.push(mergeLinkValue);
+            }
+            else {
+                mergeLinkValue.linkIndex = links[links.length - 1].linkIndex + 1;
+                links.push(mergeLinkValue);
+            }
         }
     });
 }
 
 var removeNodesAndLinks = function (removeNodes, removeLinks) {
+    //remove nodes
     for(var i = 0; i < nodes.length; i++){
         var spliceNode = false;
 
@@ -844,11 +863,25 @@ var removeNodesAndLinks = function (removeNodes, removeLinks) {
     
         if (spliceNode) nodes.splice(i--,1);
     }
-
+    //remove links with no source or target in the nodes
     for(var i = 0; i < links.length; i++){
         if (nodes.indexOf(links[i].source) == -1 || nodes.indexOf(links[i].target) == -1)
         {
             links.splice(i--,1);
         }
     }
-}
+    //update linkNames with same source and target
+    links.forEach(function (linkValue, linkIndex) {
+        removeLinks.forEach(function (removeLinkValue, removeLinkIndex) {
+            if (linkValue.source.word.toUpperCase() == removeLinkValue.source.word.toUpperCase() && linkValue.target.word.toUpperCase() == removeLinkValue.target.word.toUpperCase()) {
+                linkValue.linkName = linkValue.linkName.replace(removeLinkValue.linkName, "");
+                linkValue.linkName = linkValue.linkName.trim();
+                if (linkValue.linkName == "") {
+                    links.splice(linkIndex, 1);
+                    updateLinkType(linkValue,false);
+                }
+                return;
+            } 
+        });
+    });
+};
