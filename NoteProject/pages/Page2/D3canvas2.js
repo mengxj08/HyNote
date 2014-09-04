@@ -1,5 +1,4 @@
-﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, zoom;
-var graph;
+﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, graph, zoom, overlappingLink;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
@@ -12,6 +11,7 @@ var translate = [0, 0];
 var scale = 1;
 var newAddedClickLink = false;
 var doubleClickNode = false;
+var doubleClickLink = false;
 
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);
@@ -65,7 +65,7 @@ var multiDrawingD3 = function () {
         .attr("height", height)
         .call(zoom)
         .on("dblclick.zoom", null)
-        .on("click", clickSVG)
+        .on("click", clickSVG2)
         .on("dblclick", dblclickSVG);
     //.on("click", clickLink);
 
@@ -99,6 +99,7 @@ var multiDrawingD3 = function () {
     node = container.selectAll(".node");
     link = container.selectAll(".link");
     label = container.selectAll(".label");
+    overlappingLink = container.selectAll(".overlappingLink");
 
     //d3.select("#keyWordMap2").append("input")
     //.attr("class", "inputText2")
@@ -116,6 +117,28 @@ var multiDrawingD3 = function () {
         link.each(function () { this.parentNode.insertBefore(this, this); });
 
         link.attr('d', function (d) {
+            var deltaX = d.target.x - d.source.x,
+                deltaY = d.target.y - d.source.y,
+                dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+                normX = deltaX / dist,
+                normY = deltaY / dist,
+                sourcePadding = log2(d.source.frequency + 1) * radius,
+                targetPadding = log2(d.target.frequency + 1) * radius + 5,
+                sourceX = d.source.x + (sourcePadding * normX),
+                sourceY = d.source.y + (sourcePadding * normY),
+                targetX = d.target.x - (targetPadding * normX),
+                targetY = d.target.y - (targetPadding * normY);
+
+            if (d.linkType == "Curve")
+                return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+            else if (d.linkType == "Line")
+                return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
+            else { throw "No linkType Matched!"; }
+        });
+
+        overlappingLink.each(function () { this.parentNode.insertBefore(this, this); });
+
+        overlappingLink.attr('d', function (d) {
             var deltaX = d.target.x - d.source.x,
                 deltaY = d.target.y - d.source.y,
                 dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
@@ -242,7 +265,7 @@ function dragend(d)//end dragging node
 function dblclick(d) {//double click node
     if (d3.event.defaultPrevented) return;
 
-    console.log("double click node");
+    console.log("double click node-2");
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
 
@@ -315,29 +338,43 @@ function oneclick(d) {//one click node
 }
 function clickLink(d) // one click link
 {
+    console.log("clickLink-2");
     clickOntoLinks = true;
+    doubleClickLink = true;
     //var coordinates = [0, 0];
     //coordinates = d3.mouse(this);
     //var cursorX = coordinates[0];
     //var cursorY = coordinates[1];
+    var inputText = document.getElementById("inputText");
+    if (inputText) {
+        if (d.linkName && d.linkName != "") {
+            $(".inputText").val(d.linkName);
+            d.linkName = "";
+            restartLabels();
+        }
 
-    if (d.linkName && d.linkName != "") {
-        $(".inputText2").val(d.linkName);
-        d.linkName = "";
-        restartLabels();
+        $(".inputText").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
+        $(".inputText").focus();
+        selectedLinkObj = d;
+        selectedLink = d3.select(this);
+        selectedLink.classed("selected", true);
     }
+    else {
+        if (d.linkName && d.linkName != "") {
+            $(".inputText2").val(d.linkName);
+            d.linkName = "";
+            restartLabels();
+        }
 
-    $(".inputText2").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
-    $(".inputText2").focus();
-    selectedLinkObj = d;
-    selectedLink = d3.select(this);
-    selectedLink.classed("selected", true);
-    //restartLinks();
-    //console.log("d3.mouse.x:" + cursorX + " d3.mouse.y:" + cursorY);
-    //console.log("d3.event.x:" + d3.event.x + " d3.event.y:"+d3.event.y);
+        $(".inputText2").css({ "left": d3.event.x, "top": d3.event.y, "visibility": "visible" });
+        $(".inputText2").focus();
+        selectedLinkObj = d;
+        selectedLink = d3.select(this);
+        selectedLink.classed("selected", true);
+    }
 }
-function clickSVG(d) {
-    console.log("clickSVG" + d3.event.scale);
+function clickSVG2(d) {
+    console.log("clickSVG-2");
     if (clickOntoLinks) {
         clickOntoLinks = false;
     }
@@ -384,12 +421,15 @@ function dblclickSVG(d) {
     //    selectedNode.classed("connecting", selectedNodeObj.connecting = false);
     //    selectedNode = null;
     //}
-    if (doubleClickNode)
-    {
+    console.log("dblclickSVG-2");
+    if (doubleClickNode){
         doubleClickNode = false;
         return;
     }
-    console.log("double clickSVG");
+    if (doubleClickLink) {
+        doubleClickLink = false;
+        return;
+    }
     var addNewNode = true;
     nodes.forEach(function (nodeValue, nodeIndex) {
         if (nodeValue.word == "")
@@ -437,6 +477,7 @@ var restartLinks = function () {//redrawing Links
     console.log("NodesNumafterlinking:" + force.nodes().length);
 
     link = link.data(links);
+    overlappingLink = overlappingLink.data(links);
     //Data-join: Update
     //link.style('marker-end', 'url(#end-arrow)');
 
@@ -444,7 +485,10 @@ var restartLinks = function () {//redrawing Links
     var enterLink = link.enter().insert("path", ".node")
         .attr("class", "link")
         .attr("id", function (d) { return "linkIndex" + d.linkIndex; })
-        .style('marker-end', 'url(#end-arrow)')
+        .style('marker-end', 'url(#end-arrow)');
+
+    var enterOverlappingLink = overlappingLink.enter().insert("path", ".node")
+        .attr("class", "overlappingLink")
         .on("click", clickLink);
 
     if (newAddedClickLink)
@@ -456,6 +500,7 @@ var restartLinks = function () {//redrawing Links
 
     //Data-Join: Exit
     link.exit().remove();
+    overlappingLink.exit().remove();
 
     force.start();
 }
@@ -716,18 +761,27 @@ var saveNoteToFile = function (textContent) {
     return JSON.stringify(savedString);
 }
 
-var cleanCache = function () {
-    count = 0;
-    selectedNode = null;
-    selectedNodeObj = null;
-    selectedLink = null;
-    selectedLinkObj = null;
-    dragNodeObj = null;
-    radius = 30;   // base radius for circle
-    clickOntoLinks = false;
-    translate = [0, 0];
-    scale = 1;
-}
+//var cleanCache = function () {
+//    svg = null;
+//    container = null;
+//    overlappingLink = null;
+//    delete link;
+//    delete node;
+//    label = null;
+//    delete links;
+//    delete nodes;
+//    force = null;
+//    count = 0;
+//    selectedNode = null;
+//    selectedNodeObj = null;
+//    selectedLink = null;
+//    selectedLinkObj = null;
+//    dragNodeObj = null;
+//    radius = 30;   // base radius for circle
+//    clickOntoLinks = false;
+//    translate = [0, 0];
+//    scale = 1;
+//}
 //************************************************************************
 var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
     if (!mergeNodes) return;

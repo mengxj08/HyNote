@@ -112,6 +112,7 @@
                     this._lastNavigationPromise = WinJS.Promise.as().then(function () {
                         return WinJS.UI.Pages.render(args.detail.location, newElement, args.detail.state);
                     }).then(cleanup, cleanup);
+                    
 
                     args.detail.setPromise(this._lastNavigationPromise);
                     //WinJS.UI.NavBar hide after one clicking

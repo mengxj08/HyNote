@@ -1,4 +1,4 @@
-﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container,graph;
+﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, graph, zoom, overlappingLink;
 var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
@@ -53,10 +53,10 @@ var drawingD3 = function () {
     //drag = force.drag()
     drag = d3.behavior.drag()
         .on("dragstart", dragstart)
-        .on("drag", dragging)
+        .on("drag", dragging)  
         .on("dragend", dragend);
 
-    var zoom = d3.behavior.zoom()
+    zoom = d3.behavior.zoom()
         .scaleExtent([scaleMin, scaleMax])
         .on("zoom", zoomed);
 
@@ -68,7 +68,6 @@ var drawingD3 = function () {
         .on("click", clickSVG);
         //.on("click", clickLink);
        
-
     svg.append('svg:defs').append('svg:marker')
         .attr('id', 'end-arrow')
         .attr("viewBox", "0 -5 10 10")
@@ -98,6 +97,7 @@ var drawingD3 = function () {
     node = container.selectAll(".node");
     link = container.selectAll(".link");
     label = container.selectAll(".label");
+    overlappingLink = container.selectAll(".overlappingLink");
 
     //d3.select("#keyWordMap").append("input")
     //.attr("class", "inputText")
@@ -132,6 +132,28 @@ var drawingD3 = function () {
             else if (d.linkType == "Line")
                 return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
             else { throw "No linkType Matched!";}
+        });
+
+        overlappingLink.each(function () { this.parentNode.insertBefore(this, this); });
+
+        overlappingLink.attr('d', function (d) {
+            var deltaX = d.target.x - d.source.x,
+                deltaY = d.target.y - d.source.y,
+                dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+                normX = deltaX / dist,
+                normY = deltaY / dist,
+                sourcePadding = log2(d.source.frequency + 1) * radius,
+                targetPadding = log2(d.target.frequency + 1) * radius + 5,
+                sourceX = d.source.x + (sourcePadding * normX),
+                sourceY = d.source.y + (sourcePadding * normY),
+                targetX = d.target.x - (targetPadding * normX),
+                targetY = d.target.y - (targetPadding * normY);
+
+            if (d.linkType == "Curve")
+                return 'M' + sourceX + ',' + sourceY + 'A' + dist + ',' + dist + ' 0 0,1 ' + targetX + ',' + targetY;
+            else if (d.linkType == "Line")
+                return 'M' + sourceX + ',' + sourceY + 'L' + targetX + "," + targetY;
+            else { throw "No linkType Matched!"; }
         });
 
         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -221,7 +243,7 @@ function dragend(d)//end dragging node
 function dblclick(d) {//double click node
     if (d3.event.defaultPrevented) return;
 
-    console.log("double click node");
+    console.log("double click node-1");
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
     
@@ -233,7 +255,7 @@ function dblclick(d) {//double click node
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
 
-    console.log("click node");
+    console.log("click node-1");
     if (d.fixed && !d.connecting) {
         if (!selectedNode) {
             selectedNode = d3.select(this);
@@ -282,8 +304,9 @@ function oneclick(d) {//one click node
         selectedNodeObj = null;
     }
 }
-function clickLink (d) // one click link
+function clickLink(d) // one click link
 {
+    console.log("clickLink-1");
     clickOntoLinks = true;
     //var coordinates = [0, 0];
     //coordinates = d3.mouse(this);
@@ -308,6 +331,7 @@ function clickLink (d) // one click link
 }
 function clickSVG(d)
 {
+    console.log("clickSVG-1");
     if (clickOntoLinks) {
         clickOntoLinks = false;
     }
@@ -374,11 +398,11 @@ var restartLabels = function () { //redrawing Labels
     //force.start();
 }
 var restartLinks = function() {//redrawing Links
-
-    console.log("linkNum:" + force.links().length);
+    console.log("HomePage--linkNum:" + force.links().length);
     console.log("NodesNumafterlinking:" + force.nodes().length);
 
     link = link.data(links);
+    overlappingLink = overlappingLink.data(links);
     //Data-join: Update
     //link.style('marker-end', 'url(#end-arrow)');
 
@@ -386,9 +410,16 @@ var restartLinks = function() {//redrawing Links
     var enterLink = link.enter().insert("path", ".node")
         .attr("class", "link")
         .attr("id", function (d) { return "linkIndex" + d.linkIndex; })
-        .style('marker-end', 'url(#end-arrow)')
-        .on("click", clickLink);
+        .style('marker-end', 'url(#end-arrow)');
+        //.on("click", clickLink);
    
+    var enterOverlappingLink = overlappingLink.enter().insert("path", ".node")
+    .attr("class", "overlappingLink")
+    //.attr("id", function (d) { return "linkIndex" + d.linkIndex; })
+    //.style('marker-end', 'url(#end-arrow)')
+    .on("click", clickLink);
+
+
     if (newAddedClickLink) {
         selectedLink = enterLink;
         enterLink.attr("class", "link selected");
@@ -397,6 +428,7 @@ var restartLinks = function() {//redrawing Links
         
     //Data-Join: Exit
     link.exit().remove();
+    overlappingLink.exit().remove();
 
     force.start();
 }
@@ -618,6 +650,8 @@ var saveNoteToFile = function (textContent)
     return JSON.stringify(savedString);
 }
 var cleanCache = function () {
+    svg = null;
+    container = null;
     count = 0;
     selectedNode = null;
     selectedNodeObj = null;
