@@ -9,10 +9,9 @@ var radius = 30;   // base radius for circle
 var clickOntoLinks = false;
 var translate = [0, 0];
 var scale = 1;
+var newAddedClickLink = false;
 var scaleMin = 1;
 var scaleMax = 10;
-var newAddedClickLink = false;
-
 var updateJsonData = function (jsonData) {
     return JSON.parse(jsonData);  
 };
@@ -359,7 +358,10 @@ function clickSVG(d)
         var scale = zoom.scale();
         zoom.center([d3.event.x, d3.event.y]);
         scale = scale + 0.5;
-        if (scale > scaleMax) return;
+        if (scale > scaleMax) {
+            scale = scaleMax;
+            return;
+        }
         zoom.scale(scale);
         zoom.event(svg.transition().duration(800));
         //console.log("+" + zoom.scale());
@@ -368,7 +370,10 @@ function clickSVG(d)
         var scale = zoom.scale();
         zoom.center([d3.event.x, d3.event.y]);
         scale = scale - 0.5;
-        if (scale < scaleMin) return;
+        if (scale < scaleMin) {
+            scale = scaleMin;
+            return;
+        }
         zoom.scale(scale);
         zoom.event(svg.transition().duration(800));
         //console.log("-" + zoom.scale());

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace Component
 {
@@ -68,7 +69,10 @@ namespace Component
             while (true)
             {
                 if (this.resultJson != null) break;
+
+                System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(200));
             }
+            
             return this.resultJson;
         }
 
