@@ -195,6 +195,12 @@ function dragstart(d) {//Start dragging node
     dragNodeObj = d3.select(this);
     clickOntoLinks = true;
 
+    //if (selectedNodeObj && selectedNodeObj != d) {
+    //    selectedNodeObj = null;
+    //    selectedNode.classed("connecting", d.connecting = false);
+    //    selectedNode = null;
+    //}
+
     var textShow = document.getElementById("textShow");
     if (textShow) {
         var highlightText = d.word;

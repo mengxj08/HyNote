@@ -190,10 +190,17 @@ function dragstart(d) {//Start dragging node
     //if (d3.event.defaultPrevented) return;
     //d3.event.sourceEvent.stopPropagation();
     d3.event.sourceEvent.stopPropagation(); // silence other listeners
+    console.log("dragstart");
     d3.select(this).classed("fixed", d.fixed = true);
     dragNodeObj = d3.select(this);
     clickOntoLinks = true;
     
+    //if (selectedNodeObj && selectedNodeObj != d) {
+    //    selectedNodeObj = null;
+    //    selectedNode.classed("connecting", d.connecting = false);
+    //    selectedNode = null;
+    //}
+
     var highlightText = d.word;
     $("#textShow").highlight(highlightText,"highlight");
     //console.log("highlightText:" + highlightText);
@@ -236,6 +243,7 @@ function dragging(d)//drag node
 }
 function dragend(d)//end dragging node
 {
+    console.log("dragend");
     $("#textShow").removeHighlight();
     tick();
     force.resume();

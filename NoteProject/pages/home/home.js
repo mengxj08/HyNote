@@ -248,15 +248,34 @@
         },
 
         PassTextToParse: function () {
-            console.log("passtextParse");
+            //$("#ProgressControl").css({ "visibility": "visible" });
+            //console.log("passtextParse");
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
             console.log(resultJson);
             analyseNodes(resultJson);
+            var progressControl = document.getElementById("ProgressControl");
+            progressControl.style.visibility = "hidden";
+            //$("#ProgressControl").css({ "visibility": "hidden" });
         },
 
         testButtonClicked: function (eventInfo) {
-            homePage.prototype.PassTextToParse();
+            //var promise = new WinJS.Promise.as().then(homePage.prototype.refreshProgressBar()).then(homePage.prototype.PassTextToParse());
+            //var progressControl = document.getElementById("ProgressControl");
+            //progressControl.style.visibility = "visible";
+            //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
+            homePage.prototype.refreshProgressBar();
+            setTimeout(function () {
+                homePage.prototype.PassTextToParse();
+            }, 200);
+           
+            //WinJS.UI.Pages.render("/pages/home/home.html", progressControl, {}, setTimeout(2000)).done(homePage.prototype.refreshProgressBar());
+        },
+
+        refreshProgressBar: function () {
+            var progressControl = document.getElementById("ProgressControl");
+            progressControl.style.visibility = "visible";
+            WinJS.Resources.processAll(progressControl);
         }
 
     });

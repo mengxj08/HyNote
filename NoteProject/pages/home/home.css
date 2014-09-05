@@ -115,3 +115,29 @@ text {
     top: 80px;
     font-size: 25px;
 }
+
+progress.withText
+{
+    color: black; /* Uses the same text color as the page */
+    vertical-align: text-bottom; /* Makes the bottom of the control align with the bottom of its label */
+    height:30px;
+    width: 30px;
+}
+
+/* Text style for a label for the progress ring */
+.progressRingText
+{
+    position:relative;
+    top: 80px;
+    font-family: "Segoe UI";
+    font-size: 20pt;
+    line-height: 20pt;
+    color: red;
+    visibility: hidden;
+}
+
+/* The margin to separate the ring and its label */
+.progressRingText progress
+{
+    margin-right: 5px;
+}

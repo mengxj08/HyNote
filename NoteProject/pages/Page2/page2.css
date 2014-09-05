@@ -7,7 +7,7 @@
     margin: 20px 20px 0px 20px;
     height:100%;
     display: -ms-grid;
-    -ms-grid-columns: 1fr 180px;
+    -ms-grid-columns: 1fr 200px;
 }
 #conceptShow2 {
     -ms-grid-column: 1;
@@ -40,26 +40,27 @@
 }
 .ListItemTemplate {
     width: 100%;
-    height: 100px;
+    height: 55px;
     padding:5px;
     overflow:hidden;
     display: -ms-grid;
-    -ms-grid-rows: 1fr 1fr;
+    -ms-grid-columns: 120px 50px;
 }
 .ListItemTemplate-Detail {
-    -ms-grid-row: 1;
-    width:150px;
+    -ms-grid-column: 1;
     /*background-color:darkgray;*/
 }
 .ListItemTemplate-toggle {
-    -ms-grid-row: 2;
-    width:150px;
+    -ms-grid-column: 2;
 }
 #viewListView .win-viewport{
     -ms-overflow-style: none;
 }
 #viewListView .win-surface {
     margin:0px;
+}
+#viewListView .win-label {
+    display:none;
 }
 /*.win-listview .win-container {
     margin-left:20px;
