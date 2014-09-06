@@ -12,7 +12,7 @@
             //winNavBar = document.getElementById("navbar").winControl;
             winAppBar = document.getElementById("page2Appbar").winControl;
             page2options = options;
-            element.querySelector("#newNote").addEventListener("click", this.doClickNewNote, false);
+            element.querySelector("#left-button").addEventListener("click", this.doClickNewNote, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
@@ -25,6 +25,7 @@
             this.dataBindingProcess();
 
             var viewListView = element.querySelector("#viewListView").winControl;
+            viewListView.addEventListener("selectionchanged",this.selectionChanged);
             viewListView.layout.orientation = "vertical";
 
             width = $("#conceptShow2").width();
@@ -52,6 +53,13 @@
                     $(".inputText2").val("");
                 }
             });
+        },
+        selectionChanged: function (event) {
+            var viewListView = document.getElementById("viewListView").winControl;
+            if (viewListView.selection.count() != 0) {
+                //No selected items
+                winAppBar.show();
+            }
         },
         itemButtonClick: function (event) {
             //console.log(event.name + "---" + event.value);

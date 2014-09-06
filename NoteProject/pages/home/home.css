@@ -141,3 +141,18 @@ progress.withText
 {
     margin-right: 5px;
 }
+
+.round-button-1 {
+    display:block;
+    font-size:35px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: black;
+    height:70px;
+    width: 70px;
+    min-width: 70px;
+    position:relative;
+    top: 45px;
+    left: 25px;
+}
