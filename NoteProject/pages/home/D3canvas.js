@@ -303,6 +303,9 @@ function oneclick(d) {//one click node
             restartLabels();
 
             selectedLinkObj = links[links.length - 1];
+
+            var undoButton = document.getElementById("undoNote");
+            undoButton.style.visibility = "visible";
         }
     }
     else if (d.fixed && d.connecting) {

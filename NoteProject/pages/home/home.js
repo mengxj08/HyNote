@@ -22,7 +22,7 @@
             var conceptShow = document.getElementById("conceptShow");
             var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
             
-            var testButton = document.getElementById("Button");
+            var testButton = document.getElementById("mapButton");
             testButton.addEventListener("click", this.testButtonClicked, false);
 
  
@@ -70,6 +70,8 @@
                         return;
                     }
                 });
+
+                DataExample.currentNoteState = {};
             }
             else {
                 //Add the new note to the project
@@ -81,7 +83,6 @@
                 DataExample.itemList.push(WinJS.Binding.as({ "Title": DataExample.currentNoteState.Title, "Index": index, "checked": false, "Color": "darkgrey", "Data": DataExample.currentNoteState.Data }));
             }
             passedOptions = null;
-            DataExample.currentNoteState = {};
             WinJS.Navigation.navigate("/pages/page2/page2.html");
         },
 

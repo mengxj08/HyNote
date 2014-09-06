@@ -24,17 +24,20 @@
     <!-- The content that will be loaded and displayed. -->
     <div class="fragment homepage">
         <div id="ButtonDiv">
-            <button id="Button" type="button">Mapping</button>
+            <button id="mapButton" class="round-button-3">&#xe102;</button>
+            <button id="undoNote" class="round-button-3" style="visibility:hidden">&#xe10e;</button>
             <label id="ProgressControl" class="progressRingText">
-                <progress class="win-ring withText"></progress>
+                <progress class="win-ring withText"></progress>Loading...
             </label>
         </div>
         <header aria-label="Header content" role="banner">
             <button id="right-button" class="round-button-1">&#xe111;</button>
+            
             <h1 class="titlearea win-type-ellipsis">
                 <div id="title" contenteditable="true">Click to name Note...</div>
             </h1>
         </header>
+
         <section aria-label="Main content" role="main">
             <div id="mainGrid">
                 <div id="contentGrid">

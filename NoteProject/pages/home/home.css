@@ -105,15 +105,9 @@ text {
 }
 
 #ButtonDiv {
-    width: 100%;
-    text-align:center;
-}
-
-#Button {
-    height:50px;
-    position:relative;
-    top: 80px;
-    font-size: 25px;
+    width: 50%;
+    position: relative;
+    margin-left:auto; margin-right:0;
 }
 
 progress.withText
@@ -122,6 +116,7 @@ progress.withText
     vertical-align: text-bottom; /* Makes the bottom of the control align with the bottom of its label */
     height:30px;
     width: 30px;
+    
 }
 
 /* Text style for a label for the progress ring */
@@ -134,6 +129,7 @@ progress.withText
     line-height: 20pt;
     color: red;
     visibility: hidden;
+    float:left;
 }
 
 /* The margin to separate the ring and its label */
@@ -155,4 +151,21 @@ progress.withText
     position:relative;
     top: 45px;
     left: 25px;
+}
+
+.round-button-3 {
+    display:block;
+    font-size:35px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: black;
+    height:70px;
+    width: 70px;
+    min-width: 70px;
+    position:relative;
+    top: 45px;
+    float: right;
+    right: 20px;
+    margin-left: 20px;
 }
