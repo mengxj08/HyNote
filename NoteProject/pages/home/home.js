@@ -18,6 +18,8 @@
             //element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             //element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
+            element.querySelector("#undoNote").addEventListener("click", this.doClickUndoButton, false);
+
 
             var conceptShow = document.getElementById("conceptShow");
             var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
@@ -44,6 +46,7 @@
             height = $("#conceptShow").height();
             drawingD3();
             this.readPassedOptions();
+            this.saveCurrentState();
 
             $(".inputText").keyup(function (e) {
                 if (e.keyCode == 13) {
@@ -52,13 +55,16 @@
                     inputText = inputText.trim();
                     console.log(inputText);
                     updateLinkLabelName(inputText);
-                    $(".inputText").val("");
-                    $(".inputText").css({ "visibility": "hidden" });
                 }
             });
         },
 
         //AppBar Command button function
+        doClickUndoButton: function () {
+            hideSelectedLink1();
+            homePage.prototype.readCurrenState();
+        },
+
         doClickAddtoProject: function () {
             homePage.prototype.saveCurrentState();
             if (passedOptions) {
@@ -144,7 +150,7 @@
             var titleName = document.getElementById("title");
             DataExample.currentNoteState.Title = titleName.innerText.trim();
             DataExample.currentNoteState.Data = savedString;
-            console.log(DataExample.currentNoteState);
+            console.log("CurrentData"+DataExample.currentNoteState);
         },
 
         readCurrenState: function () {

@@ -16,6 +16,7 @@
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
+            element.querySelector("#undoProject").addEventListener("click", this.doClickUndoProject, false);
             //element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
              
             WinJS.Namespace.define("utility", { itemButtonClick: this.itemButtonClick });
@@ -49,8 +50,6 @@
                     }
                     else { console.log("No update while type enter in inputText.");}
                     
-                    $(".inputText2").css({ "visibility": "hidden" });
-                    $(".inputText2").val("");
                 }
             });
         },
@@ -109,6 +108,11 @@
                     return;
                 }
             });
+        },
+
+        doClickUndoProject: function () {
+            hideSelectedLink2();
+            page2obj.prototype.readProjectState();
         },
         doClickNewNote: function () {
             page2obj.prototype.saveProjectState();

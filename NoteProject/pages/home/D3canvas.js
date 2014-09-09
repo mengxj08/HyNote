@@ -261,13 +261,13 @@ function dblclick(d) {//double click node
 }
 function oneclick(d) {//one click node
     if (d3.event.defaultPrevented) return;
-
     console.log("click node-1");
     if (d.fixed && !d.connecting) {
         if (!selectedNode) {
             selectedNode = d3.select(this);
             selectedNodeObj = d;
             d3.select(this).classed("connecting", d.connecting = true);
+            hideSelectedLink1();
         }
         else {
             if (selectedNodeObj == d) return; //Self-connected is not allowed
@@ -281,9 +281,11 @@ function oneclick(d) {//one click node
             });
             if (depulicatedConnect) return;
 
+            selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+            saveCurrentState();
             clickOntoLinks = true;
             selectedNode.classed("fixed", selectedNodeObj.fixed = false);
-            selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+            
             selectedNode.classed("connected", selectedNodeObj.connected = true);
 
             var linkIndex = 0;
@@ -346,15 +348,7 @@ function clickSVG(d)
         clickOntoLinks = false;
     }
     else {
-        $(".inputText").css({ "visibility": "hidden" });
-        $(".inputText").val("");
-        selectedLinkObj = null;
-        if (selectedLink)
-        {
-            selectedLink.classed("selected", false);
-            tick();
-        }
-        selectedLink = null;
+        hideSelectedLink1();
     }
 
     if (d3.event.ctrlKey) {
@@ -457,6 +451,20 @@ var restartNodes = function () {//redrawing Nodes
     node = node.data(force.nodes(), function (d) { return d.word; });
 
     //Data-Join : Update
+    node.attr("class", function (d) {
+        if (d.fixed) {
+            //if (d.connecting) return "node fixed connecting";
+            //else return "node fixed";
+            return "node fixed";
+        }
+        else if (d.connected) {
+            return "node connected";
+        }
+        else {
+            return "node";
+        }
+    });
+
     node.select("circle")
         .transition().duration(500)
         .attr("r", function (d) { return radius * log2(d.frequency + 1); });
@@ -468,7 +476,17 @@ var restartNodes = function () {//redrawing Nodes
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
         //.attr("class", "node")
-         .attr("class", function (d) { return d.fixed ? "node fixed" : "node";})
+         .attr("class", function (d) {
+             if (d.fixed) {
+                 return "node fixed";
+             }
+             else if (d.connected) {
+                 return "node connected";
+             }
+             else {
+                 return "node";
+             }
+         })
         //.attr("id", function (d) { return d.id; })
         .on("dblclick", dblclick)
         .on("click", oneclick)
@@ -558,10 +576,7 @@ var analyseNodes = function(jsonData) { //Analyse the textarea/jsonData and upda
 var updateLinkLabelName = function(inputText) //update label name for link
 {
     selectedLinkObj.linkName = inputText;
-    $(".inputText").css({ "visibility": "hidden" });
-    selectedLinkObj = null;
-    selectedLink.classed("selected", false);
-    selectedLink = null;
+    hideSelectedLink1();
     restartLabels();
     tick();
     //restartLinks();
@@ -635,6 +650,20 @@ var linkstoNodes = function () {
         });
     });
 };
+
+var hideSelectedLink1 = function () {
+    $(".inputText").css({ "visibility": "hidden" });
+    $(".inputText").val("");
+    selectedLinkObj = null;
+    if (selectedLink) {
+        selectedLink.classed("selected", false);
+        tick();
+    }
+    selectedLink = null;
+
+    var undoButton = document.getElementById("undoNote");
+    undoButton.style.visibility = "hidden";
+};
 //**************************************************************************
 //Keyboard event
 function keyup() {
@@ -679,4 +708,13 @@ var cleanCache = function () {
     clickOntoLinks = false;
     translate = [0, 0];
     scale = 1;
+}
+var saveCurrentState = function () {
+    var textShow = document.getElementById("textShow");
+    var savedString = saveNoteToFile(textShow.innerText.trim());
+    var titleName = document.getElementById("title");
+    DataExample.currentNoteState.Title = titleName.innerText.trim();
+    DataExample.currentNoteState.Data = savedString;
+
+    console.log("CurrentData" + DataExample.currentNoteState.Data);
 }

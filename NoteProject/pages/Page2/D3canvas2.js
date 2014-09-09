@@ -294,19 +294,11 @@ function oneclick(d) {//one click node
 
     console.log("click node");
     if (d.fixed && !d.connecting) {
-        $(".inputText2").css({ "visibility": "hidden" });
-        $(".inputText2").val("");
-        selectedLinkObj = null;
-        if (selectedLink) {
-            selectedLink.classed("selected", false);
-            tick();
-        }
-        selectedLink = null;
-
         if (!selectedNode) {
             selectedNode = d3.select(this);
             selectedNodeObj = d;
             d3.select(this).classed("connecting", d.connecting = true);
+            hideSelectedLink2();
         }
         else {
             if (selectedNodeObj == d) return; //Self-connected is not allowed
@@ -319,9 +311,20 @@ function oneclick(d) {//one click node
             });
             if (depulicatedConnect) return;
 
+            selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+            var undoProject = document.getElementById("undoProject");
+            if (undoProject) {
+                undoProject.style.visibility = "visible";
+                saveProjectState();
+            }
+            else {
+                var undoButton = document.getElementById("undoNote");
+                undoButton.style.visibility = "visible";
+                saveCurrentState();
+            }
+            
             clickOntoLinks = true;
             selectedNode.classed("fixed", selectedNodeObj.fixed = false);
-            selectedNode.classed("connecting", selectedNodeObj.connecting = false);
             selectedNode.classed("connected", selectedNodeObj.connected = true);
 
             var linkIndex = 0;
@@ -392,14 +395,7 @@ function clickSVG2(d) {
         clickOntoLinks = false;
     }
     else {
-        $(".inputText2").css({ "visibility": "hidden" });
-        $(".inputText2").val("");
-        selectedLinkObj = null;
-        if (selectedLink) {
-            selectedLink.classed("selected", false);
-            tick();
-        }
-        selectedLink = null;
+        hideSelectedLink2();
     }
 
     //var coordinates = [0, 0];
@@ -532,6 +528,20 @@ var restartNodes = function () {//redrawing Nodes
     node = node.data(force.nodes(), function (d) { return d.word; });
 
     //Data-Join : Update
+    node.attr("class", function (d) {
+        if (d.fixed) {
+            //if (d.connecting) return "node fixed connecting";
+            //else return "node fixed";
+            return "node fixed";
+        }
+        else if (d.connected) {
+            return "node connected";
+        }
+        else {
+            return "node";
+        }
+    });
+
     node.select("circle")
         .transition().duration(500)
         .attr("r", function (d) { return radius * log2(d.frequency + 1); });
@@ -543,7 +553,19 @@ var restartNodes = function () {//redrawing Nodes
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
         //.attr("class", "node")
-        .attr("class", function (d) { return d.fixed ? "node fixed" : "node";})
+        .attr("class", function (d) {
+            if (d.fixed) {
+                //if (d.connecting) return "node fixed connecting";
+                //else return "node fixed";
+                return "node fixed";
+            }
+            else if (d.connected) {
+                return "node connected";
+            }
+            else {
+                return "node";
+            }
+        })
         //.attr("id", function (d) { return d.id; })
         .on("dblclick", dblclick)
         .on("click", oneclick)
@@ -668,9 +690,7 @@ var updateLinkLabelName = function (inputText2) //update label name for link
 {
     selectedLinkObj.linkName = inputText2;
 
-    selectedLinkObj = null;
-    selectedLink.classed("selected", false);
-    selectedLink = null;
+    hideSelectedLink2();
     restartLabels();
     tick();
     //restartLinks();
@@ -740,6 +760,28 @@ var linkstoNodes = function () {
             else { }
         });
     });
+};
+
+var hideSelectedLink2 = function () {
+    selectedLinkObj = null;
+    if (selectedLink) {
+        selectedLink.classed("selected", false);
+        tick();
+    }
+    selectedLink = null;
+
+    var undoProject = document.getElementById("undoProject");
+    if (undoProject) {
+        undoProject.style.visibility = "hidden";
+        $(".inputText2").css({ "visibility": "hidden" });
+        $(".inputText2").val("");
+    }
+    else {
+        var undoButton = document.getElementById("undoNote");
+        undoButton.style.visibility = "hidden";
+        $(".inputText").css({ "visibility": "hidden" });
+        $(".inputText").val("");
+    }
 };
 //**************************************************************************
 //Keyboard event
@@ -898,4 +940,13 @@ var removeNodesAndLinks = function (removeNodes, removeLinks) {
             } 
         });
     });
+};
+
+var saveProjectState = function () {
+    var textShow = "N/A";
+    var currentState = saveNoteToFile(textShow);
+
+    var titleName = document.getElementById("titleProject");
+    DataExample.currentProjectState.Title = titleName.innerText.trim();
+    DataExample.currentProjectState.Data = currentState;
 };
