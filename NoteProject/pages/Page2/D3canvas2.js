@@ -209,15 +209,15 @@ function dragstart(d) {//Start dragging node
         $("#textShow").highlight(highlightText, "highlight");
     }
     else {
-        DataExample.itemList.forEach(function (itemValue, itemIndex) {
-            var readJson = JSON.parse(itemValue.Data);
-            readJson.node.forEach(function (nodeValue, nodeIndex) {
-                if (nodeValue.word == d.word) {
-                    itemValue.Color = "red";
-                    return;
-                }
-            });
-        });
+        //DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        //    var readJson = JSON.parse(itemValue.Data);
+        //    readJson.node.forEach(function (nodeValue, nodeIndex) {
+        //        if (nodeValue.word == d.word) {
+        //            itemValue.Color = "red";
+        //            return;
+        //        }
+        //    });
+        //});
     }
 }
 function dragging(d)//drag node
@@ -261,15 +261,15 @@ function dragend(d)//end dragging node
         $("#textShow").removeHighlight();
     }
     else {
-        DataExample.itemList.forEach(function (itemValue, itemIndex) {
-            var readJson = JSON.parse(itemValue.Data);
-            readJson.node.forEach(function (nodeValue, nodeIndex) {
-                if (nodeValue.word == d.word) {
-                    itemValue.Color = "darkgrey";
-                    return;
-                }
-            });
-        });
+        //DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        //    var readJson = JSON.parse(itemValue.Data);
+        //    readJson.node.forEach(function (nodeValue, nodeIndex) {
+        //        if (nodeValue.word == d.word) {
+        //            itemValue.Color = "darkgrey";
+        //            return;
+        //        }
+        //    });
+        //});
     }
 
     tick();
@@ -281,6 +281,7 @@ function dblclick(d) {//double click node
     console.log("double click node-2");
     d3.select(this).classed("fixed", d.fixed = false);
     d3.select(this).classed("connecting", d.connecting = false);
+    changeItemViewColor(d, false);
 
     if (d == selectedNodeObj) {
         selectedNodeObj = null;
@@ -298,6 +299,7 @@ function oneclick(d) {//one click node
             selectedNode = d3.select(this);
             selectedNodeObj = d;
             d3.select(this).classed("connecting", d.connecting = true);
+            changeItemViewColor(d, true);
             hideSelectedLink2();
         }
         else {
@@ -312,6 +314,8 @@ function oneclick(d) {//one click node
             if (depulicatedConnect) return;
 
             selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+            changeItemViewColor(selectedNodeObj, false);
+
             var undoProject = document.getElementById("undoProject");
             if (undoProject) {
                 undoProject.style.visibility = "visible";
@@ -350,6 +354,7 @@ function oneclick(d) {//one click node
         d3.select(this).classed("connecting", d.connecting = false);
         selectedNode = null;
         selectedNodeObj = null;
+        changeItemViewColor(d, false);
     }
 }
 function clickLink(d) // one click link
@@ -949,4 +954,21 @@ var saveProjectState = function () {
     var titleName = document.getElementById("titleProject");
     DataExample.currentProjectState.Title = titleName.innerText.trim();
     DataExample.currentProjectState.Data = currentState;
+};
+
+var changeItemViewColor = function (d, isHighlight) {
+    DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        var readJson = JSON.parse(itemValue.Data);
+        readJson.node.forEach(function (nodeValue, nodeIndex) {
+            if (nodeValue.word == d.word) {
+
+                if(isHighlight)
+                    itemValue.Color = "red";
+                else
+                    itemValue.Color = "darkgrey";
+
+                return;
+            }
+        });
+    });
 };
