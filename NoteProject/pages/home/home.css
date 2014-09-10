@@ -122,14 +122,14 @@ progress.withText
 /* Text style for a label for the progress ring */
 .progressRingText
 {
-    position:relative;
-    top: 80px;
+    position:absolute;
+    top: 110px;
+    left: 0px;
     font-family: "Segoe UI";
     font-size: 20pt;
     line-height: 20pt;
     color: red;
     visibility: hidden;
-    float:left;
 }
 
 /* The margin to separate the ring and its label */
@@ -165,7 +165,7 @@ progress.withText
     min-width: 70px;
     position:relative;
     top: 45px;
-    float: right;
-    right: 20px;
-    margin-left: 20px;
+    float: left;
+    left: 20px;
+    margin-right: 20px;
 }

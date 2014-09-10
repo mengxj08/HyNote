@@ -150,7 +150,7 @@
             var titleName = document.getElementById("title");
             DataExample.currentNoteState.Title = titleName.innerText.trim();
             DataExample.currentNoteState.Data = savedString;
-            console.log("CurrentData"+DataExample.currentNoteState);
+            //console.log("CurrentData"+DataExample.currentNoteState);
         },
 
         readCurrenState: function () {

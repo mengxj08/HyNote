@@ -5,6 +5,7 @@
     //var winNavBar;
     var winAppBar;
     var page2options = null;
+    var page2Timeout = null;
     var page2obj = WinJS.UI.Pages.define("/pages/Page2/page2.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
@@ -34,6 +35,7 @@
 
             multiDrawingD3();
             this.readPassedOptions();
+            this.updateFile();
 
             $(".inputText2").keyup(function (e) {
                 if (e.keyCode == 13) {
@@ -128,6 +130,7 @@
             openPicker.pickSingleFileAsync().then(function (file) {
                 if (file) {
                     Windows.Storage.CachedFileManager.deferUpdates(file);
+                    DataExample.storageFile = file;
                     Windows.Storage.FileIO.readTextAsync(file).done(function (contents) {
                         var JsonObject = JSON.parse(contents)
                         var readJson = JsonObject.currentState;
@@ -175,7 +178,7 @@
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
             });
-            var titleName = document.getElementById("titleProject");
+            //var titleName = document.getElementById("titleProject");
             var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
             savedString = JSON.stringify(savedString);
             //savedString = savedString.toString();
@@ -184,6 +187,7 @@
                 if (file) {
                     Windows.Storage.CachedFileManager.deferUpdates(file);
                     // write to file
+                    DataExample.storageFile = file;
                     Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
                         Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
                             if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
@@ -284,9 +288,39 @@
             page2options = null;
         },
 
+        updateFile : function () {
+            //console.log("updateFile");
+            if (DataExample.storageFile) {
+                console.log("auto-saving");
+                page2obj.prototype.saveProjectState();
+
+                var dataExample = [];
+                DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                    dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
+                });
+                //var titleName = document.getElementById("titleProject");
+                var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
+                savedString = JSON.stringify(savedString);
+
+                var file = DataExample.storageFile;
+                Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
+                    Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
+                        if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
+                            //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
+                        } else {
+                            //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
+                        }
+                    });
+                });
+            }
+            page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*3);
+        },
+
         unload: function () {
             // TODO: Respond to navigations away from this page.
             //WinJS.UI.Fragments.clearCache();
+            if (page2Timeout)
+                clearTimeout(page2Timeout);
         },
 
         updateLayout: function (element, viewState, lastViewState) {

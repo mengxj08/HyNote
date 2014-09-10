@@ -653,6 +653,9 @@ var restartNodes = function () {//redrawing Nodes
 //****************************************************************************
 var updateNodeWord = function (inputText2)//Update Node word for Nodes
 {
+    $(".inputText2").css({ "visibility": "hidden" });
+    $(".inputText2").val("");
+
     var selectedNodeIndex = nodes.indexOf(selectedNodeObj);
     nodes.splice(selectedNodeIndex, 1);
     var newAddNode = null;
@@ -687,6 +690,7 @@ var updateNodeWord = function (inputText2)//Update Node word for Nodes
     */
     //selectedNode.classed("connecting", selectedNodeObj.connecting = false);
     //selectedNode.classed("fixed", selectedNodeObj.fixed = false);
+    changeItemViewColor(selectedNodeObj,false);
     selectedNodeObj = null;
     selectedNode = null;
     restartNodes();

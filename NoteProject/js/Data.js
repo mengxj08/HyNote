@@ -10,6 +10,7 @@
 
     var currentNoteState = {};
     var currentProjectState = {};
+    var storageFile = null;
 
     // Create a namespace to make the data publicly accessible. 
     var publicMembers =
