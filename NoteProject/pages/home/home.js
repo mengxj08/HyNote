@@ -76,8 +76,6 @@
                         return;
                     }
                 });
-
-                DataExample.currentNoteState = {};
             }
             else {
                 //Add the new note to the project
@@ -89,6 +87,7 @@
                 DataExample.itemList.push(WinJS.Binding.as({ "Title": DataExample.currentNoteState.Title, "Index": index, "checked": false, "Color": "darkgrey", "Data": DataExample.currentNoteState.Data }));
             }
             passedOptions = null;
+            DataExample.currentNoteState = {};
             WinJS.Navigation.navigate("/pages/page2/page2.html");
         },
 
@@ -259,6 +258,7 @@
             //console.log("passtextParse");
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
+            textShow.innerText = textShow.innerText;
             console.log(resultJson);
             analyseNodes(resultJson);
             var progressControl = document.getElementById("ProgressControl");

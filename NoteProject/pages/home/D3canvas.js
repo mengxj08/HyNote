@@ -716,5 +716,5 @@ var saveCurrentState = function () {
     DataExample.currentNoteState.Title = titleName.innerText.trim();
     DataExample.currentNoteState.Data = savedString;
 
-    console.log("CurrentData" + DataExample.currentNoteState.Data);
+    //console.log("CurrentData" + DataExample.currentNoteState.Data);
 }

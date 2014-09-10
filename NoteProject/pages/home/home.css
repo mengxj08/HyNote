@@ -40,15 +40,15 @@
     margin-left: 20px; 
     width: auto;
     height: 79vh;
-    -moz-appearance: textfield;
-    -webkit-appearance: textfield;
+    /*-moz-appearance: textfield;
+    -webkit-appearance: textfield;*/
     background-color: white;
     background-color: -moz-field;
     border: 3px solid darkgray;
     box-shadow: 1px 1px 1px 0 lightgray inset;  
-    font: -moz-field;
-    font: -webkit-small-control;
-    font-size: xx-large;
+    /*font: -moz-field;
+    font: -webkit-small-control;*/
+    font-size: 25pt;
     word-wrap: break-word;
     overflow: auto;
 }
