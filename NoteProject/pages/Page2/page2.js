@@ -54,6 +54,13 @@
                     
                 }
             });
+
+            $("#titleProject").focusin(function () {
+                var titleProject = document.getElementById("titleProject");
+                if (titleProject.innerText.trim() == "Click to name Project...") {
+                    titleProject.innerText = "";
+                }
+            });
         },
         selectionChanged: function (event) {
             var viewListView = document.getElementById("viewListView").winControl;

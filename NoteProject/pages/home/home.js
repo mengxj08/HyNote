@@ -57,6 +57,20 @@
                     updateLinkLabelName(inputText);
                 }
             });
+
+            $("#title").focusin(function () {
+                var titleName = document.getElementById("title");
+                if (titleName.innerText.trim() == "Click to name Note...") {
+                    titleName.innerText = "";
+                }
+            });
+
+            $("#textShow").focusin(function () {
+                var textShow = document.getElementById("textShow");
+                if (textShow.innerText.trim() == "Click to take notes...") {
+                    textShow.innerText = "";
+                }
+            });
         },
 
         //AppBar Command button function
@@ -273,7 +287,9 @@
             //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
             homePage.prototype.refreshProgressBar();
             setTimeout(function () {
-                homePage.prototype.PassTextToParse();
+                //homePage.prototype.PassTextToParse();
+                var textShow = document.getElementById("textShow");
+                resultJson = SampleComponent.localJsonResult(textShow.innerText);
             }, 200);
            
             //WinJS.UI.Pages.render("/pages/home/home.html", progressControl, {}, setTimeout(2000)).done(homePage.prototype.refreshProgressBar());
