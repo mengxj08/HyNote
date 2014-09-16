@@ -6,6 +6,7 @@
     var winAppBar;
     var page2options = null;
     var page2Timeout = null;
+    var canSave = true;
     var page2obj = WinJS.UI.Pages.define("/pages/Page2/page2.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
@@ -66,11 +67,14 @@
             var viewListView = document.getElementById("viewListView").winControl;
             if (viewListView.selection.count() != 0) {
                 //No selected items
-                winAppBar.show();
+                //winAppBar.show();
             }
         },
         itemButtonClick: function (event) {
             //console.log(event.name + "---" + event.value);
+
+            page2obj.prototype.saveProjectToNote(event.name);
+
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == event.name)
                 {
@@ -90,9 +94,60 @@
             page2obj.prototype.saveProjectState();
             WinJS.Navigation.navigate("/pages/home/home.html", {"Index":event.name});
         },
+        saveProjectToNote: function (itemValueIndex) {
+            //page2obj.prototype.saveProjectState();
+            DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                if (itemValue.Index == itemValueIndex) {
+                    var readJson = JSON.parse(itemValue.Data);
+                    console.log(itemValue.Data);
+                    readJson.node.forEach(function (JsonNodeValue, JsonNodeIndex) {
+                        nodes.forEach(function (nodeValue, nodeIndex) {
+                            if (JsonNodeValue.word.toUpperCase() == nodeValue.word.toUpperCase()) {
+                                console.log("----FUCK-----------");
+                                var frequency = JsonNodeValue.frequency;
+                                JsonNodeValue = nodeValue;
+                                JsonNodeValue.frequency = frequency;
+                                if (JsonNodeValue.connecting) {
+                                    changeItemViewColor(JsonNodeValue,false);
+                                    JsonNodeValue.connecting = false;
+                                    selectedNode = null;
+                                    selectedNodeObj = null;
+                                }
+                                
+                                readJson.node[JsonNodeIndex] = JsonNodeValue;
+                                return;
+                            }
+                        });
+                    });
+
+                    for (var i = 0; i < readJson.link.length; i++) {
+                        var delLink = true;
+                        var JsonLinkValue = readJson.link[i];
+                        links.forEach(function (linkValue, linkIndex) {
+                            if (JsonLinkValue.source.word.toUpperCase() == linkValue.source.word.toUpperCase() && JsonLinkValue.target.word.toUpperCase() == linkValue.target.word.toUpperCase()) {
+                                delLink = false;
+                                JsonLinkValue.linkName = linkValue.linkName;
+                                JsonLinkValue.linkType = linkValue.linkType;
+                                return;
+                            }
+                        });
+
+                        if (delLink) {
+                            readJson.link.splice(i--,1);
+                        }
+                    }
+
+
+                    var newItemValueData = JSON.stringify(readJson);
+                    itemValue.Data = newItemValueData;
+                    console.log(itemValue.Data);
+                    return;
+                }
+            });
+        },
         toggleSwitchChange: function (event) {
             var index = event.srcElement.title;
-            console.log("index:"+index);
+            //console.log("index:"+index);
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == index)
                 {
@@ -108,6 +163,8 @@
                         restartLabels();
                     }
                     else {
+                        page2obj.prototype.saveProjectToNote(index);
+
                         removeNodesAndLinks(readJson.node, readJson.link);
 
                         restartNodes();
@@ -173,13 +230,22 @@
         },
 
         doClickSave: function () {
+            if (DataExample.storageFile) {
+                page2obj.prototype.autoSaving();
+                return;
+            }
+
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.documentsLibrary;
             savePicker.fileTypeChoices.insert("Project", [".project"]);
-            savePicker.suggestedFileName = "New Document";
 
             page2obj.prototype.saveProjectState();
-            console.log("FUCK"+DataExample.itemList.length);
+            if (DataExample.currentProjectState.Title != "Click to name Project..." && DataExample.currentProjectState.Title != "") {
+                savePicker.suggestedFileName = DataExample.currentProjectState.Title;
+            }
+            else {
+                savePicker.suggestedFileName = "New Document";
+            }
             //var dataExample = DataExample.itemList.slice(0);
             var dataExample = [];
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
@@ -196,13 +262,14 @@
                     // write to file
                     DataExample.storageFile = file;
                     Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
-                        Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
-                            if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
-                                //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
-                            } else {
-                                //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
-                            }
-                        });
+                         Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
+                                if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
+                                    canSave = true;
+                                    //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
+                                } else {
+                                    //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
+                                }
+                         });
                     });
                 } else {
                     //WinJS.log && WinJS.log("Operation cancelled.", "sample", "status");
@@ -293,10 +360,11 @@
             }
             else { }
             page2options = null;
+
+            //page2obj.prototype.autoSaving();
         },
 
-        updateFile : function () {
-            //console.log("updateFile");
+        autoSaving: function () {
             if (DataExample.storageFile) {
                 console.log("auto-saving");
                 page2obj.prototype.saveProjectState();
@@ -320,7 +388,12 @@
                     });
                 });
             }
-            page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*3);
+        },
+
+        updateFile : function () {
+            //console.log("updateFile");
+            page2obj.prototype.autoSaving();
+            page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*2);
         },
 
         unload: function () {

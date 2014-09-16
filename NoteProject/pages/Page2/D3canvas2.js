@@ -335,7 +335,13 @@ function oneclick(d) {//one click node
             if (links.length != 0)
                 linkIndex = links[links.length - 1].linkIndex + 1;
 
-            links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex": linkIndex });
+            if (undoProject) {
+                links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex": linkIndex, "external":true});
+            }
+            else {
+                links.push({ "source": selectedNodeObj, "target": d, "linkName": null, "linkType": "Line", "linkIndex": linkIndex });
+            }
+            
             newAddedClickLink = true;
             updateLinkType(links[links.length - 1], true);
             selectedNode = null;

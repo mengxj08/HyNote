@@ -51,8 +51,8 @@ namespace Component
     }
     public sealed class SampleComponent
     {
-        //string [] args = new String[] {"C:\\Users\\v-xime\\Documents\\Visual Studio 2013\\Projects\\NoteProject\\NoteProject\\bin\\Debug\\AppX\\Models","en-Chunker,en-Tokens,en-POS_Tags,en-Constituency_Tree,en-Dependency_Tree,en-Lemmas,en-Named_Entities,en-"};
-        string[] args = new String[] { "C:\\Users\\v-xime\\Documents\\Visual Studio 2013\\Projects\\NoteProject\\NoteProject\\bin\\Debug\\AppX\\Models", "en-Dependency_Tree" };
+        string [] args = new String[] {"C:\\Users\\v-xime\\Documents\\Visual Studio 2013\\Projects\\NoteProject\\NoteProject\\bin\\Debug\\AppX\\Models","en-Chunker,en-Tokens,en-POS_Tags,en-Constituency_Tree,en-Dependency_Tree,en-Lemmas,en-Named_Entities,en-"};
+        //string[] args = new String[] { "C:\\Users\\v-xime\\Documents\\Visual Studio 2013\\Projects\\NoteProject\\NoteProject\\bin\\Debug\\AppX\\Models", "en-Dependency_Tree" };
         string results;
         string resultJson = null;
         
@@ -76,14 +76,23 @@ namespace Component
             return this.resultJson;
         }
 
+        public string LocalJsonResult(string input) {
+            var h = InitAnalysisHost(args);
+            UsingEnglishAnalyzers(h, input);
+            return this.resultJson;
+        }
+
         public void InitialAnalysis(RootObject rootObject)
         {
             DataBase database = new DataBase();           
             int i = 0;
             foreach (var obj in rootObject.Value)
             {
-                if(obj.Tag == "NNP" || obj.Tag == "NN")
+                if (obj.Tag.Length < 2) continue;
+                System.Diagnostics.Debug.WriteLine("tag:" + obj.Tag);
+                if(obj.Tag[0] == 'N' && obj.Tag[1] == 'N')
                 {
+                    
                     Boolean flag = true;
                     foreach (var node in database.nodes)
                     {
@@ -158,48 +167,48 @@ namespace Component
             InitialAnalysis(rootObject);
             
         }
-        //private IAnalysisHost InitAnalysisHost(string[] args)
-        //{
-        //    IAnalysisHost h;
-        //    string modelDir = null;
-        //    var splatAnalyzers = new List<string>();
-        //    //modelDir = args.Length != 0 ? args[0] : Environment.GetEnvironmentVariable("SPLAT_MODEL_DIR");
-        //    modelDir = args[0];
-        //    if (string.IsNullOrEmpty(modelDir))
-        //    {
-        //        throw new ArgumentException("Model Directory needs to be set for SPLAT to initialize.\n Pass the Model Directory as the first argument or set Environment variable SPLAT_MODEL_DIR");
-        //    }
-        //    //Console.WriteLine("Environment variable SPLAT_MODEL_DIR is: " + modelDir);
+        private IAnalysisHost InitAnalysisHost(string[] args)
+        {
+            IAnalysisHost h;
+            string modelDir = null;
+            var splatAnalyzers = new List<string>();
+            //modelDir = args.Length != 0 ? args[0] : Environment.GetEnvironmentVariable("SPLAT_MODEL_DIR");
+            modelDir = args[0];
+            if (string.IsNullOrEmpty(modelDir))
+            {
+                throw new ArgumentException("Model Directory needs to be set for SPLAT to initialize.\n Pass the Model Directory as the first argument or set Environment variable SPLAT_MODEL_DIR");
+            }
+            //Console.WriteLine("Environment variable SPLAT_MODEL_DIR is: " + modelDir);
 
-        //    if (args.Length > 1)
-        //    {
-        //        splatAnalyzers = args[1].Split(new char[] { ';', ',' }).ToList();
-        //        //string[] splatAnalyzers = new string[] { "Chunker", "Constituency_Tree", "Dependency_Tree", "Katakana_Transliterator", "Lemmas", "Named_Entities", "POS_Tags", "Semantic_Roles", "Sentiment", "Stemmer", "Tokens", "Triples" };                            
-        //        //splatAnalyzers.Add("BaseForms");
-        //    }
-        //    h = HostFactory.CreateHost(modelDir, splatAnalyzers);
-        //    //Console.WriteLine("Finished loading models for SPLAT.");
-        //    return h;
-        //}
+            if (args.Length > 1)
+            {
+                splatAnalyzers = args[1].Split(new char[] { ';', ',' }).ToList();
+                //string[] splatAnalyzers = new string[] { "Chunker", "Constituency_Tree", "Dependency_Tree", "Katakana_Transliterator", "Lemmas", "Named_Entities", "POS_Tags", "Semantic_Roles", "Sentiment", "Stemmer", "Tokens", "Triples" };                            
+                //splatAnalyzers.Add("BaseForms");
+            }
+            h = HostFactory.CreateHost(modelDir, splatAnalyzers);
+            //Console.WriteLine("Finished loading models for SPLAT.");
+            return h;
+        }
 
-        //private void UsingEnglishAnalyzers(IAnalysisHost h, string input)
-        //{
-        //    var line = input;
-        //    var b = h.CreateAnalysis("en", line);
-        //    int count = 0;
-        //    System.Diagnostics.Debug.WriteLine("test");
-        //    foreach (var an in h.Analyzers("en"))
-        //    {
-        //        count ++;
-        //        if (count == 4)
-        //        {
-        //            System.Diagnostics.Debug.WriteLine("    " + an);
-        //            var output = b.Demand(new AnalysisName(an));
-        //            System.Diagnostics.Debug.WriteLine(output);
-        //            break;
-        //        }
+        private void UsingEnglishAnalyzers(IAnalysisHost h, string input)
+        {
+            var line = input;
+            var b = h.CreateAnalysis("en", line);
+            int count = 0;
+            System.Diagnostics.Debug.WriteLine("test");
+            foreach (var an in h.Analyzers("en"))
+            {
+                count++;
+                if (count == 4)
+                {
+                    System.Diagnostics.Debug.WriteLine("    " + an);
+                    var output = b.Demand(new AnalysisName(an));
+                    System.Diagnostics.Debug.WriteLine(output);
+                    break;
+                }
 
-        //    }
-        //}
+            }
+        }
     }
 }

@@ -272,7 +272,7 @@
             //console.log("passtextParse");
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
-            textShow.innerText = textShow.innerText;
+            //textShow.innerText = textShow.innerText;
             console.log(resultJson);
             analyseNodes(resultJson);
             var progressControl = document.getElementById("ProgressControl");
@@ -287,9 +287,9 @@
             //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
             homePage.prototype.refreshProgressBar();
             setTimeout(function () {
-                //homePage.prototype.PassTextToParse();
-                var textShow = document.getElementById("textShow");
-                resultJson = SampleComponent.localJsonResult(textShow.innerText);
+                homePage.prototype.PassTextToParse();
+                //var textShow = document.getElementById("textShow");
+                //resultJson = SampleComponent.localJsonResult(textShow.innerText);
             }, 200);
            
             //WinJS.UI.Pages.render("/pages/home/home.html", progressControl, {}, setTimeout(2000)).done(homePage.prototype.refreshProgressBar());
