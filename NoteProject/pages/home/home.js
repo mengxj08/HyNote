@@ -280,11 +280,20 @@
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
             //textShow.innerText = textShow.innerText;
-            console.log(resultJson);
-            analyseNodes(resultJson);
+            //console.log(resultJson);
             var progressControl = document.getElementById("ProgressControl");
             progressControl.style.visibility = "hidden";
-            //$("#ProgressControl").css({ "visibility": "hidden" });
+            if (resultJson != "N/A") {
+                analyseNodes(resultJson);
+            }
+            else {
+                console.log("Internet is slow. Try again please...");
+                var errorMsg = document.getElementById("errorMsg");
+                errorMsg.style.visibility = "visible";
+                setTimeout(function () {
+                    errorMsg.style.visibility = "hidden";
+                }, 1000);
+            }
         },
 
         testButtonClicked: function (eventInfo) {
@@ -292,7 +301,9 @@
             //var progressControl = document.getElementById("ProgressControl");
             //progressControl.style.visibility = "visible";
             //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
-            homePage.prototype.refreshProgressBar();
+            var errorMsg = document.getElementById("errorMsg");
+            errorMsg.style.visibility = "hidden";
+            homePage.prototype.refreshProgressBar("Loading...");
             setTimeout(function () {
                 homePage.prototype.PassTextToParse();
                 //var textShow = document.getElementById("textShow");
@@ -302,8 +313,9 @@
             //WinJS.UI.Pages.render("/pages/home/home.html", progressControl, {}, setTimeout(2000)).done(homePage.prototype.refreshProgressBar());
         },
 
-        refreshProgressBar: function () {
+        refreshProgressBar: function (showText) {
             var progressControl = document.getElementById("ProgressControl");
+            //$("#ProgressControl").text(showText);
             progressControl.style.visibility = "visible";
             WinJS.Resources.processAll(progressControl);
         }

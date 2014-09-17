@@ -10,7 +10,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Threading;
-
+using System.Diagnostics;
 namespace Component
 {
     public sealed class RootObject
@@ -65,15 +65,21 @@ namespace Component
             CallSplatJsonService(input);
 
             resultJson = null;
+            Stopwatch s = new Stopwatch();
+            s.Start();
 
-            while (true)
+            while (s.Elapsed < TimeSpan.FromSeconds(2))
             {
                 if (this.resultJson != null) break;
 
                 System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(200));
             }
-            
-            return this.resultJson;
+            s.Stop();
+
+            if (this.resultJson != null)
+                return this.resultJson;
+            else
+                return "N/A";
         }
 
         public string LocalJsonResult(string input) {
