@@ -10,6 +10,8 @@
 
     var currentNoteState = {};
     var currentProjectState = {};
+    var initialLinks = [];
+    var externalLinks = JSON.stringify(initialLinks);
     var storageFile = null;
 
     // Create a namespace to make the data publicly accessible. 
@@ -17,7 +19,9 @@
         {
             itemList: itemList,
             currentNoteState: currentNoteState,
-            currentProjectState: currentProjectState
+            currentProjectState: currentProjectState,
+            externalLinks:externalLinks,
+            storageFile: storageFile
         };
     WinJS.Namespace.define("DataExample", publicMembers);
 };

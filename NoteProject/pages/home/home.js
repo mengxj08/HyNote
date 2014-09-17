@@ -80,6 +80,9 @@
         },
 
         doClickAddtoProject: function () {
+            if (selectedNode) {
+
+            }
             homePage.prototype.saveCurrentState();
             if (passedOptions) {
                 //modify the corresponding DataExample.itemList
@@ -158,6 +161,10 @@
         },
 
         saveCurrentState: function () {
+            if (selectedNodeObj) {
+                selectedNodeObj.connecting = false;
+            }
+                
             var textShow = document.getElementById("textShow");
             var savedString = saveNoteToFile(textShow.innerText.trim());
             var titleName = document.getElementById("title");

@@ -43,7 +43,7 @@
                     // Do something
                     var inputText = $(".inputText2").val();
                     inputText = inputText.trim();
-                    console.log(inputText);
+                    //console.log(inputText);
                     if (selectedLinkObj) {
                         updateLinkLabelName(inputText);
                     }
@@ -99,11 +99,10 @@
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == itemValueIndex) {
                     var readJson = JSON.parse(itemValue.Data);
-                    console.log(itemValue.Data);
+                    //console.log(itemValue.Data);
                     readJson.node.forEach(function (JsonNodeValue, JsonNodeIndex) {
                         nodes.forEach(function (nodeValue, nodeIndex) {
                             if (JsonNodeValue.word.toUpperCase() == nodeValue.word.toUpperCase()) {
-                                console.log("----FUCK-----------");
                                 var frequency = JsonNodeValue.frequency;
                                 JsonNodeValue = nodeValue;
                                 JsonNodeValue.frequency = frequency;
@@ -137,15 +136,31 @@
                         }
                     }
 
+                    //Add to ExternalLinks
+                    var externalLinks = JSON.parse(DataExample.externalLinks);
+                    console.log("aaaaaaa:"+DataExample.externalLinks);
+                    links.forEach(function (linkValue, linkIndex) {
+                        if (linkValue.external) {
+                            for (var i = 0; i < readJson.node.length; i++) {
+                                if (linkValue.source.word.toUpperCase() == readJson.node[i].word.toUpperCase() || linkValue.target.word.toUpperCase() == readJson.node[i].word.toUpperCase()) {
+                                    externalLinks.push(linkValue);
+                                    console.log("TTTTTTT");
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                    DataExample.externalLinks = JSON.stringify(externalLinks);
 
                     var newItemValueData = JSON.stringify(readJson);
                     itemValue.Data = newItemValueData;
-                    console.log(itemValue.Data);
+                    console.log("bbbbbbb:" + DataExample.externalLinks);
                     return;
                 }
             });
         },
         toggleSwitchChange: function (event) {
+            console.log("toggleSwitchChange");
             var index = event.srcElement.title;
             //console.log("index:"+index);
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
@@ -156,6 +171,7 @@
 
                     if (itemValue.checked) {
                         mergeNodesAndLinks(readJson.node, readJson.link);
+                        mergeExternalLinks();
                         linkstoNodes();
 
                         restartNodes();
@@ -199,10 +215,19 @@
                         var JsonObject = JSON.parse(contents)
                         var readJson = JsonObject.currentState;
                         var dataExample = JsonObject.projectData;
+                        var addExternalLinks = JsonObject.externalLinks;
+
+                        var externalLinks = Json.parse(DataExample.externalLinks);
+                        addExternalLinks.forEach(function (newExternalLink, newExternalIndex) {
+                            externalLinks.push(newExternalLink);
+                        });
+                        DataExample.externalLinks = Json.stringify(externalLinks);
+
                         var titleName = document.getElementById("titleProject");
                         titleName.innerText = JsonObject.ProjectName;
                         
                         mergeNodesAndLinks(readJson.node, readJson.link);
+                        mergeExternalLinks();
                         linkstoNodes();
 
                         restartNodes();
@@ -252,7 +277,7 @@
                 dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
             });
             //var titleName = document.getElementById("titleProject");
-            var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
+            var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample, "externalLinks": JSON.parse(DataExample.externalLinks) };
             savedString = JSON.stringify(savedString);
             //savedString = savedString.toString();
             savePicker.pickSaveFileAsync().then(function (file) {
@@ -325,18 +350,21 @@
         },
 
         saveProjectState: function () {
+            if (selectedNodeObj) {
+                selectedNodeObj.connecting = false;
+            }
             var textShow = "N/A";
             var currentState = saveNoteToFile(textShow);
 
             var titleName = document.getElementById("titleProject");
             DataExample.currentProjectState.Title = titleName.innerText.trim();
             DataExample.currentProjectState.Data = currentState;
-            console.log(DataExample.currentProjectState);
+            //console.log(DataExample.currentProjectState);
         },
         readProjectState: function () {
             var titleName = document.getElementById("titleProject");
             titleName.innerText = DataExample.currentProjectState.Title;
-            console.log(titleName.innerText);
+            //console.log(titleName.innerText);
             var readJson = JSON.parse(DataExample.currentProjectState.Data);
 
             nodes = readJson.node;
@@ -374,7 +402,7 @@
                     dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
                 });
                 //var titleName = document.getElementById("titleProject");
-                var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample };
+                var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample, "externalLinks": JSON.parse(DataExample.externalLinks) };
                 savedString = JSON.stringify(savedString);
 
                 var file = DataExample.storageFile;

@@ -860,6 +860,69 @@ var saveNoteToFile = function (textContent) {
 //    scale = 1;
 //}
 //************************************************************************
+var mergeExternalLinks = function () {
+    console.log("ccccc:" + DataExample.externalLinks);
+    var externalLinks = JSON.parse(DataExample.externalLinks);
+
+    var linkCount = links.length;
+    for (var j = 0; j < externalLinks.length; j++) {
+        var mergeLinkValue = externalLinks[j];
+        var pushtoLinks = false;
+        for (var i = 0; i < linkCount; i++) {
+            if (mergeLinkValue.source.word.toUpperCase() == links[i].source.word.toUpperCase() && mergeLinkValue.target.word.toUpperCase() == links[i].target.word.toUpperCase()) {
+                if (links[i].linkName.indexOf(mergeLinkValue.linkName) == -1) {
+                    links[i].linkName = links[i].linkName + " " + mergeLinkValue.linkName;
+                }
+                externalLinks.splice(j--,1);
+                break;
+            }
+            else if (mergeLinkValue.source.word.toUpperCase() == links[i].target.word.toUpperCase() && mergeLinkValue.target.word.toUpperCase() == links[i].source.word.toUpperCase()) {
+                pushtoLinks = true;
+                mergeLinkValue.linkType = "Curve";
+                links[i].linkType = "Curve";
+                externalLinks.splice(j--, 1);
+                break;
+            }
+            else { }
+        }
+        if (pushtoLinks) {
+            if (links.length == 0) {
+                mergeLinkValue.linkIndex = links.length;
+                links.push(mergeLinkValue);
+            }
+            else {
+                mergeLinkValue.linkIndex = links[links.length - 1].linkIndex + 1;
+                links.push(mergeLinkValue);
+            }
+        }
+    }
+
+    for (var i = 0; i < externalLinks.length; i++) {
+        var isSourceIn = false;
+        var isTargetIn = false;
+        nodes.forEach(function (nodeValue, nodeIndex) {
+            if (nodeValue.word.toUpperCase() == externalLinks[i].source.word.toUpperCase()) isSourceIn = true;
+            if (nodeValue.word.toUpperCase() == externalLinks[i].target.word.toUpperCase()) isTargetIn = true;
+        });
+        if (isSourceIn && isTargetIn) {
+            var mergeLinkValue = externalLinks[i];
+            if (links.length == 0) {
+                mergeLinkValue.linkIndex = links.length;
+                links.push(mergeLinkValue);
+            }
+            else {
+                mergeLinkValue.linkIndex = links[links.length - 1].linkIndex + 1;
+                links.push(mergeLinkValue);
+            }
+
+            externalLinks.splice(i--,1);
+        }
+    }
+
+    DataExample.externalLinks = JSON.stringify(externalLinks);
+    console.log("ddddddd:" + DataExample.externalLinks);
+};
+
 var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {
     var nodeCount = nodes.length;
     mergeNodes.forEach(function (mergeNodeValue, mergeNodeIndex) {
