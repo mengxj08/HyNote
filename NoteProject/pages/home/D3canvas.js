@@ -584,6 +584,9 @@ var updateLinkLabelName = function(inputText) //update label name for link
 };
 var delLinkandLabel = function ()//delete selected link and its label
 {
+    $(".inputText").css({ "visibility": "hidden" });
+    $(".inputText").val("");
+
     links.forEach(function (linkvalue, linkIndex) {
         if (linkvalue == selectedLinkObj) {
             links.splice(linkIndex, 1);

@@ -713,6 +713,8 @@ var updateLinkLabelName = function (inputText2) //update label name for link
 };
 var delLinkandLabel = function ()//delete selected link and its label
 {
+    $(".inputText").css({ "visibility": "hidden" });
+    $(".inputText").val("");
     $(".inputText2").css({ "visibility": "hidden" });
     $(".inputText2").val("");
     links.forEach(function (linkvalue, linkIndex) {

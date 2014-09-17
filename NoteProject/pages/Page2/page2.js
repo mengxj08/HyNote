@@ -217,11 +217,11 @@
                         var dataExample = JsonObject.projectData;
                         var addExternalLinks = JsonObject.externalLinks;
 
-                        var externalLinks = Json.parse(DataExample.externalLinks);
+                        var externalLinks = JSON.parse(DataExample.externalLinks);
                         addExternalLinks.forEach(function (newExternalLink, newExternalIndex) {
                             externalLinks.push(newExternalLink);
                         });
-                        DataExample.externalLinks = Json.stringify(externalLinks);
+                        DataExample.externalLinks = JSON.stringify(externalLinks);
 
                         var titleName = document.getElementById("titleProject");
                         titleName.innerText = JsonObject.ProjectName;
