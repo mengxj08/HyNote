@@ -73,14 +73,13 @@
         itemButtonClick: function (event) {
             //console.log(event.name + "---" + event.value);
 
-            page2obj.prototype.saveProjectToNote(event.name);
-
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == event.name)
                 {
                     if (itemValue.checked)
                     {
                         //itemValue.checked = false;
+                        page2obj.prototype.saveProjectToNote(event.name);
                         var readJson = JSON.parse(itemValue.Data);
                         removeNodesAndLinks(readJson.node, readJson.link);
 
@@ -95,9 +94,10 @@
             WinJS.Navigation.navigate("/pages/home/home.html", {"Index":event.name});
         },
         saveProjectToNote: function (itemValueIndex) {
-            //page2obj.prototype.saveProjectState();
+            console.log("------------saveProjectToNote------------");
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == itemValueIndex) {
+                    console.log("11111111111" + itemValue.Data);
                     var readJson = JSON.parse(itemValue.Data);
                     //console.log(itemValue.Data);
                     readJson.node.forEach(function (JsonNodeValue, JsonNodeIndex) {
@@ -153,6 +153,8 @@
 
                     var newItemValueData = JSON.stringify(readJson);
                     itemValue.Data = newItemValueData;
+
+                    console.log("2222222222" + itemValue.Data);
                     return;
                 }
             });
