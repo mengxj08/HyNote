@@ -559,8 +559,8 @@ var restartNodes = function () {//redrawing Nodes
 
     node.select("text")
         .transition().duration(500)
-        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; });
-
+        .style("font-size", function (d) { return Math.min(2 * radius * log2(d.frequency + 1), (2 * radius * log2(d.frequency + 1) - 8) / d.textlength * 24) + "px"; })
+        .attr("dy", ".35em");
     //Data-Join: Enter
     var nodeEnter = node.enter().append("g")
         //.attr("class", "node")
@@ -1032,6 +1032,9 @@ var saveProjectState = function () {
 };
 
 var changeItemViewColor = function (d, isHighlight) {
+    var undoProject = document.getElementById("undoProject");
+    if (!undoProject) return;
+
     DataExample.itemList.forEach(function (itemValue, itemIndex) {
         var readJson = JSON.parse(itemValue.Data);
         readJson.node.forEach(function (nodeValue, nodeIndex) {

@@ -80,19 +80,22 @@
         },
 
         doClickAddtoProject: function () {
-            if (selectedNode) {
-
-            }
             homePage.prototype.saveCurrentState();
             if (passedOptions) {
                 //modify the corresponding DataExample.itemList
+                var passedItemChecked = false;
                 DataExample.itemList.forEach(function (itemValue, itemIndex) {
                     if (itemValue.Index == passedOptions.Index) {
                         itemValue.Title = DataExample.currentNoteState.Title;
                         itemValue.Data = DataExample.currentNoteState.Data;
+                        passedItemChecked = itemValue.checked;
                         return;
                     }
                 });
+                if (passedItemChecked)
+                    WinJS.Navigation.navigate("/pages/page2/page2.html", passedOptions);
+                else
+                    WinJS.Navigation.navigate("/pages/page2/page2.html");
             }
             else {
                 //Add the new note to the project
@@ -102,33 +105,33 @@
                     var index = DataExample.itemList.getAt(DataExample.itemList.length - 1).Index + 1;
                 }
                 DataExample.itemList.push(WinJS.Binding.as({ "Title": DataExample.currentNoteState.Title, "Index": index, "checked": false, "Color": "darkgrey", "Data": DataExample.currentNoteState.Data }));
+                WinJS.Navigation.navigate("/pages/page2/page2.html");
             }
             passedOptions = null;
             DataExample.currentNoteState = {};
-            WinJS.Navigation.navigate("/pages/page2/page2.html");
         },
 
-        doClickreviewNotes: function () {
-            homePage.prototype.saveCurrentState();
-            if (!passedOptions) {
-                //record the current note into memory
-            }
-            else {
-                //modify the corresponding DataExample.itemList
-                DataExample.itemList.forEach(function (itemValue, itemIndex) {
-                    if (itemValue.Index == passedOptions.Index)
-                    {
-                        itemValue.Title = DataExample.currentNoteState.Title;
-                        itemValue.Data = DataExample.currentNoteState.Data;
-                        return;
-                    }
-                });
+        //doClickreviewNotes: function () {
+        //    homePage.prototype.saveCurrentState();
+        //    if (!passedOptions) {
+        //        //record the current note into memory
+        //    }
+        //    else {
+        //        //modify the corresponding DataExample.itemList
+        //        DataExample.itemList.forEach(function (itemValue, itemIndex) {
+        //            if (itemValue.Index == passedOptions.Index)
+        //            {
+        //                itemValue.Title = DataExample.currentNoteState.Title;
+        //                itemValue.Data = DataExample.currentNoteState.Data;
+        //                return;
+        //            }
+        //        });
 
-                DataExample.currentNoteState = {};
-            }
-            passedOptions = null;
-            WinJS.Navigation.navigate("/pages/page2/page2.html");
-        },
+        //        DataExample.currentNoteState = {};
+        //    }
+        //    passedOptions = null;
+        //    WinJS.Navigation.navigate("/pages/page2/page2.html");
+        //},
 
         readPassedOptions: function () {
             if (passedOptions) {

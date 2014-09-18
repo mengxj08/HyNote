@@ -4,7 +4,7 @@
     "use strict";
     //var winNavBar;
     var winAppBar;
-    var page2options = null;
+    //var page2options = null;
     var page2Timeout = null;
     var canSave = true;
     var page2obj = WinJS.UI.Pages.define("/pages/Page2/page2.html", {
@@ -13,7 +13,7 @@
         ready: function (element, options) {
             //winNavBar = document.getElementById("navbar").winControl;
             winAppBar = document.getElementById("page2Appbar").winControl;
-            page2options = options;
+            //page2options = options;
             element.querySelector("#left-button").addEventListener("click", this.doClickNewNote, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
@@ -35,7 +35,7 @@
             height = $("#conceptShow2").height();
 
             multiDrawingD3();
-            this.readPassedOptions();
+            this.readPassedOptions(options);
             this.updateFile();
 
             $(".inputText2").keyup(function (e) {
@@ -80,7 +80,7 @@
                 {
                     if (itemValue.checked)
                     {
-                        itemValue.checked = false;
+                        //itemValue.checked = false;
                         var readJson = JSON.parse(itemValue.Data);
                         removeNodesAndLinks(readJson.node, readJson.link);
 
@@ -104,11 +104,12 @@
                         nodes.forEach(function (nodeValue, nodeIndex) {
                             if (JsonNodeValue.word.toUpperCase() == nodeValue.word.toUpperCase()) {
                                 var frequency = JsonNodeValue.frequency;
-                                JsonNodeValue = nodeValue;
+                                JsonNodeValue = JSON.parse(JSON.stringify(nodeValue));
                                 JsonNodeValue.frequency = frequency;
                                 if (JsonNodeValue.connecting) {
                                     changeItemViewColor(JsonNodeValue,false);
                                     JsonNodeValue.connecting = false;
+                                    nodeValue.connecting = false;
                                     selectedNode = null;
                                     selectedNodeObj = null;
                                 }
@@ -138,13 +139,11 @@
 
                     //Add to ExternalLinks
                     var externalLinks = JSON.parse(DataExample.externalLinks);
-                    console.log("aaaaaaa:"+DataExample.externalLinks);
                     links.forEach(function (linkValue, linkIndex) {
                         if (linkValue.external) {
                             for (var i = 0; i < readJson.node.length; i++) {
                                 if (linkValue.source.word.toUpperCase() == readJson.node[i].word.toUpperCase() || linkValue.target.word.toUpperCase() == readJson.node[i].word.toUpperCase()) {
                                     externalLinks.push(linkValue);
-                                    console.log("TTTTTTT");
                                     break;
                                 }
                             }
@@ -154,7 +153,6 @@
 
                     var newItemValueData = JSON.stringify(readJson);
                     itemValue.Data = newItemValueData;
-                    console.log("bbbbbbb:" + DataExample.externalLinks);
                     return;
                 }
             });
@@ -378,9 +376,24 @@
             restartLinks();
             restartLabels();
         },
-        readPassedOptions: function () {
+        readPassedOptions: function (page2options) {
             if (page2options) {
                 page2obj.prototype.readProjectState();
+                DataExample.itemList.forEach(function (itemValue, itemIndex) {
+                    if (itemValue.Index == page2options.Index) {
+                        if (!itemValue.checked) return;
+                        var readJson = JSON.parse(itemValue.Data);
+
+                        mergeNodesAndLinks(readJson.node, readJson.link);
+                        mergeExternalLinks();
+                        linkstoNodes();
+
+                        restartNodes();
+                        restartLinks();
+                        restartLabels();
+                        return;
+                    }
+                });
 
             }
             else if (DataExample.currentProjectState.Title) {
