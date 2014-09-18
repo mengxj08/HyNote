@@ -166,11 +166,17 @@
             }
                 
             var textShow = document.getElementById("textShow");
-            var savedString = saveNoteToFile(textShow.innerText.trim());
+            //var modifiedText = textShow.innerText.trim().replace("\r\n", "1");
+            var text = textShow.innerText.trim();
+            
+            var find = "\r\n\r\n"
+            var re = new RegExp(find, 'g');
+            text = text.replace(re, '\r\n');
+            var savedString = saveNoteToFile(text);
             var titleName = document.getElementById("title");
             DataExample.currentNoteState.Title = titleName.innerText.trim();
             DataExample.currentNoteState.Data = savedString;
-            //console.log("CurrentData"+DataExample.currentNoteState);
+            console.log("CurrentData"+DataExample.currentNoteState.Data);
         },
 
         readCurrenState: function () {
