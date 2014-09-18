@@ -863,7 +863,6 @@ var saveNoteToFile = function (textContent) {
 //}
 //************************************************************************
 var mergeExternalLinks = function () {
-    console.log("ccccc:" + DataExample.externalLinks);
     var externalLinks = JSON.parse(DataExample.externalLinks);
 
     var linkCount = links.length;
@@ -922,7 +921,6 @@ var mergeExternalLinks = function () {
     }
 
     DataExample.externalLinks = JSON.stringify(externalLinks);
-    console.log("ddddddd:" + DataExample.externalLinks);
 };
 
 var mergeNodesAndLinks = function (mergeNodes, mergeLinks) {

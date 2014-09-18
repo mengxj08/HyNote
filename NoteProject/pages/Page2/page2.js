@@ -94,10 +94,8 @@
             WinJS.Navigation.navigate("/pages/home/home.html", {"Index":event.name});
         },
         saveProjectToNote: function (itemValueIndex) {
-            console.log("------------saveProjectToNote------------");
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == itemValueIndex) {
-                    console.log("11111111111" + itemValue.Data);
                     var readJson = JSON.parse(itemValue.Data);
                     //console.log(itemValue.Data);
                     readJson.node.forEach(function (JsonNodeValue, JsonNodeIndex) {
@@ -137,16 +135,41 @@
                         }
                     }
 
+                    //Convert non-external new added Links in Project View to note-Links
                     //Add to ExternalLinks
                     var externalLinks = JSON.parse(DataExample.externalLinks);
                     links.forEach(function (linkValue, linkIndex) {
                         if (linkValue.external) {
+                            var isSourceIn = false;
+                            var isTargetIn = false;
                             for (var i = 0; i < readJson.node.length; i++) {
-                                if (linkValue.source.word.toUpperCase() == readJson.node[i].word.toUpperCase() || linkValue.target.word.toUpperCase() == readJson.node[i].word.toUpperCase()) {
-                                    externalLinks.push(linkValue);
-                                    break;
+                                if (linkValue.source.word.toUpperCase() == readJson.node[i].word.toUpperCase()) {
+                                    isSourceIn = true;
+                                }
+                                else if (linkValue.target.word.toUpperCase() == readJson.node[i].word.toUpperCase()) {
+          
+                                    isTargetIn = true;
+                                }
+                                else { }
+                            }
+
+                            if (isSourceIn && isTargetIn) {
+                                linkValue.external = false;
+                                var addLinktoNoteObj = JSON.parse(JSON.stringify(linkValue));
+
+                                if (readJson.link.length == 0) {
+                                    addLinktoNoteObj.linkIndex = readJson.link.length;
+                                    readJson.link.push(addLinktoNoteObj);
+                                }
+                                else {
+                                    addLinktoNoteObj.linkIndex = readJson.link[readJson.link.length - 1].linkIndex + 1;
+                                    readJson.link.push(addLinktoNoteObj);
                                 }
                             }
+                            else if (isSourceIn || isTargetIn) {
+                                externalLinks.push(linkValue);
+                            }
+                            else { }
                         }
                     });
                     DataExample.externalLinks = JSON.stringify(externalLinks);
@@ -154,7 +177,6 @@
                     var newItemValueData = JSON.stringify(readJson);
                     itemValue.Data = newItemValueData;
 
-                    console.log("2222222222" + itemValue.Data);
                     return;
                 }
             });
