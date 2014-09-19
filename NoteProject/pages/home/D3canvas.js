@@ -1,5 +1,4 @@
 ﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, graph, zoom, overlappingLink;
-var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
 var selectedLink = null;
@@ -670,6 +669,17 @@ var hideSelectedLink1 = function () {
 //**************************************************************************
 //Keyboard event
 function keyup() {
+    if (selectedLinkObj || !selectedNodeObj) return;
+    switch (d3.event.keyCode) {
+        case 69: //Edit
+            if (selectedNodeObj) {
+                $(".inputText").css({
+                    "left": selectedNodeObj.x + translate[0], "top": selectedNodeObj.y + translate[1], "visibility": "visible"
+                });
+                $(".inputText").focus();
+            }
+            break;
+    }
 }
 
 function keydown() {
@@ -701,7 +711,6 @@ var saveNoteToFile = function (textContent)
 var cleanCache = function () {
     svg = null;
     container = null;
-    count = 0;
     selectedNode = null;
     selectedNodeObj = null;
     selectedLink = null;
@@ -720,4 +729,47 @@ var saveCurrentState = function () {
     DataExample.currentNoteState.Data = savedString;
 
     //console.log("CurrentData" + DataExample.currentNoteState.Data);
+}
+var updateNoteNodeWord = function (inputText2)//Update Node word for Nodes
+{
+    $(".inputText").css({ "visibility": "hidden" });
+    $(".inputText").val("");
+
+    var selectedNodeIndex = nodes.indexOf(selectedNodeObj);
+    nodes.splice(selectedNodeIndex, 1);
+    var newAddNode = null;
+    nodes.forEach(function (nodeValue, nodeIndex) {
+        if (nodeValue.word.toUpperCase() == inputText2.toUpperCase()) {
+            newAddNode = nodeValue;
+        }
+    });
+    if (!newAddNode) {
+        newAddNode = JSON.parse(JSON.stringify(selectedNodeObj));
+        newAddNode.word = inputText2;
+        nodes.push(newAddNode);
+    }
+    else {
+        newAddNode.frequency += selectedNodeObj.frequency;
+    }
+
+    links.forEach(function (linkValue, linkIndex) {
+        if (linkValue.source == selectedNodeObj)
+            linkValue.source = newAddNode;
+        else if (linkValue.target == selectedNodeObj)
+            linkValue.target = newAddNode;
+        else { }
+    });
+
+    newAddNode.fixed = false;
+    newAddNode.connecting = false;
+    newAddNode.connected = false;
+    /*
+    This part needs update if we set state/style for connected node.
+    */
+    //selectedNode.classed("connecting", selectedNodeObj.connecting = false);
+    //selectedNode.classed("fixed", selectedNodeObj.fixed = false);
+    //changeItemViewColor(selectedNodeObj, false);
+    selectedNodeObj = null;
+    selectedNode = null;
+    restartNodes();
 }

@@ -1,5 +1,4 @@
 ﻿var width, height, force, node, nodes, link, links, label, drag, svg, tick, container, graph, zoom, overlappingLink;
-var count = 0;
 var selectedNode = null;
 var selectedNodeObj = null;
 var selectedLink = null;
@@ -807,11 +806,20 @@ function keyup() {
     if (selectedLinkObj || !selectedNodeObj) return;
     switch (d3.event.keyCode) {
         case 69: //Edit
+            var undoProject = document.getElementById("undoProject");
             if (selectedNodeObj) {
-                $(".inputText2").css({
-                    "left": selectedNodeObj.x + translate[0], "top": selectedNodeObj.y + translate[1], "visibility": "visible"
-                });
-                $(".inputText2").focus();
+                if (undoProject) {
+                    $(".inputText2").css({
+                        "left": selectedNodeObj.x + translate[0], "top": selectedNodeObj.y + translate[1], "visibility": "visible"
+                    });
+                    $(".inputText2").focus();
+                }
+                else {
+                    $(".inputText").css({
+                        "left": selectedNodeObj.x + translate[0], "top": selectedNodeObj.y + translate[1], "visibility": "visible"
+                    });
+                    $(".inputText").focus();
+                }
             }
             break;
     }

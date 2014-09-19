@@ -53,8 +53,13 @@
                     // Do something
                     var inputText = $(".inputText").val();
                     inputText = inputText.trim();
-                    console.log(inputText);
-                    updateLinkLabelName(inputText);
+                    if (selectedLinkObj) {
+                        updateLinkLabelName(inputText);
+                    }
+                    else if (selectedNodeObj) {
+                        updateNoteNodeWord(inputText);
+                    }
+                    else { console.log("No update while type enter in inputText."); }
                 }
             });
 

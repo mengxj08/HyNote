@@ -6,7 +6,6 @@
     var winAppBar;
     //var page2options = null;
     var page2Timeout = null;
-    var canSave = true;
     var page2obj = WinJS.UI.Pages.define("/pages/Page2/page2.html", {
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
@@ -19,7 +18,7 @@
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
             element.querySelector("#undoProject").addEventListener("click", this.doClickUndoProject, false);
-            //element.querySelector("#remove").addEventListener("click", this.doClickRemove, false);
+            element.querySelector("#newProject").addEventListener("click", this.doClickNewProject, false);
              
             WinJS.Namespace.define("utility", { itemButtonClick: this.itemButtonClick });
             WinJS.Namespace.define("utility", { toggleSwitchChange: this.toggleSwitchChange });
@@ -67,7 +66,7 @@
             var viewListView = document.getElementById("viewListView").winControl;
             if (viewListView.selection.count() != 0) {
                 //No selected items
-                //winAppBar.show();
+                winAppBar.show();
             }
         },
         itemButtonClick: function (event) {
@@ -229,6 +228,37 @@
             WinJS.Navigation.navigate("/pages/home/home.html");
         },
 
+        doClickNewProject: function () {
+            while (DataExample.itemList.length > 0) {
+                DataExample.itemList.pop();
+            }
+            var initialLinks = [];
+            DataExample.currentProjectState = {};
+            DataExample.externalLinks = JSON.stringify(initialLinks);
+            DataExample.storageFile = null;
+
+            selectedNode = null;
+            selectedNodeObj = null;
+            selectedLink = null;
+            selectedLinkObj = null;
+            dragNodeObj = null;
+            radius = 30;
+            clickOntoLinks = false;
+            translate = [0, 0];
+            scale = 1;
+
+            nodes = [];
+            links = [];
+            force.nodes(nodes);
+            force.links(links);
+            restartLinks();
+            restartLabels();
+            restartNodes();
+
+            //winNavBar.hide();
+            winAppBar.hide();
+        },
+
         doClickOpen: function () {
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
             //openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail;
@@ -317,7 +347,6 @@
                     Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
                          Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
                                 if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
-                                    canSave = true;
                                     //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
                                 } else {
                                     //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
@@ -460,11 +489,11 @@
                 });
             }
         },
-
+         
         updateFile : function () {
             //console.log("updateFile");
             page2obj.prototype.autoSaving();
-            page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*2);
+            page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*1);
         },
 
         unload: function () {
