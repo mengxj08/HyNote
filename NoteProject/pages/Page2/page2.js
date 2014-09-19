@@ -98,25 +98,31 @@
                 if (itemValue.Index == itemValueIndex) {
                     var readJson = JSON.parse(itemValue.Data);
                     //console.log(itemValue.Data);
-                    readJson.node.forEach(function (JsonNodeValue, JsonNodeIndex) {
+                    for (var i = 0; i < readJson.node.length; i++) {
+                        var JsonNodeValue = readJson.node[i];
+                        var delJsonNodeValue = true;
                         nodes.forEach(function (nodeValue, nodeIndex) {
                             if (JsonNodeValue.word.toUpperCase() == nodeValue.word.toUpperCase()) {
+                                delJsonNodeValue = false;
                                 var frequency = JsonNodeValue.frequency;
                                 JsonNodeValue = JSON.parse(JSON.stringify(nodeValue));
                                 JsonNodeValue.frequency = frequency;
                                 if (JsonNodeValue.connecting) {
-                                    changeItemViewColor(JsonNodeValue,false);
+                                    changeItemViewColor(JsonNodeValue, false);
                                     JsonNodeValue.connecting = false;
                                     nodeValue.connecting = false;
                                     selectedNode = null;
                                     selectedNodeObj = null;
                                 }
-                                
-                                readJson.node[JsonNodeIndex] = JsonNodeValue;
+                                readJson.node[i] = JsonNodeValue;
                                 return;
                             }
                         });
-                    });
+
+                        if (delJsonNodeValue) {
+                            readJson.node.splice(i--,1);
+                        }
+                    }
 
                     for (var i = 0; i < readJson.link.length; i++) {
                         var delLink = true;

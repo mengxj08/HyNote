@@ -742,8 +742,9 @@ var delNodeWithLink = function ()//delete seleced node and its associated links
             links.splice(i--, 1);
     }
 
+    changeItemViewColor(selectedNodeObj,false);
     selectedNode = null;
-    selecedNodeObj = null;
+    selectedNodeObj = null;
 
     restartNodes();
     restartLinks();
