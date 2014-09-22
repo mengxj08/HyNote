@@ -173,6 +173,13 @@ namespace Component
             InitialAnalysis(rootObject);
             
         }
+        //------------------------------------------------------------------------------------------------------------------
+        //using GreatNounList
+
+
+
+        //------------------------------------------------------------------------------------------------------------------
+        //using local server
         private IAnalysisHost InitAnalysisHost(string[] args)
         {
             IAnalysisHost h;

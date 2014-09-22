@@ -315,6 +315,7 @@
             //var progressControl = document.getElementById("ProgressControl");
             //progressControl.style.visibility = "visible";
             //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
+            console.log(DataExample.nounList[0]);
             var errorMsg = document.getElementById("errorMsg");
             errorMsg.style.visibility = "hidden";
             homePage.prototype.refreshProgressBar("Loading...");

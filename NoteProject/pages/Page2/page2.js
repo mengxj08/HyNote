@@ -229,6 +229,8 @@
         },
 
         doClickNewProject: function () {
+            var titleProject = document.getElementById("titleProject");
+            titleProject.innerText = "Click to name Project...";
             while (DataExample.itemList.length > 0) {
                 DataExample.itemList.pop();
             }
