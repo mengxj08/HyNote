@@ -14,6 +14,8 @@
     var externalLinks = JSON.stringify(initialLinks);
     var storageFile = null;
     var nounList = null;
+    var tmpCache = [];
+    var cache = JSON.stringify(tmpCache);
     // Create a namespace to make the data publicly accessible. 
     var publicMembers =
         {
@@ -22,11 +24,14 @@
             currentProjectState: currentProjectState,
             externalLinks:externalLinks,
             storageFile: storageFile,
-            nounList: nounList
+            nounList: nounList,
+            cache:cache
         };
     WinJS.Namespace.define("DataExample", publicMembers);
 
-    var url = new Windows.Foundation.Uri("ms-appx:///data/GreatNounList");
+    //var url = new Windows.Foundation.Uri("ms-appx:///data/GreatNounList");
+    //var url = new Windows.Foundation.Uri("ms-appx:///data/nounlist.txt");
+    var url = new Windows.Foundation.Uri("ms-appx:///data/Nouns.txt");
     
     Windows.Storage.StorageFile.getFileFromApplicationUriAsync(url).done(function (file) {
         console.log("test11");

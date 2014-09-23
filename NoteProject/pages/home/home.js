@@ -24,8 +24,8 @@
             var conceptShow = document.getElementById("conceptShow");
             var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
             
-            var testButton = document.getElementById("mapButton");
-            testButton.addEventListener("click", this.testButtonClicked, false);
+            //var testButton = document.getElementById("mapButton");
+            //testButton.addEventListener("click", this.testButtonClicked, false);
 
  
             //*************************************************************************
@@ -74,6 +74,13 @@
                 var textShow = document.getElementById("textShow");
                 if (textShow.innerText.trim() == "Click to take notes...") {
                     textShow.innerText = "";
+                }
+            });
+
+            $("#textShow").keyup(function (e) {
+                if (e.keyCode == 32 || e.keyCode == 13 || (e.keyCode >= 106 && e.keyCode <= 222)) {
+                    homePage.prototype.localTextParsing();
+
                 }
             });
         },
@@ -288,6 +295,59 @@
             winAppBar.hide();
         },
 
+        localTextParsing: function () {
+            var textShow = document.getElementById("textShow").innerText;
+            textShow = textShow.trim();
+            var localJson = [];
+            var tmpCache = JSON.parse(DataExample.cache);
+            var punctuationless = textShow.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, '');
+            var finalString = punctuationless.replace(/\s{2,}/g, " ");
+            console.log("FFFF:"+finalString);
+            var words = finalString.split(" ");
+            console.log(DataExample.nounList.length);
+            words.forEach(function (wordValue, wordIndex) {
+                var isExisted = false;
+                var tmp = wordValue.trim();
+                console.log(tmp);
+                localJson.forEach(function (JsonValue, JsonIndex) {
+                    if (JsonValue.word.toUpperCase() == tmp.toUpperCase()) {
+                        isExisted = true;
+                        JsonValue.frequency++;
+                    }
+                });
+
+                if (!isExisted) {
+                    var isNoun = false;
+                    for (var i = 0; i < tmpCache.length; i++) {
+                        if (tmp.toUpperCase() == tmpCache[i].word.toUpperCase()) {
+                            isNoun = true;
+                            localJson.push({ "word": tmp, "frequency": 1 });
+                        }
+                    }
+                    
+                    if (!isNoun) {
+                        var isNewNoun = false;
+                        for (var i = 0; i < DataExample.nounList.length; i++) {
+                            if (DataExample.nounList[i].toUpperCase() == tmp.toUpperCase()) {
+                                localJson.push({ "word": tmp, "frequency": 1 });
+                                localJson.push({ "word": tmp, "isNoun": true });
+                                isNewNoun = true;
+                                break;
+                            }
+                        }
+
+                        if (!isNewNoun) {
+                            localJson.push({ "word": tmp, "isNoun": false });
+                        }
+                    }
+                }
+            });
+            var finalJson = {};
+            DataExample.cache = JSON.stringify(tmpCache);
+            finalJson.nodes = localJson;
+            analyseNodes(JSON.stringify(finalJson));
+        },
+
         PassTextToParse: function () {
             //$("#ProgressControl").css({ "visibility": "visible" });
             //console.log("passtextParse");
@@ -315,7 +375,7 @@
             //var progressControl = document.getElementById("ProgressControl");
             //progressControl.style.visibility = "visible";
             //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
-            console.log(DataExample.nounList[0]);
+            //console.log(DataExample.nounList[0]);
             var errorMsg = document.getElementById("errorMsg");
             errorMsg.style.visibility = "hidden";
             homePage.prototype.refreshProgressBar("Loading...");
