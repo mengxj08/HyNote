@@ -8,7 +8,6 @@
     var nav = WinJS.Navigation;
     var sched = WinJS.Utilities.Scheduler;
     var ui = WinJS.UI;
-
     app.addEventListener("activated", function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
             if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
@@ -21,7 +20,17 @@
 
             nav.history = app.sessionState.history || {};
             nav.history.current.initialPlaceholder = true;
+            nav.addEventListener("beforenavigate", function (eventObject) {
+                if (eventObject.detail.location == nav.location) {
+                    eventObject.detail.setPromise(WinJS.Promise.wrap(true));
+ 
+                }
+                else {
+                    eventObject.detail.setPromise(WinJS.Promise.wrap(false));
+                }
+            });
 
+            setupDataset();
             // Optimize the load of the application and while the splash screen is shown, execute high priority scheduled work.
             ui.disableAnimations();
             var p = ui.processAll().then(function () {

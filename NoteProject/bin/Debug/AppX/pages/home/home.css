@@ -1,8 +1,12 @@
-﻿.homepage section[role=main] {
+﻿/*.homepage section[role=main] {
     margin-left: 120px;
     margin-right: 120px;
+}*/
+#title {
+    width: 550px;
+    height: 100px;
+    overflow: auto;
 }
-
 #mainGrid {
     margin: 20px 20px 0px 20px;
     height:100%;
@@ -11,7 +15,6 @@
     height: 100%;
     display: -ms-grid;
     -ms-grid-columns: 1fr 1fr;
-    /*-ms-grid-rows: 80vh;*/
 }
 
 #conceptShow {
@@ -19,87 +22,150 @@
     width: auto;
     height: 100%; 
     margin-right: 20px; 
-    border: 3px solid black;
-    border-right: 10px solid blue;
+    border: 1px solid darkgray;
+    border-right: 10px dashed darkgray;
     background: #ccc;
+    overflow:hidden;
 }
 .ui-resizable-helper { border: 2px dotted red; }
 
 #keyWordMap {
-
     width: 100%;
-    height: 100%;
+    -ms-overflow-style: none;
+    height: 79vh;
 }
 
 #textShow {
     -ms-grid-column: 2;
     margin-left: 20px; 
     width: auto;
-    height: 75vh;
-
-    -moz-appearance: textfield;
-    -webkit-appearance: textfield;
+    height: 79vh;
+    /*-moz-appearance: textfield;
+    -webkit-appearance: textfield;*/
     background-color: white;
     background-color: -moz-field;
     border: 3px solid darkgray;
     box-shadow: 1px 1px 1px 0 lightgray inset;  
-    font: -moz-field;
-    font: -webkit-small-control;
-    font-size: xx-large;
-    word-break: break-all;
+    /*font: -moz-field;
+    font: -webkit-small-control;*/
+    font-size: 25pt;
     word-wrap: break-word;
     overflow: auto;
-   
-    /*float: right;*/
 }
-
-/*#inputText {
-    margin: 0px;
-    width: 100%;
-    height:75vh;
-}*/
-
-.item {
-/*background: rgb(135,199,135);*/
-  height: 100px;
-  width: 100px;
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 50%;
-  background: yellow;
-}
-
-/*   */
-
-.link {
+path.link {
+  fill: none;
   stroke: #000;
-  stroke-width: 1.5px;
+  stroke-opacity:0.3;
+  stroke-width: 3px;
 }
 
+path.link.selected {
+  stroke-dasharray: 5,5;
+}
+
+path.overlappingLink {
+  fill-opacity:0;
+  stroke-width: 20px;
+  stroke: red;
+  stroke-opacity:0;
+  cursor: pointer;
+}
 .circle {
   cursor: move;
   fill: #ccc;
   stroke: #000;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
+  cursor: pointer;
 }
 
-.node.fixed {
-  fill: #f00;
+.fixed .circle {
+    stroke-width: 2.5px;
 }
-.node.connecting {
-    fill: #ff6a00;
+.connecting .circle {
+    fill: darkgray;
 }
-.node.connected {
-    fill: #4cff00;
-}
-
-.node.connected.fixed {
-    fill: #00ff90;
-}
-
 text {
   font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
   pointer-events: none;
+}
+
+.inputText {
+  visibility: hidden;
+  position:absolute;
+  max-width: 150px;
+  left: 0px;
+  top:  0px;
+}
+
+.highlight { background-color: yellow }
+
+.win-appbar {
+    background-color: #DBDBFF;
+}
+
+#ButtonDiv {
+    width: 50%;
+    position: relative;
+    margin-left:auto; margin-right:0;
+}
+
+progress.withText
+{
+    color: black; /* Uses the same text color as the page */
+    vertical-align: text-bottom; /* Makes the bottom of the control align with the bottom of its label */
+    height:30px;
+    width: 30px;
+    
+}
+
+/* Text style for a label for the progress ring */
+.progressRingText
+{
+    position:absolute;
+    top: 110px;
+    left: 0px;
+    font-family: "Segoe UI";
+    font-size: 20pt;
+    line-height: 20pt;
+    color: red;
+    visibility: hidden;
+}
+
+/* The margin to separate the ring and its label */
+.progressRingText progress
+{
+    margin-right: 5px;
+}
+
+.round-button-1 {
+    display:block;
+    font-size:35px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: black;
+    height:70px;
+    width: 70px;
+    min-width: 70px;
+    position:relative;
+    top: 45px;
+    left: 25px;
+}
+
+.round-button-3 {
+    display:block;
+    font-size:35px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: black;
+    height:70px;
+    width: 70px;
+    min-width: 70px;
+    position:relative;
+    top: 45px;
+    float: left;
+    left: 20px;
+    margin-right: 20px;
 }

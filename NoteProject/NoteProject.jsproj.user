@@ -4,7 +4,8 @@
     <ReferenceCachePath>C:\Users\v-xime\AppData\Local\Temp\HelloWorldWithPages_refcache</ReferenceCachePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebuggerFlavor>AppHostLocalDebugger</DebuggerFlavor>
+    <DebuggerFlavor>AppHostRemoteDebugger</DebuggerFlavor>
     <DebuggerType>Script</DebuggerType>
+    <MachineName>HCI047733431553:4000</MachineName>
   </PropertyGroup>
 </Project>

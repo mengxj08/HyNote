@@ -58,13 +58,16 @@
     <Content Include="css\default.css" />
     <Content Include="css\images\ui-icons_222222_256x240.png" />
     <Content Include="css\jquery-ui.min.css" />
+    <Content Include="data\GreatNounList" />
+    <Content Include="data\nounlist.txt" />
+    <Content Include="data\Nouns.txt" />
     <Content Include="images\logo.scale-100.png" />
     <Content Include="images\smalllogo.scale-100.png" />
     <Content Include="images\splashscreen.scale-100.png" />
     <Content Include="images\storelogo.scale-100.png" />
     <Content Include="js\d3.min.js" />
+    <Content Include="js\Data.js" />
     <Content Include="js\default.js" />
-    <Content Include="js\freewall.js" />
     <Content Include="js\jquery-2.1.1.min.js" />
     <Content Include="js\jquery-ui.min.js" />
     <Content Include="js\jquery.highlight-4.js" />
@@ -74,6 +77,7 @@
     <Content Include="pages\home\home.html" />
     <Content Include="pages\home\home.js" />
     <Content Include="default.html" />
+    <Content Include="pages\Page2\D3canvas2.js" />
     <Content Include="pages\Page2\page2.css" />
     <Content Include="pages\Page2\page2.html" />
     <Content Include="pages\Page2\page2.js" />

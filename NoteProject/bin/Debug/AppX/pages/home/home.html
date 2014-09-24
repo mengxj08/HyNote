@@ -23,29 +23,46 @@
 <body>
     <!-- The content that will be loaded and displayed. -->
     <div class="fragment homepage">
+        <div id="ButtonDiv">
+            <button id="mapButton" class="round-button-3">&#xe102;</button>
+            <button id="undoNote" class="round-button-3" style="visibility:hidden">&#xe10e;</button>
+            <label id="ProgressControl" class="progressRingText">
+                <progress class="win-ring withText"></progress>Loading...
+            </label>
+            <label id="errorMsg" class="progressRingText">Internet is slow. Try again please...</label>
+        </div>
         <header aria-label="Header content" role="banner">
-            <button data-win-control="WinJS.UI.BackButton"></button>
+            <button id="right-button" class="round-button-1">&#xe111;</button>
+            
             <h1 class="titlearea win-type-ellipsis">
-                <span class="pagetitle">Welcome to NoteProject!</span>
+                <div id="title" contenteditable="true">Click to name Note...</div>
             </h1>
-            <button id="testButton">Test</button>
         </header>
+
         <section aria-label="Main content" role="main">
             <div id="mainGrid">
                 <div id="contentGrid">
                     <div id="conceptShow">
-                        <div id="keyWordMap" class="win-scrollview">
-
-                       </div>
+                        <div id="keyWordMap">
+                            <input type="text" class="inputText" id="inputText" />
+                            <!--class="win-scrollview"-->
+                            <!--<input type="text"/>-->
+                        </div>
                     </div>
-                    <div id="textShow" contenteditable="true">
-
-                    </div>
+                    
+                    <div id="textShow" contenteditable="true">Click to take notes...</div>
                 </div>
             </div>
             <!-- A hyperlink to page2.html. -->
             <!--<p><a href="/pages/page2/page2.html">Go to page 2.</a></p>-->
         </section>
+    </div>
+    <div id="homeAppbar" data-win-control="WinJS.UI.AppBar">
+        <!--<button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'reviewNotes', label:'Review Notes', icon:'page2', section:'selection'}" type="button"></button>-->
+        <!--<button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'AddtoProject', label:'Add to Project', icon:'add', section:'selection'}" type="button"></button>-->
+        <!--<button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'open', label:'Open', icon:'openfile', section:'global'}" type="button"></button>
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'save', label:'Save', icon:'save', section:'global'}" type="button"></button>-->
+        <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'delete', label:'Delete', icon:'delete', section:'global'}" type="button"></button>
     </div>
 </body>
 </html>

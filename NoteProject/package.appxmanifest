@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="4c720e30-542c-4811-a244-62aa9b8ff9d7" Version="1.0.0.0" Publisher="CN=v-xime" />
+  <Identity Name="4c720e30-542c-4811-a244-62aa9b8ff9d6" Version="1.0.0.0" Publisher="CN=v-xime" />
   <Properties>
     <DisplayName>NoteProject</DisplayName>
     <PublisherDisplayName>v-xime</PublisherDisplayName>

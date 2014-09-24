@@ -3,7 +3,6 @@ C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Component.pri
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Common.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll
-C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatDrop.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatInterfaces.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatLibrary.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\NlpCommon.dll
@@ -24,7 +23,6 @@ C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Optimizer.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\MathUtil.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Newtonsoft.Json.xml
-C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatDrop.pdb
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatInterfaces.pdb
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatLibrary.pdb
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\obj\Debug\Component.winmd

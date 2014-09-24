@@ -87,6 +87,7 @@
                 // Responds to navigation by adding new pages to the DOM. 
                 _navigating: function (args) {
                     var newElement = this._createPageElement();
+
                     this._element.appendChild(newElement);
 
                     this._lastNavigationPromise.cancel();
@@ -111,8 +112,12 @@
                     this._lastNavigationPromise = WinJS.Promise.as().then(function () {
                         return WinJS.UI.Pages.render(args.detail.location, newElement, args.detail.state);
                     }).then(cleanup, cleanup);
+                    
 
                     args.detail.setPromise(this._lastNavigationPromise);
+                    //WinJS.UI.NavBar hide after one clicking
+                    //var winNavBar = document.getElementById("navbar").winControl;
+                    //winNavBar.hide();
                 },
 
                 // Responds to resize events and call the updateLayout function

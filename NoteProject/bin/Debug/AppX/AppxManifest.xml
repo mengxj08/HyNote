@@ -7,7 +7,7 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="4c720e30-542c-4811-a244-62aa9b8ff9d7" Version="1.0.0.0" Publisher="CN=v-xime" ProcessorArchitecture="neutral" />
+  <Identity Name="4c720e30-542c-4811-a244-62aa9b8ff9d6" Version="1.0.0.0" Publisher="CN=v-xime" ProcessorArchitecture="neutral" />
   <Properties>
     <DisplayName>NoteProject</DisplayName>
     <PublisherDisplayName>v-xime</PublisherDisplayName>
@@ -37,11 +37,11 @@
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
         <Path>CLRHost.dll</Path>
-        <ActivatableClass ActivatableClassId="Component.SampleComponent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.LinksData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.RootObject" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="Component.DataBase" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="Component.NodesData" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Component.RootObject" ThreadingModel="both" />
-        <ActivatableClass ActivatableClassId="Component.LinksData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Component.SampleComponent" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="Component.AnalyzedWord" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
