@@ -34,12 +34,8 @@
     var url = new Windows.Foundation.Uri("ms-appx:///data/Nouns.txt");
     
     Windows.Storage.StorageFile.getFileFromApplicationUriAsync(url).done(function (file) {
-        console.log("test11");
         Windows.Storage.FileIO.readLinesAsync(file).done(function (lines) {
             DataExample.nounList = lines;
-            console.log("test222");
         });
     });
-
-    console.log("test");
 };

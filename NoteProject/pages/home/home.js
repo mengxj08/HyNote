@@ -2,7 +2,6 @@
     "use strict";
     var SampleComponent = new Component.SampleComponent();
     var resultJson;
-    //var winNavBar;
     var winAppBar;
     var passedOptions = null;
     var homePage = WinJS.UI.Pages.define("/pages/home/home.html", {
@@ -12,22 +11,13 @@
             passedOptions = options;
 
             winAppBar = document.getElementById("homeAppbar").winControl;
-            
             element.querySelector("#right-button").addEventListener("click", this.doClickAddtoProject, false);
-            //element.querySelector("#reviewNotes").addEventListener("click", this.doClickreviewNotes, false);
-            //element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
-            //element.querySelector("#save").addEventListener("click", this.doClickSave, false);
             element.querySelector("#delete").addEventListener("click", this.doClickDelete, false);
             element.querySelector("#undoNote").addEventListener("click", this.doClickUndoButton, false);
 
-
             var conceptShow = document.getElementById("conceptShow");
             var constantWidth = $("#conceptShow").outerWidth(true) + $("#textShow").outerWidth(true);
-            
-            //var testButton = document.getElementById("mapButton");
-            //testButton.addEventListener("click", this.testButtonClicked, false);
-
- 
+             
             //*************************************************************************
             //Codes below are designed for resizable conceptMap
 
@@ -77,6 +67,13 @@
                 }
             });
 
+            //**********************************************************
+            //Option 1 : Use the button to create concepts
+            //var testButton = document.getElementById("mapButton");
+            //testButton.addEventListener("click", this.testButtonClicked, false);
+
+            //**********************************************************
+            //Option 2: Real-time creating concepts while typing
             $("#textShow").keyup(function (e) {
                 if (e.keyCode == 32 || e.keyCode == 13 || (e.keyCode >= 106 && e.keyCode <= 222)) {
                     homePage.prototype.localTextParsing();
@@ -181,9 +178,7 @@
             }
                 
             var textShow = document.getElementById("textShow");
-            //var modifiedText = textShow.innerText.trim().replace("\r\n", "1");
             var text = textShow.innerText.trim();
-            
             var find = "\r\n\r\n"
             var re = new RegExp(find, 'g');
             text = text.replace(re, '\r\n');
@@ -302,7 +297,6 @@
             var tmpCache = JSON.parse(DataExample.cache);
             var punctuationless = textShow.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, '');
             var finalString = punctuationless.replace(/\s{2,}/g, " ");
-            console.log("FFFF:"+finalString);
             var words = finalString.split(" ");
             console.log(DataExample.nounList.length);
             words.forEach(function (wordValue, wordIndex) {
@@ -320,24 +314,25 @@
                     var isNoun = false;
                     for (var i = 0; i < tmpCache.length; i++) {
                         if (tmp.toUpperCase() == tmpCache[i].word.toUpperCase()) {
-                            isNoun = true;
-                            localJson.push({ "word": tmp, "frequency": 1 });
+                            isNoun = tmpCache[i].isNoun;
+                            break;
                         }
                     }
-                    
-                    if (!isNoun) {
+                    if (isNoun) {
+                        localJson.push({ "word": tmp, "frequency": 1 });
+                    }
+                    else {
                         var isNewNoun = false;
                         for (var i = 0; i < DataExample.nounList.length; i++) {
                             if (DataExample.nounList[i].toUpperCase() == tmp.toUpperCase()) {
                                 localJson.push({ "word": tmp, "frequency": 1 });
-                                localJson.push({ "word": tmp, "isNoun": true });
+                                tmpCache.push({ "word": tmp, "isNoun": true });
                                 isNewNoun = true;
                                 break;
                             }
                         }
-
                         if (!isNewNoun) {
-                            localJson.push({ "word": tmp, "isNoun": false });
+                            tmpCache.push({ "word": tmp, "isNoun": false });
                         }
                     }
                 }
@@ -349,12 +344,8 @@
         },
 
         PassTextToParse: function () {
-            //$("#ProgressControl").css({ "visibility": "visible" });
-            //console.log("passtextParse");
             var textShow = document.getElementById("textShow");
             resultJson = SampleComponent.getResultJson(textShow.innerText);
-            //textShow.innerText = textShow.innerText;
-            //console.log(resultJson);
             var progressControl = document.getElementById("ProgressControl");
             progressControl.style.visibility = "hidden";
             if (resultJson != "N/A") {
@@ -371,32 +362,18 @@
         },
 
         testButtonClicked: function (eventInfo) {
-            //var promise = new WinJS.Promise.as().then(homePage.prototype.refreshProgressBar()).then(homePage.prototype.PassTextToParse());
-            //var progressControl = document.getElementById("ProgressControl");
-            //progressControl.style.visibility = "visible";
-            //setTimeout(function () { console.log("fuck"); progressControl.style.visibility = "hidden"; }, 2000);
-            //console.log(DataExample.nounList[0]);
             var errorMsg = document.getElementById("errorMsg");
             errorMsg.style.visibility = "hidden";
             homePage.prototype.refreshProgressBar("Loading...");
             setTimeout(function () {
                 homePage.prototype.PassTextToParse();
-                //var textShow = document.getElementById("textShow");
-                //resultJson = SampleComponent.localJsonResult(textShow.innerText);
             }, 200);
-           
-            //WinJS.UI.Pages.render("/pages/home/home.html", progressControl, {}, setTimeout(2000)).done(homePage.prototype.refreshProgressBar());
         },
 
         refreshProgressBar: function (showText) {
             var progressControl = document.getElementById("ProgressControl");
-            //$("#ProgressControl").text(showText);
             progressControl.style.visibility = "visible";
             WinJS.Resources.processAll(progressControl);
         }
-
     });
-
-
-
 })();

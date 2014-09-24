@@ -10,9 +10,7 @@
         // This function is called whenever a user navigates to this page. It
         // populates the page elements with the app's data.
         ready: function (element, options) {
-            //winNavBar = document.getElementById("navbar").winControl;
             winAppBar = document.getElementById("page2Appbar").winControl;
-            //page2options = options;
             element.querySelector("#left-button").addEventListener("click", this.doClickNewNote, false);
             element.querySelector("#open").addEventListener("click", this.doClickOpen, false);
             element.querySelector("#save").addEventListener("click", this.doClickSave, false);
@@ -70,8 +68,6 @@
             }
         },
         itemButtonClick: function (event) {
-            //console.log(event.name + "---" + event.value);
-
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == event.name)
                 {
@@ -96,7 +92,6 @@
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == itemValueIndex) {
                     var readJson = JSON.parse(itemValue.Data);
-                    //console.log(itemValue.Data);
                     for (var i = 0; i < readJson.node.length; i++) {
                         var JsonNodeValue = readJson.node[i];
                         var delJsonNodeValue = true;
@@ -189,7 +184,6 @@
         toggleSwitchChange: function (event) {
             console.log("toggleSwitchChange");
             var index = event.srcElement.title;
-            //console.log("index:"+index);
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 if (itemValue.Index == index)
                 {
@@ -207,9 +201,7 @@
                     }
                     else {
                         page2obj.prototype.saveProjectToNote(index);
-
                         removeNodesAndLinks(readJson.node, readJson.link);
-
                         restartNodes();
                         restartLinks();
                         restartLabels();
@@ -257,7 +249,6 @@
             restartLabels();
             restartNodes();
 
-            //winNavBar.hide();
             winAppBar.hide();
         },
 
@@ -331,15 +322,12 @@
             else {
                 savePicker.suggestedFileName = "New Document";
             }
-            //var dataExample = DataExample.itemList.slice(0);
             var dataExample = [];
             DataExample.itemList.forEach(function (itemValue, itemIndex) {
                 dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
             });
-            //var titleName = document.getElementById("titleProject");
             var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample, "externalLinks": JSON.parse(DataExample.externalLinks) };
             savedString = JSON.stringify(savedString);
-            //savedString = savedString.toString();
             savePicker.pickSaveFileAsync().then(function (file) {
 
                 if (file) {
@@ -349,14 +337,13 @@
                     Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
                          Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
                                 if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
-                                    //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
+                                    //Complete
                                 } else {
-                                    //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
+                                    //Failure
                                 }
                          });
                     });
                 } else {
-                    //WinJS.log && WinJS.log("Operation cancelled.", "sample", "status");
                 }
             });
         },
@@ -369,10 +356,8 @@
             else {
                 viewListView.selection.getItems().done(function (selectedDataSource) {
                     var contents = selectedDataSource[0].data.Data.toString();
-                    //var fileTitle = selectedDataSource[0].data.Title.toString();
                     var fileIndex = selectedDataSource[0].data.Index;
                     var toggleChecked = false;
-                    //console.log(contents);
                     viewListView.selection.clear();
 
                     DataExample.itemList.forEach(function (itemValue, itemIndex) {//del single item
@@ -382,14 +367,6 @@
                             return;
                         }
                     });
-                    //for (var i = 0; i < DataExample.itemList.length; i++) //del Multi-item
-                    //{
-                    //    if (DataExample.itemList.getAt(i).title == fileTitle)
-                    //    {
-                    //        DataExample.itemList.splice(i--, 1);
-                    //        break;
-                    //    }
-                    //}
                     if (toggleChecked) {
                         var readJson = JSON.parse(contents);
                         removeNodesAndLinks(readJson.node, readJson.link);
@@ -414,16 +391,13 @@
             }
             var textShow = "N/A";
             var currentState = saveNoteToFile(textShow);
-
             var titleName = document.getElementById("titleProject");
             DataExample.currentProjectState.Title = titleName.innerText.trim();
             DataExample.currentProjectState.Data = currentState;
-            //console.log(DataExample.currentProjectState);
         },
         readProjectState: function () {
             var titleName = document.getElementById("titleProject");
             titleName.innerText = DataExample.currentProjectState.Title;
-            //console.log(titleName.innerText);
             var readJson = JSON.parse(DataExample.currentProjectState.Data);
 
             nodes = readJson.node;
@@ -462,8 +436,6 @@
             }
             else { }
             page2options = null;
-
-            //page2obj.prototype.autoSaving();
         },
 
         autoSaving: function () {
@@ -475,7 +447,6 @@
                 DataExample.itemList.forEach(function (itemValue, itemIndex) {
                     dataExample.push({ Title: itemValue.Title, Index: itemValue.Index, checked: itemValue.checked, Color: itemValue.Color, Data: itemValue.Data });
                 });
-                //var titleName = document.getElementById("titleProject");
                 var savedString = { "ProjectName": DataExample.currentProjectState.Title, "currentState": JSON.parse(DataExample.currentProjectState.Data), "projectData": dataExample, "externalLinks": JSON.parse(DataExample.externalLinks) };
                 savedString = JSON.stringify(savedString);
 
@@ -483,9 +454,9 @@
                 Windows.Storage.FileIO.writeTextAsync(file, savedString).done(function () {
                     Windows.Storage.CachedFileManager.completeUpdatesAsync(file).done(function (updateStatus) {
                         if (updateStatus === Windows.Storage.Provider.FileUpdateStatus.complete) {
-                            //WinJS.log && WinJS.log("File " + file.name + " was saved.", "sample", "status");
+                            //Complete
                         } else {
-                            //WinJS.log && WinJS.log("File " + file.name + " couldn't be saved.", "sample", "status");
+                            //Failure
                         }
                     });
                 });
@@ -493,25 +464,18 @@
         },
          
         updateFile : function () {
-            //console.log("updateFile");
             page2obj.prototype.autoSaving();
             page2Timeout = setTimeout(page2obj.prototype.updateFile, 1000*60*1);
         },
 
         unload: function () {
-            // TODO: Respond to navigations away from this page.
-            //WinJS.UI.Fragments.clearCache();
+            //Respond to navigations away from this page.
             if (page2Timeout)
                 clearTimeout(page2Timeout);
         },
 
         updateLayout: function (element, viewState, lastViewState) {
-            /// <param name="element" domElement="true" />
-
-            // TODO: Respond to changes in layout.
-            //var viewListView = element.querySelector("#viewListView").winControl;
-            //viewListView.layout.orientation = "vertical";
-
+            //Respond to changes in layout.
         }
     });
 })();
