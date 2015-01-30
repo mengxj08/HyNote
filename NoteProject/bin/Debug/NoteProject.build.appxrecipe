@@ -1,170 +1,170 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>C47FP02</Machine>
-    <WindowsUser>v-xime</WindowsUser>
+    <Machine>JASONMENG</Machine>
+    <WindowsUser>Jason</WindowsUser>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>4c720e30-542c-4811-a244-62aa9b8ff9d6</PackageIdentityName>
-    <IntermediateOutputPath>C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bld\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Code\NoteProject\NoteProject\bld\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Code\NoteProject\NoteProject\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Component.winmd">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Component.winmd">
       <PackagePath>Component.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatInterfaces.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\SplatInterfaces.dll">
       <PackagePath>SplatInterfaces.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplatLibrary.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\SplatLibrary.dll">
       <PackagePath>SplatLibrary.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Common.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Common.dll">
       <PackagePath>Common.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\NlpCommon.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\NlpCommon.dll">
       <PackagePath>NlpCommon.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\PorterLib.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\PorterLib.dll">
       <PackagePath>PorterLib.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\ClassifierLib.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\ClassifierLib.dll">
       <PackagePath>ClassifierLib.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\DataExtractor.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\DataExtractor.dll">
       <PackagePath>DataExtractor.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Tokenizer.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Tokenizer.dll">
       <PackagePath>Tokenizer.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\TextFilter.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\TextFilter.dll">
       <PackagePath>TextFilter.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\ExtractorLib.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\ExtractorLib.dll">
       <PackagePath>ExtractorLib.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\MLLibrary.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\MLLibrary.dll">
       <PackagePath>MLLibrary.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\LocalFeatureExtractor.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\LocalFeatureExtractor.dll">
       <PackagePath>LocalFeatureExtractor.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SemanticRoleLearner.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\SemanticRoleLearner.dll">
       <PackagePath>SemanticRoleLearner.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Vectors.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Vectors.dll">
       <PackagePath>Vectors.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Optimizer.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Optimizer.dll">
       <PackagePath>Optimizer.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\MathUtil.dll">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\MathUtil.dll">
       <PackagePath>MathUtil.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SemanticRoleLabeler.exe">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\SemanticRoleLabeler.exe">
       <PackagePath>SemanticRoleLabeler.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\SplitMerge.exe">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\SplitMerge.exe">
       <PackagePath>SplitMerge.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\Morph.exe">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\Morph.exe">
       <PackagePath>Morph.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\bin\Debug\PerceptronUtil.exe">
+    <AppxPackagedFile Include="C:\Code\NoteProject\Component\bin\Debug\PerceptronUtil.exe">
       <PackagePath>PerceptronUtil.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\default.css">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\css\default.css">
       <PackagePath>css\default.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\jquery-ui.min.css">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\css\jquery-ui.min.css">
       <PackagePath>css\jquery-ui.min.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.css">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\home\home.css">
       <PackagePath>pages\home\home.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.css">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\Page2\page2.css">
       <PackagePath>pages\Page2\page2.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\css\images\ui-icons_222222_256x240.png">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\css\images\ui-icons_222222_256x240.png">
       <PackagePath>css\images\ui-icons_222222_256x240.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\logo.scale-100.png">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\images\logo.scale-100.png">
       <PackagePath>images\logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\smalllogo.scale-100.png">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\images\smalllogo.scale-100.png">
       <PackagePath>images\smalllogo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\splashscreen.scale-100.png">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\images\splashscreen.scale-100.png">
       <PackagePath>images\splashscreen.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\images\storelogo.scale-100.png">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\images\storelogo.scale-100.png">
       <PackagePath>images\storelogo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\data\GreatNounList">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\data\GreatNounList">
       <PackagePath>data\GreatNounList</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\data\nounlist.txt">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\data\nounlist.txt">
       <PackagePath>data\nounlist.txt</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\data\Nouns.txt">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\data\Nouns.txt">
       <PackagePath>data\Nouns.txt</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\d3.min.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\d3.min.js">
       <PackagePath>js\d3.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\Data.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\Data.js">
       <PackagePath>js\Data.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\default.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery-2.1.1.min.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\jquery-2.1.1.min.js">
       <PackagePath>js\jquery-2.1.1.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery-ui.min.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\jquery-ui.min.js">
       <PackagePath>js\jquery-ui.min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\jquery.highlight-4.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\jquery.highlight-4.js">
       <PackagePath>js\jquery.highlight-4.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\js\navigator.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\js\navigator.js">
       <PackagePath>js\navigator.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\D3canvas.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\home\D3canvas.js">
       <PackagePath>pages\home\D3canvas.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\home\home.js">
       <PackagePath>pages\home\home.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\D3canvas2.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\Page2\D3canvas2.js">
       <PackagePath>pages\Page2\D3canvas2.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.js">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\Page2\page2.js">
       <PackagePath>pages\Page2\page2.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\home\home.html">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\home\home.html">
       <PackagePath>pages\home\home.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\default.html">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\default.html">
       <PackagePath>default.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\pages\Page2\page2.html">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\pages\Page2\page2.html">
       <PackagePath>pages\Page2\page2.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri">
+    <AppxPackagedFile Include="C:\Code\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

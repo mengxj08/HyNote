@@ -44,23 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Common">
-      <HintPath>D:\Microsoft\Work\Code\Splat\bin\Debug\Common.dll</HintPath>
+      <HintPath>libs\Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SplatDrop">
-      <HintPath>D:\Microsoft\Work\Code\Splat\bin\Debug\SplatDrop.dll</HintPath>
-    </Reference>
     <Reference Include="SplatInterfaces">
-      <HintPath>D:\Microsoft\Work\Code\Splat\SplatInterfaces\bin\Debug\SplatInterfaces.dll</HintPath>
+      <HintPath>libs\SplatInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="SplatLibrary">
-      <HintPath>D:\Microsoft\Work\Code\Splat\SplatLibrary\bin\Debug\SplatLibrary.dll</HintPath>
+      <HintPath>libs\SplatLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="libs\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

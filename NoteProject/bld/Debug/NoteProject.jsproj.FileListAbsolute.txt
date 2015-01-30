@@ -57,3 +57,47 @@ C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bi
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\MathUtil.dll
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\SplatInterfaces.pdb
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\NoteProject\bin\Debug\SplatLibrary.pdb
+C:\Code\NoteProject\NoteProject\bin\Debug\ReverseMap\resources.pri
+C:\Code\NoteProject\NoteProject\bin\Debug\AppxManifest.xml
+C:\Code\NoteProject\NoteProject\bin\Debug\NoteProject.build.appxrecipe
+C:\Code\NoteProject\NoteProject\bin\Debug\Component.winmd
+C:\Code\NoteProject\NoteProject\bin\Debug\SplatInterfaces.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\Newtonsoft.Json.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\SplatLibrary.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\Common.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\NlpCommon.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\PorterLib.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\SemanticRoleLabeler.exe
+C:\Code\NoteProject\NoteProject\bin\Debug\ClassifierLib.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\DataExtractor.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\Tokenizer.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\SplitMerge.exe
+C:\Code\NoteProject\NoteProject\bin\Debug\Morph.exe
+C:\Code\NoteProject\NoteProject\bin\Debug\TextFilter.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\ExtractorLib.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\MLLibrary.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\LocalFeatureExtractor.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\SemanticRoleLearner.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\PerceptronUtil.exe
+C:\Code\NoteProject\NoteProject\bin\Debug\Vectors.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\Optimizer.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\MathUtil.dll
+C:\Code\NoteProject\NoteProject\bin\Debug\Component.pdb
+C:\Code\NoteProject\NoteProject\bin\Debug\Component.pri
+C:\Code\NoteProject\NoteProject\bin\Debug\SplatInterfaces.pdb
+C:\Code\NoteProject\NoteProject\bin\Debug\Newtonsoft.Json.xml
+C:\Code\NoteProject\NoteProject\bin\Debug\SplatLibrary.pdb
+C:\Code\NoteProject\NoteProject\bld\Debug\NoteProject.jsprojResolveAssemblyReference.cache
+C:\Code\NoteProject\NoteProject\bld\Debug\NoteProject.jsproj.GenerateResource.Cache
+C:\Code\NoteProject\NoteProject\bld\Debug\priconfig.xml
+C:\Code\NoteProject\NoteProject\bld\Debug\priconfig.xml.intermediate
+C:\Code\NoteProject\NoteProject\bld\Debug\layout.resfiles
+C:\Code\NoteProject\NoteProject\bld\Debug\layout.resfiles.intermediate
+C:\Code\NoteProject\NoteProject\bld\Debug\resources.resfiles
+C:\Code\NoteProject\NoteProject\bld\Debug\resources.resfiles.intermediate
+C:\Code\NoteProject\NoteProject\bld\Debug\pri.resfiles
+C:\Code\NoteProject\NoteProject\bld\Debug\pri.resfiles.intermediate
+C:\Code\NoteProject\NoteProject\bld\Debug\qualifiers.txt
+C:\Code\NoteProject\NoteProject\bld\Debug\qualifiers.txt.intermediate
+C:\Code\NoteProject\NoteProject\bld\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Code\NoteProject\NoteProject\bld\Debug\ProjectArchitectures.txt

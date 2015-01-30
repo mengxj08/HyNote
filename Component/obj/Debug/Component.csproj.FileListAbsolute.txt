@@ -41,3 +41,27 @@ C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\obj\
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\obj\Debug\qualifiers.txt.intermediate
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\obj\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\v-xime\Documents\Visual Studio 2013\Projects\NoteProject\Component\obj\Debug\Component.csprojResolveAssemblyReference.cache
+C:\Code\NoteProject\Component\bin\Debug\Component.winmd
+C:\Code\NoteProject\Component\bin\Debug\Component.pdb
+C:\Code\NoteProject\Component\bin\Debug\Component.pri
+C:\Code\NoteProject\Component\bin\Debug\Common.dll
+C:\Code\NoteProject\Component\bin\Debug\Newtonsoft.Json.dll
+C:\Code\NoteProject\Component\bin\Debug\SplatInterfaces.dll
+C:\Code\NoteProject\Component\bin\Debug\SplatLibrary.dll
+C:\Code\NoteProject\Component\bin\Debug\Newtonsoft.Json.xml
+C:\Code\NoteProject\Component\obj\Debug\Component.csprojResolveAssemblyReference.cache
+C:\Code\NoteProject\Component\obj\Debug\Component.winmd
+C:\Code\NoteProject\Component\obj\Debug\Component.pdb
+C:\Code\NoteProject\Component\obj\Debug\Component.winmdobj
+C:\Code\NoteProject\Component\obj\Debug\Component.compile.pdb
+C:\Code\NoteProject\Component\obj\Debug\priconfig.xml
+C:\Code\NoteProject\Component\obj\Debug\priconfig.xml.intermediate
+C:\Code\NoteProject\Component\obj\Debug\layout.resfiles
+C:\Code\NoteProject\Component\obj\Debug\layout.resfiles.intermediate
+C:\Code\NoteProject\Component\obj\Debug\resources.resfiles
+C:\Code\NoteProject\Component\obj\Debug\resources.resfiles.intermediate
+C:\Code\NoteProject\Component\obj\Debug\pri.resfiles
+C:\Code\NoteProject\Component\obj\Debug\pri.resfiles.intermediate
+C:\Code\NoteProject\Component\obj\Debug\qualifiers.txt
+C:\Code\NoteProject\Component\obj\Debug\qualifiers.txt.intermediate
+C:\Code\NoteProject\Component\obj\Debug\MultipleQualifiersPerDimensionFound.txt
